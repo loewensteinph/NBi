@@ -246,15 +246,13 @@
     <Compile Include="Query\DbTypeBuilder.cs" />
     <Compile Include="Query\IQueryParameter.cs" />
     <Compile Include="Query\IQueryTemplateVariable.cs" />
-    <Compile Include="Report\ReportCommand.cs" />
+    <Compile Include="Report\IReportParser.cs" />
+    <Compile Include="Report\IReportParserFactory.cs" />
+    <Compile Include="Report\Request\IReport.cs" />
+    <Compile Include="Report\ReportParserFactory.cs" />
+    <Compile Include="Report\Result\ReportCommand.cs" />
+    <Compile Include="Report\Result\ReportParameter.cs" />
     <Compile Include="ResultSet\Comparer\ComparerFactory.cs" />
-    <Compile Include="Report\FileRequest.cs" />
-    <Compile Include="Report\DatabaseParser.cs" />
-    <Compile Include="Report\DatabaseRequest.cs" />
-    <Compile Include="Report\FileParser.cs" />
-    <Compile Include="Report\IParser.cs" />
-    <Compile Include="Report\IQueryRequest.cs" />
-    <Compile Include="Report\ParserFactory.cs" />
     <Compile Include="ResultSet\Comparer\DateTimeToleranceFactory.cs" />
     <Compile Include="ResultSet\Comparer\NumericBoundedPercentageTolerance.cs" />
     <Compile Include="ResultSet\Comparer\NumericToleranceFactory.cs" />
@@ -415,11 +413,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <EmbeddedResource Include="Query\CleanCache.xmla" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Report\ReportServerListDataSet.sql" />
-    <EmbeddedResource Include="Report\ReportServerListSharedDataSet.sql" />
-    <EmbeddedResource Include="Report\ReportServerQueryFromSharedDataSet.sql" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

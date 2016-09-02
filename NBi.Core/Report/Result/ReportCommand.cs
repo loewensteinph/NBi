@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NBi.Core.Report
+namespace NBi.Core.Report.Result
 {
     public class ReportCommand
     {

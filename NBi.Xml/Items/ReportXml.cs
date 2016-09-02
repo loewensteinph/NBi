@@ -7,10 +7,12 @@ using NBi.Core;
 using NBi.Core.Report;
 using NBi.Xml.Settings;
 using NBi.Xml.Constraints;
+using NBi.Core.Report.Result;
+using NBi.Core.Report.Request;
 
 namespace NBi.Xml.Items
 {
-    public class ReportXml : QueryableXml, IReferenceFriendly
+    public class ReportXml : QueryableXml, IReferenceFriendly, IReport
     {
         [XmlAttribute("source")]
         public string Source { get; set; }
@@ -20,6 +22,10 @@ namespace NBi.Xml.Items
         
         [XmlAttribute("name")]
         public string Name { get; set; }
+
+        [XmlAttribute("version")]
+        [XmlIgnore]
+        public string Version { get { return "SqlServer2016"; } }
 
         [XmlAttribute("dataset")]
         public string Dataset { get; set; }
@@ -35,22 +41,10 @@ namespace NBi.Xml.Items
         private ReportCommand command;
         public override string GetQuery()
         {
-            var parser = ParserFactory.GetParser(
-                    Source
-                    , Path
-                    , Name
-                    , Dataset
-                );
+            var parserFactory = new ReportParserFactory();
+            var parser = parserFactory.Get(this);
 
-            var request = ParserFactory.GetRequest(
-                    Source
-                    , Settings.BasePath
-                    , Path
-                    , Name
-                    , Dataset
-                );
-
-            command = parser.ExtractQuery(request);
+            command = parser.ExtractQuery(this.Dataset);
 
             return command.Text;
         }

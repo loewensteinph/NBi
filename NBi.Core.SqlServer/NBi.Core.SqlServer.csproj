@@ -93,6 +93,9 @@
     <Compile Include="IntegrationService\PackageEvents.cs" />
     <Compile Include="IntegrationService\PackageInfoExtensions.cs" />
     <Compile Include="IntegrationService\SsisEtlRunnerFactory.cs" />
+    <Compile Include="ReportingService\DatabaseParser.cs" />
+    <Compile Include="ReportingService\FileParser.cs" />
+    <Compile Include="ReportingService\SsrsReportParserFactory.cs" />
     <Compile Include="Smo\BatchRunCommand.cs" />
     <Compile Include="Smo\SmoBatchRunnerFactory.cs" />
   </ItemGroup>
@@ -102,7 +105,18 @@
       <Name>NBi.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="ReportingService\ReportServerListDataSet.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ReportingService\ReportServerListSharedDataSet.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ReportingService\ReportServerQueryFromSharedDataSet.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ReportingService\ReportServerListParameter.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

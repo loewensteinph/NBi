@@ -124,7 +124,7 @@
     <Compile Include="Integration\Core\Structure\StructureDiscoveryFactoryProviderTest.cs" />
     <Compile Include="Integration\Core\Structure\Tabular\TabularStructureDiscoveryFactoryTest.cs" />
     <Compile Include="Integration\Core\WindowsService\WindowsServiceCheckTest.cs" />
-    <Compile Include="Integration\Core\Report\DatabaseParserTest.cs" />
+    <Compile Include="Integration\Core\SqlServer\Report\DatabaseParserTest.cs" />
     <Compile Include="Integration\Core\WindowsService\WindowsServiceCommandTest.cs" />
     <Compile Include="Integration\GenbiL\TestSuiteGeneratorTest.cs" />
     <Compile Include="Integration\NUnit\EqualToConstraintTest.cs" />
@@ -149,7 +149,7 @@
     <Compile Include="Unit\Core\CsvWriterTest.cs" />
     <Compile Include="Unit\Core\DataType\DataTypeInfoFactoryTest.cs" />
     <Compile Include="Unit\Core\GroupCommandFactoryTest.cs" />
-    <Compile Include="Unit\Core\Etl\SsisEtlRunnerFactoryTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\IntegrationService\SsisEtlRunnerFactoryTest.cs" />
     <Compile Include="Unit\Core\Evaluate\RowValidatorTest.cs" />
     <Compile Include="Unit\Core\DataManipulation\DataManipulationFactoryTest.cs" />
     <Compile Include="Unit\Core\Evaluate\ExpressionComparableTest.cs" />
@@ -160,7 +160,7 @@
     <Compile Include="Unit\Core\Members\PredefinedMembersFactoryTest.cs" />
     <Compile Include="Unit\Core\OfficeDataConnectionFileParserTest.cs" />
     <Compile Include="Unit\Core\Query\DbTypeBuilderTest.cs" />
-    <Compile Include="Unit\Core\Report\FileParserTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\FileParserTest.cs" />
     <Compile Include="Unit\Core\ResultSet\KeyCollectionTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\BooleanComparerTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\DateTimeRoundingTest.cs" />
@@ -182,6 +182,7 @@
     <Compile Include="Unit\Core\ConnectionFactoryTest.cs" />
     <Compile Include="Unit\Core\ResultSetManagerTest.cs" />
     <Compile Include="Unit\Core\CsvReaderTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\SsrsReportParserFactoryTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\HierarchyDiscoveryCommandBuilderTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\MeasureDiscoveryCommandBuilderTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\DimensionDiscoveryCommandBuilderTest.cs" />
@@ -476,16 +477,16 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\Currency_Rates.rdl" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\Currency_List.rdl" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\Currency_Rates.rdl" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\Currency_List.rdl" />
     <EmbeddedResource Include="Unit\Service\Resources\OrderedLight.nbitt" />
     <EmbeddedResource Include="Unit\Service\Resources\OrderedFull.nbitt" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\EmployeeSalesDetail.rsd" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\EmployeeSalesYearOverYear.rsd" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\Employee_Sales_Summary.rdl" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\EmpSalesMonth.rsd" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\SalesEmployees.rsd" />
-    <EmbeddedResource Include="Unit\Core\Report\Resources\Currency_List - SProc.rdl" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\EmployeeSalesDetail.rsd" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\EmployeeSalesYearOverYear.rsd" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\Employee_Sales_Summary.rdl" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\EmpSalesMonth.rsd" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\SalesEmployees.rsd" />
+    <EmbeddedResource Include="Unit\Core\SqlServer\ReportingService\Resources\Currency_List - SProc.rdl" />
   </ItemGroup>
   <ItemGroup>
     <MyOptionalItems Include="ConnectionString.user.config">
