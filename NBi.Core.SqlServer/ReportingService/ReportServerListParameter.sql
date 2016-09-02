@@ -1,7 +1,7 @@
 ﻿select
 	Params.p.value('Name[1]','varchar(Max)') as ParameterName,
     Params.p.value('Prompt[1]','varchar(Max)') as ParameterLabel,
-    Params.p.value ('DataType[1]', 'VARCHAR(Max)') as DataType,
+    Params.p.value ('Type[1]', 'VARCHAR(Max)') as DataType,
     case when Params.p.value ('Prompt[1]', 'VARCHAR(Max)')='' then 'false' else 'true' end as [Hidden]
 from
 	(
