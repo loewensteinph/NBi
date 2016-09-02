@@ -234,6 +234,13 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="report-parameter-type">
+    <xs:attribute name="caption" type="xs:string" use="optional" />
+    <xs:attribute name="name" type="xs:string" use="optional" />
+    <xs:attribute name="report" type="xs:string" use="optional" />
+    <xs:attribute name="path" type="xs:string" use="optional" />
+    <xs:attribute name="connectionString" type="xs:string" use="optional" />
+  </xs:complexType>
   <xs:complexType name="any-structures-type">
     <xs:attribute name="connectionString" type="xs:string" use="optional" />
   </xs:complexType>
@@ -342,6 +349,11 @@
         </xs:attribute>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="report-parameters-type">
+    <xs:attribute name="report" type="xs:string" use="optional" />
+    <xs:attribute name="path" type="xs:string" use="optional" />
+    <xs:attribute name="connectionString" type="xs:string" use="optional" />
   </xs:complexType>
   <xs:complexType name="members-type">
     <xs:sequence>
@@ -659,6 +671,7 @@
                   <xs:element name="column" type="column-type"/>
                   <xs:element name="routine" type="routine-type"/>
                   <xs:element name="parameter" type="routine-parameter-type"/>
+                  <xs:element name="report-parameter" type="report-parameter-type"/>
                   <xs:element name="perspectives" type="perspectives-type"/>
                   <xs:element name="measure-groups" type="measure-groups-type"/>
                   <xs:element name="measures" type="measures-type"/>
@@ -671,6 +684,7 @@
                   <xs:element name="columns" type="columns-type"/>
                   <xs:element name="routines" type="routines-type"/>
                   <xs:element name="parameters" type="routine-parameters-type"/>
+                  <xs:element name="report-parameters" type="report-parameters-type"/>
                 </xs:choice>
               </xs:complexType>
             </xs:element>

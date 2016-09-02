@@ -101,6 +101,8 @@
     <Compile Include="Decoration\Command\CommandGroupXml.cs" />
     <Compile Include="GroupXml.cs" />
     <Compile Include="InheritanceTestXml.cs" />
+    <Compile Include="Items\ReportParametersXml.cs" />
+    <Compile Include="Items\ReportParameterXml.cs" />
     <Compile Include="Items\ColumnXml.cs" />
     <Compile Include="Items\ColumnsXml.cs" />
     <Compile Include="Items\Filters\IOwnerFilter.cs" />

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<testSuite name="The TestSuite" xmlns="http://NBi/TestSuite">
+	<test name="With name">
+		<system-under-test>
+			<structure>
+        <report-parameter name="myName" report="myReport" path="myPath" connectionString="connectionString"/>
+			</structure>
+		</system-under-test>
+		<assert>
+			<exists/>
+		</assert>
+	</test>
+  <test name="With caption">
+    <system-under-test>
+      <structure>
+        <report-parameter caption="myCaption" report="myReport" path="myPath" connectionString="connectionString"/>
+      </structure>
+    </system-under-test>
+    <assert>
+      <exists/>
+    </assert>
+  </test>
+  <test name="With caption">
+    <system-under-test>
+      <structure>
+        <report-parameters report="myReport" path="myPath" connectionString="connectionString"/>
+      </structure>
+    </system-under-test>
+    <assert>
+      <equivalentTo>
+        <item>Alpha</item>
+        <item>Beta</item>
+      </equivalentTo>
+    </assert>
+  </test>
+</testSuite>

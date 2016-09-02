@@ -271,6 +271,7 @@
     <Compile Include="Unit\Xml\Constraints\ExistsXmlTest.cs" />
     <Compile Include="Unit\Xml\Decoration\ConditionXmlTest.cs" />
     <Compile Include="Unit\Xml\Decoration\DecorationXmlTest.cs" />
+    <Compile Include="Unit\Xml\Items\ReportParameterXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\RoutineParameterXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\RoutineXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\SetXmlTest.cs" />
@@ -683,6 +684,7 @@
     <Content Include="Acceptance\Resources\PowerBiDesktop\Source.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Unit\Xml\Resources\ReportParameterXmlTestSuite.xml" />
     <EmbeddedResource Include="Integration\Core\Resources\Sample.odc" />
     <EmbeddedResource Include="Unit\Xml\Resources\PerspectiveXmlTestSuite.xml" />
     <EmbeddedResource Include="Unit\Xml\Resources\NoRowsXmlTestSuite.xml" />

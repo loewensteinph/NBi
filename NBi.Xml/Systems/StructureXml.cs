@@ -30,7 +30,9 @@ namespace NBi.Xml.Systems
         XmlElement(Type = typeof(RoutineXml), ElementName = "routine"),
         XmlElement(Type = typeof(RoutinesXml), ElementName = "routines"),
         XmlElement(Type = typeof(RoutineParameterXml), ElementName = "parameter"),
-        XmlElement(Type = typeof(RoutineParametersXml), ElementName = "parameters")
+        XmlElement(Type = typeof(RoutineParametersXml), ElementName = "parameters"),
+        XmlElement(Type = typeof(ReportParameterXml), ElementName = "report-parameter"),
+        XmlElement(Type = typeof(ReportParametersXml), ElementName = "report-parameters")
         ]
         public AbstractItem Item { get; set; }
 
