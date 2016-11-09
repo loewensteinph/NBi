@@ -8,19 +8,8 @@ using NBi.Xml.Settings;
 
 namespace NBi.Xml.Items
 {
-    public abstract class BaseItem
+    public abstract class ConnectionItemXml : ModelItemXml
     {
-        [XmlIgnore()]
-        public virtual DefaultXml Default { get; set; }
-        [XmlIgnore()]
-        public virtual SettingsXml Settings { get; set; }
-
-        public BaseItem()
-        {
-            Default = new DefaultXml();
-            Settings = new SettingsXml();
-        }
-
         [XmlAttribute("connectionString")]
         public string ConnectionString { get; set; }
 

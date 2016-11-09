@@ -8,23 +8,18 @@ namespace NBi.Xml.Systems
 {
     public class ExecutionXml : AbstractSystemUnderTestXml, IReferenceFriendly
     {       
-        public virtual bool IsQuery()
-        {
-            return true;
-        }
-        
         [XmlElement(Type = typeof(QueryXml), ElementName = "query"),
         XmlElement(Type = typeof(AssemblyXml), ElementName = "assembly"),
         XmlElement(Type = typeof(ReportXml), ElementName = "report"),
         XmlElement(Type = typeof(EtlXml), ElementName = "etl"),
         ]
-        public virtual ExecutableXml Item { get; set; }
+        public override ModelItemXml Item { get; set; }
 
-        public override BaseItem BaseItem
+        public ExecutableXml BaseItem
         {
             get
             {
-                return (BaseItem) Item;
+                return (ExecutableXml)BaseItem;
             }
         }
 

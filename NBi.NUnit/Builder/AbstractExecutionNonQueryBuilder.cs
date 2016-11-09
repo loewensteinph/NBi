@@ -26,7 +26,7 @@ namespace NBi.NUnit.Builder
         protected IExecution InstantiateSystemUnderTest(ExecutionXml executionXml)
         {
             var factory = new ExecutionFactory();
-            var instance = factory.Get(executionXml.BaseItem as IExecutable);
+            var instance = factory.Get(executionXml.Item as IExecutable);
             return instance;
         }
 

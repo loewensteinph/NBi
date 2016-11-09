@@ -55,7 +55,7 @@ namespace NBi.Xml.Constraints
         [XmlElement("xml-source")]
         public XmlSourceXml XmlSource { get; set; }
 
-        public override BaseItem BaseItem
+        public override ConnectionItemXml BaseItem
         {
             get
             {

@@ -91,17 +91,7 @@ namespace NBi.Xml.Constraints
             Items = new List<string>();
         }
 
-        public override BaseItem BaseItem
-        {
-            get
-            {
-                if (Query != null)
-                    return Query;
-                if (Members != null && Members.BaseItem != null)
-                    return Members.BaseItem;
-                return null;
-            }
-        }
+
 
     }
 }

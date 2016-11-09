@@ -20,7 +20,7 @@ namespace NBi.Xml.Systems
         XmlElement(Type = typeof(LevelXml), ElementName = "level"),
         XmlElement(Type = typeof(SetXml), ElementName = "set")
         ]
-        public AbstractMembersItem Item { get; set; }
+        public override ModelItemXml Item { get; set; }
 
         [XmlElement("exclude")]
         public ExcludeXml Exclude { get; set; }
@@ -41,22 +41,20 @@ namespace NBi.Xml.Systems
             set { return; }
         }
 
-        public override BaseItem BaseItem
-        {
-            get
-            {
-                return Item;
-            }
-        }
-
         internal override Dictionary<string, string> GetRegexMatch()
         {
-            return Item.GetRegexMatch();
+            if (Item is IAutoCategorize)
+                return ((IAutoCategorize)Item).GetRegexMatch();
+            else
+                return new Dictionary<string, string>();
         }
 
         public override ICollection<string> GetAutoCategories()
         {
-            var values = Item.GetAutoCategories();
+            ICollection<string> values = new List<string>();
+            if (Item is IAutoCategorize)
+                values = ((IAutoCategorize)Item).GetAutoCategories();
+
             values.Add("Members");
             return values;
         }

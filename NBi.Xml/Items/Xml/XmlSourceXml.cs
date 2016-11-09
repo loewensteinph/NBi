@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items.Xml
 {
-    public class XmlSourceXml : BaseItem
+    public class XmlSourceXml : ConnectionItemXml
     {
         [XmlElement("file")]
         public FileXml File { get; set; }

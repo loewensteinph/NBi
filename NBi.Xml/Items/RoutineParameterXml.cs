@@ -29,14 +29,14 @@ namespace NBi.Xml.Items
             get { return "routine's parameter"; }
         }
 
-        internal override Dictionary<string, string> GetRegexMatch()
+        public override Dictionary<string, string> GetRegexMatch()
         {
             var dico = base.GetRegexMatch();
             dico.Add("sut:routine", Routine);
             return dico;
         }
 
-        internal override ICollection<string> GetAutoCategories()
+        public override ICollection<string> GetAutoCategories()
         {
             var values = new List<string>();
             if (!string.IsNullOrEmpty(Perspective))

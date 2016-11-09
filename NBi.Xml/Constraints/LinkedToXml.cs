@@ -10,6 +10,6 @@ namespace NBi.Xml.Constraints
         [XmlElement(Type = typeof(MeasureGroupXml), ElementName = "measure-group"),
         XmlElement(Type = typeof(DimensionXml), ElementName = "dimension")
         ]
-        public AbstractItem Item { get; set; }
+        public ModelItemXml Item { get; set; }
     }
 }

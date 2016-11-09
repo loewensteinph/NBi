@@ -100,8 +100,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Path, Is.EqualTo(@"/Etl/"));
@@ -116,8 +116,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Server, Is.EqualTo("."));
@@ -133,8 +133,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
             var parameters = etl.Parameters;
 
             Assert.That(parameters, Is.Not.Null);
@@ -169,8 +169,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Server, Is.EqualTo("."));
@@ -189,8 +189,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Server, Is.EqualTo("."));
@@ -210,8 +210,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Is32Bits, Is.True);
@@ -225,8 +225,8 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            Assert.That(ts.Tests[testNr].Systems[0].BaseItem, Is.InstanceOf<EtlXml>());
-            var etl = ts.Tests[testNr].Systems[0].BaseItem as EtlXml;
+            Assert.That(ts.Tests[testNr].Systems[0].Item, Is.InstanceOf<EtlXml>());
+            var etl = ts.Tests[testNr].Systems[0].Item as EtlXml;
 
             Assert.That(etl, Is.Not.Null);
             Assert.That(etl.Environment, Is.EqualTo("Environment"));

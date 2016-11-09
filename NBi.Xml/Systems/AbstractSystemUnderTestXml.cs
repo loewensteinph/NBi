@@ -19,8 +19,8 @@ namespace NBi.Xml.Systems
             set
             {
                 _default = value;
-                if (BaseItem != null)
-                    BaseItem.Default = value;
+                if (Item != null)
+                    Item.Default = value;
             }
         }
         private SettingsXml settings;
@@ -31,12 +31,13 @@ namespace NBi.Xml.Systems
             set
             {
                 settings = value;
-                if (BaseItem != null)
-                    BaseItem.Settings = value;
+                if (Item != null)
+                    Item.Settings = value;
             }
         }
 
-        public abstract BaseItem BaseItem { get; }
+        [XmlIgnore()]
+        public abstract ModelItemXml Item { get; set; }
 
         public AbstractSystemUnderTestXml()
         {

@@ -53,34 +53,39 @@ namespace NBi.NUnit.Builder
   
         protected MembersDiscoveryRequest InstantiateMembersDiscovery(MembersXml membersXml)
         {
+
             string perspective = null, dimension = null, hierarchy = null, level = null, set=null;
             MembersDiscoveryRequest disco = null;
 
             if (membersXml.Item == null)
                 throw new ArgumentNullException();
 
+            if (!(membersXml.Item is DatabaseModelItemXml))
+                throw new ArgumentException();
+
             if (!(membersXml.Item is HierarchyXml || membersXml.Item is LevelXml || membersXml.Item is SetXml))
-            {
                 throw new ArgumentOutOfRangeException();
+
+            var item = membersXml.Item as DatabaseModelItemXml;
+
+            if (item is HierarchyXml)
+            {
+                perspective = ((HierarchyXml)item).Perspective;
+                dimension = ((HierarchyXml)item).Dimension;
+                hierarchy = item.Caption;
             }
 
-            if (membersXml.Item is HierarchyXml)
+            if (item is LevelXml)
             {
-                perspective = ((HierarchyXml)membersXml.Item).Perspective;
-                dimension = ((HierarchyXml)membersXml.Item).Dimension;
-                hierarchy = membersXml.Item.Caption;
+                perspective = ((LevelXml)item).Perspective;
+                dimension = ((LevelXml)item).Dimension;
+                hierarchy = ((LevelXml)item).Hierarchy;
+                level = item.Caption;
             }
-            if (membersXml.Item is LevelXml)
-            {
-                perspective = ((LevelXml)membersXml.Item).Perspective;
-                dimension = ((LevelXml)membersXml.Item).Dimension;
-                hierarchy = ((LevelXml)membersXml.Item).Hierarchy;
-                level = membersXml.Item.Caption;
-            }
-            if (membersXml.Item is HierarchyXml || membersXml.Item is LevelXml)
+            if (item is HierarchyXml || item is LevelXml)
             {
                 disco = discoveryFactory.Build(
-                    membersXml.Item.GetConnectionString(),
+                    item.GetConnectionString(),
                     membersXml.ChildrenOf,
                     membersXml.Exclude.Items,
                     BuildPatterns(membersXml.Exclude.Patterns),
@@ -90,13 +95,13 @@ namespace NBi.NUnit.Builder
                     level);
             }
                 
-            if (membersXml.Item is SetXml)
+            if (item is SetXml)
             {
-                perspective = ((SetXml)membersXml.Item).Perspective;
-                set = membersXml.Item.Caption;
+                perspective = ((SetXml)item).Perspective;
+                set = item.Caption;
 
                 disco = discoveryFactory.Build(
-                    membersXml.Item.GetConnectionString(),
+                    item.GetConnectionString(),
                     membersXml.Exclude.Items,
                     BuildPatterns(membersXml.Exclude.Patterns),
                     perspective,

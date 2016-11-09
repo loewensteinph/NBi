@@ -30,26 +30,30 @@ namespace NBi.NUnit.Builder
         {
             var commandBuilder = new CommandBuilder();
 
-            var connectionString = executionXml.Item.GetConnectionString();
-            var commandText = (executionXml.Item as QueryableXml).GetQuery();
+            var item = executionXml.Item as QueryableXml;
+            if (item == null)
+                throw new ArgumentException();
+
+            var connectionString = item.GetConnectionString();
+            var commandText = item.GetQuery();
 
             IEnumerable<IQueryParameter> parameters=null;
             IEnumerable<IQueryTemplateVariable> variables = null;
-            if (executionXml.BaseItem is QueryXml)
+            if (executionXml.Item is QueryXml)
             { 
-                parameters = ((QueryXml)executionXml.BaseItem).GetParameters();
-                variables = ((QueryXml)executionXml.BaseItem).GetVariables();
+                parameters = ((QueryXml)executionXml.Item).GetParameters();
+                variables = ((QueryXml)executionXml.Item).GetVariables();
             }
-            if (executionXml.BaseItem is ReportXml)
+            if (executionXml.Item is ReportXml)
             {
-                parameters = ((ReportXml)executionXml.BaseItem).GetParameters();
+                parameters = ((ReportXml)executionXml.Item).GetParameters();
             }
             var cmd = commandBuilder.Build(connectionString, commandText, parameters, variables);
             cmd.CommandTimeout = (int) Math.Ceiling((executionXml.Item as QueryableXml).Timeout/1000.0);
 
-            if (executionXml.BaseItem is ReportXml)
+            if (executionXml.Item is ReportXml)
             {
-                cmd.CommandType = ((ReportXml)executionXml.BaseItem).GetCommandType();
+                cmd.CommandType = ((ReportXml)executionXml.Item).GetCommandType();
             }
 
             return cmd;

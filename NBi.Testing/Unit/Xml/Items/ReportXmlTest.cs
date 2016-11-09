@@ -65,8 +65,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report, Is.Not.Null);
             Assert.That(report.Source, Is.EqualTo(@"Data Source=(local)\SQL2012;Initial Catalog=ReportServer;Integrated Security=True;"));
@@ -85,8 +85,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report.GetConnectionString(), Is.EqualTo(@"Data Source=mhknbn2kdz.database.windows.net;Initial Catalog=AdventureWorks2012;User Id=sqlfamily;password=sqlf@m1ly"));
         }
@@ -100,8 +100,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report.Parameters, Is.Not.Null);
             Assert.That(report.Parameters, Has.Count.EqualTo(2));
@@ -116,8 +116,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report, Is.Not.Null);
             Assert.That(report.Source, Is.EqualTo(@"http://reports.com/reports"));
@@ -136,8 +136,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report, Is.Not.Null);
             Assert.That(report.Source, Is.EqualTo(@"http://new.reports.com/reports"));
@@ -156,8 +156,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<ReportXml>());
-            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<ReportXml>());
+            var report = (ReportXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(report, Is.Not.Null);
             Assert.That(report.Source, Is.EqualTo(@"http://new.reports.com/reports"));

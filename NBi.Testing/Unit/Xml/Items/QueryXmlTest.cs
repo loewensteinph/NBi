@@ -64,8 +64,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<QueryXml>());
-            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<QueryXml>());
+            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(query, Is.Not.Null);
             Assert.That(query.Parameters, Has.Count.EqualTo(0));
@@ -79,7 +79,7 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(query.GetQuery(), Is.StringContaining("select myColumn from myTable where myFirstField=@FirstField and 1=@NonEmpty"));
 
@@ -102,7 +102,7 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(query.Parameters, Is.Not.Null);
             Assert.That(query.Parameters, Is.Not.Empty);
@@ -119,7 +119,7 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(query.Parameters, Is.Not.Null);
             Assert.That(query.Parameters, Is.Not.Empty);
@@ -137,7 +137,7 @@ namespace NBi.Testing.Unit.Xml.Items
             // Create an instance of the XmlSerializer specifying type and namespace.
             TestSuiteXml ts = DeserializeSample();
 
-            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            var query = (QueryXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(query.Timeout, Is.EqualTo(60000));
         }

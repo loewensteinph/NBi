@@ -7,7 +7,7 @@ using NBi.Core.ResultSet;
 
 namespace NBi.Xml.Items.ResultSet
 {
-    public class ResultSetXml : BaseItem
+    public class ResultSetXml : ConnectionItemXml
     {
         [XmlElement("row")]
         public List<RowXml> _rows { get; set; }

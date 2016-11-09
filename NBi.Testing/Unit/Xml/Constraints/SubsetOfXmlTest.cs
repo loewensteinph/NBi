@@ -78,7 +78,7 @@ namespace NBi.Testing.Unit.Xml.Constraints
 
             var members = ((SubsetOfXml)ts.Tests[testNr].Constraints[0]).Members;
             Assert.That(members.ChildrenOf, Is.EqualTo("All"));
-            Assert.That(((HierarchyXml)(members.BaseItem)).Caption, Is.EqualTo("myHierarchy"));
+            Assert.That(((HierarchyXml)(members.Item)).Caption, Is.EqualTo("myHierarchy"));
         }
     }
 }

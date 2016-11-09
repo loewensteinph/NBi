@@ -37,7 +37,7 @@ namespace NBi.Testing.Unit.Xml.Constraints
             Assert.That(ts.Tests[testNr].Constraints[0], Is.TypeOf<LinkedToXml>());
             var ctr = (LinkedToXml)ts.Tests[testNr].Constraints[0];
             Assert.That(ctr.Item, Is.TypeOf<MeasureGroupXml>());
-            Assert.That(ctr.Item.Caption, Is.EqualTo("measure-group"));
+            Assert.That(((MeasureGroupXml)ctr.Item).Caption, Is.EqualTo("measure-group"));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace NBi.Testing.Unit.Xml.Constraints
             Assert.That(ts.Tests[testNr].Constraints[0], Is.TypeOf<LinkedToXml>());
             var ctr = (LinkedToXml)ts.Tests[testNr].Constraints[0];
             Assert.That(ctr.Item, Is.TypeOf<DimensionXml>());
-            Assert.That(ctr.Item.Caption, Is.EqualTo("dimension"));
+            Assert.That(((DimensionXml)ctr.Item).Caption, Is.EqualTo("dimension"));
         }
 
     }

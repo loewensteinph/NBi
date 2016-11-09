@@ -57,9 +57,11 @@ namespace NBi.Testing.Unit.NUnit.Builder
         {
             //Buiding object used during test
             var sutXml = new StructureXml();
-            sutXml.Item = new MeasureGroupsXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((MeasureGroupsXml)sutXml.Item).Perspective = "Perspective";
+            sutXml.Item = new MeasureGroupsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective"
+            };
 
             var ctrXml = new EquivalentToXml();
             ctrXml.Items.Add("Search");
@@ -92,8 +94,10 @@ namespace NBi.Testing.Unit.NUnit.Builder
 
             var sutXml = new StructureXml();
 
-            sutXml.Item = new MeasureGroupsXml();
-            ((MeasureGroupsXml)sutXml.Item).Perspective = "Perspective";
+            sutXml.Item = new MeasureGroupsXml()
+            {
+                Perspective = "Perspective"
+            };
 
             sutXml.Default = new DefaultXml() { ConnectionString = ConnectionStringReader.GetAdomd() };
 
@@ -120,8 +124,10 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new PerspectivesXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
+            sutXml.Item = new PerspectivesXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd()
+            };
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -143,9 +149,11 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new MeasureGroupsXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((MeasureGroupsXml)sutXml.Item).Perspective = "Perspective";
+            sutXml.Item = new MeasureGroupsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective"
+            };
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             //Call the method to test
@@ -164,9 +172,11 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new MeasureGroupsXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((MeasureGroupsXml)sutXml.Item).Perspective = "Perspective";
+            sutXml.Item = new MeasureGroupsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective"
+            };
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -190,10 +200,12 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new MeasuresXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((MeasuresXml)sutXml.Item).Perspective = "Perspective";
-            ((MeasuresXml)sutXml.Item).MeasureGroup = "MeasureGroup";
+            sutXml.Item = new MeasuresXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective",
+                MeasureGroup = "MeasureGroup"
+            };
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -215,10 +227,11 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            var dim = new DimensionsXml();
-            dim.ConnectionString = ConnectionStringReader.GetAdomd();
-            dim.Perspective = "Perspective";
-            sutXml.Item = dim;
+            sutXml.Item = new DimensionsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective"
+            };
 
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
@@ -246,9 +259,11 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new DimensionsXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((DimensionsXml)sutXml.Item).Perspective = "Perspective";
+            sutXml.Item = new DimensionsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective"
+            };
 
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
@@ -274,11 +289,14 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new LevelsXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((LevelsXml)sutXml.Item).Perspective = "Perspective";
-            ((LevelsXml)sutXml.Item).Dimension = "Dimension";
-            ((LevelsXml)sutXml.Item).Hierarchy = "Hierarchy";
+            sutXml.Item = new LevelsXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective",
+                Dimension = "Dimension",
+                Hierarchy = "Hierarchy"
+            };
+
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -301,12 +319,14 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new PropertiesXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((PropertiesXml)sutXml.Item).Perspective = "Perspective";
-            ((PropertiesXml)sutXml.Item).Dimension = "Dimension";
-            ((PropertiesXml)sutXml.Item).Hierarchy = "Hierarchy";
-            ((PropertiesXml)sutXml.Item).Level = "Level";
+            sutXml.Item = new PropertiesXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective",
+                Dimension = "Dimension",
+                Hierarchy = "Hierarchy",
+                Level = "Level"
+            };
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -332,11 +352,14 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new MeasuresXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((IPerspectiveFilter)sutXml.Item).Perspective = "Perspective";
-            ((IMeasureGroupFilter)sutXml.Item).MeasureGroup = "MeasureGroup";
-            ((IDisplayFolderFilter)sutXml.Item).DisplayFolder = "DisplayFolder";
+            sutXml.Item = new MeasuresXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective",
+                MeasureGroup = "MeasureGroup",
+                DisplayFolder = "DisplayFolder"
+            };
+            
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();
@@ -370,11 +393,15 @@ namespace NBi.Testing.Unit.NUnit.Builder
             var ctrXml = ctrXmlStubFactory.Object;
 
             var sutXml = new StructureXml();
-            sutXml.Item = new PropertiesXml();
-            sutXml.Item.ConnectionString = ConnectionStringReader.GetAdomd();
-            ((IDimensionFilter)sutXml.Item).Dimension = "Dimension";
-            ((IHierarchyFilter)sutXml.Item).Hierarchy = "Hierarchy";
-            ((ILevelFilter)sutXml.Item).Level = "Level";
+            sutXml.Item = new PropertiesXml()
+            {
+                ConnectionString = ConnectionStringReader.GetAdomd(),
+                Perspective = "Perspective",
+                Dimension = "Dimension",
+                Hierarchy = "Hierarchy",
+                Level = "Level"
+            };
+
             var builder = new StructureEquivalentToBuilder();
             builder.Setup(sutXml, ctrXml);
             builder.Build();

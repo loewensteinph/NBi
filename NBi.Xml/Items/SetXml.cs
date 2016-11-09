@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items
 {
-    public class SetXml : AbstractMembersItem, IPerspectiveFilter
+    public class SetXml : DatabaseModelItemXml, IPerspectiveFilter
     {
         [XmlAttribute("perspective")]
         public string Perspective { get; set; }
@@ -19,14 +19,14 @@ namespace NBi.Xml.Items
             get { return "set"; }
         }
 
-        internal override Dictionary<string, string> GetRegexMatch()
+        public override Dictionary<string, string> GetRegexMatch()
         {
             var dico = base.GetRegexMatch();
             dico.Add("sut:perspective", Perspective);
             return dico;
         }
 
-        internal override ICollection<string> GetAutoCategories()
+        public override ICollection<string> GetAutoCategories()
         {
             var values = new List<string>();
             if (!string.IsNullOrEmpty(Perspective))

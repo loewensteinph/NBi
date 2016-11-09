@@ -6,25 +6,24 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items
 {
-    public class ReportParameterXml : AbstractItem
+    public class ReportParameterXml : ReportingModelItemXml
     {
-        
-        [XmlAttribute("path")]
-        public string Path { get; set; }
-
         [XmlAttribute("report")]
         public string Report { get; set; }
 
         [XmlAttribute("name")]
         public string Name { get; set; }
-        
+
+        [XmlAttribute("caption")]
+        public string Caption { get; set; }
+
         [XmlIgnore]
         public override string TypeName
         {
-            get { return "parameter"; }
+            get { return "report's parameter"; }
         }
 
-        internal override Dictionary<string, string> GetRegexMatch()
+        public override Dictionary<string, string> GetRegexMatch()
         {
             var dico = new Dictionary<string, string>();
             dico.Add("sut:caption", Caption);
@@ -32,7 +31,7 @@ namespace NBi.Xml.Items
             return dico;
         }
 
-        internal override ICollection<string> GetAutoCategories()
+        public override ICollection<string> GetAutoCategories()
         {
             var values = new List<string>();
             if (!string.IsNullOrEmpty(Path))

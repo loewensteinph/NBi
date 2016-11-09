@@ -66,8 +66,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<AssemblyXml>());
-            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<AssemblyXml>());
+            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(assembly, Is.Not.Null);
             Assert.That(assembly.Path, Is.EqualTo("NBi.Testing.dll"));
@@ -85,8 +85,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<AssemblyXml>());
-            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<AssemblyXml>());
+            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(assembly, Is.Not.Null);
             Assert.That(assembly.MethodParameters, Is.Not.Null);
@@ -105,8 +105,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<AssemblyXml>());
-            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<AssemblyXml>());
+            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(assembly, Is.Not.Null);
             Assert.That(assembly.MethodParameters, Is.Not.Null);
@@ -125,8 +125,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<AssemblyXml>());
-            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<AssemblyXml>());
+            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(assembly, Is.Not.Null);
             Assert.That(assembly.MethodParameters, Is.Not.Null);
@@ -145,8 +145,8 @@ namespace NBi.Testing.Unit.Xml.Items
             TestSuiteXml ts = DeserializeSample();
 
             Assert.That(ts.Tests[testNr].Systems[0], Is.TypeOf<ExecutionXml>());
-            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem, Is.TypeOf<AssemblyXml>());
-            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).BaseItem;
+            Assert.That(((ExecutionXml)ts.Tests[testNr].Systems[0]).Item, Is.TypeOf<AssemblyXml>());
+            var assembly = (AssemblyXml)((ExecutionXml)ts.Tests[testNr].Systems[0]).Item;
 
             Assert.That(assembly, Is.Not.Null);
             Assert.That(assembly.MethodParameters, Is.Not.Null);

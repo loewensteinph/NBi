@@ -11,24 +11,22 @@ namespace NBi.Xml.Systems
         XmlElement(Type = typeof(PropertyXml), ElementName = "property"),
         XmlElement(Type = typeof(ColumnXml), ElementName = "column"),
         ]
-        public AbstractItem Item { get; set; }
-
-        public override BaseItem BaseItem
-        {
-            get
-            {
-                return Item;
-            }
-        }
+        public override ModelItemXml Item { get; set; }
 
         internal override Dictionary<string, string> GetRegexMatch()
         {
-            return Item.GetRegexMatch();
+            if (Item is IAutoCategorize)
+                return ((IAutoCategorize)Item).GetRegexMatch();
+            else
+                return new Dictionary<string, string>();
         }
 
         public override ICollection<string> GetAutoCategories()
         {
-            var values = Item.GetAutoCategories();
+            ICollection<string> values = new List<string>();
+            if (Item is IAutoCategorize)
+                values = ((IAutoCategorize)Item).GetAutoCategories();
+            
             values.Add("Data-type");
             return values;
         }

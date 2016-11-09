@@ -38,11 +38,14 @@ namespace NBi.NUnit.Builder
 
         protected NBiConstraint InstantiateConstraint(LinkedToXml ctrXml)
         {
-            var ctr = new LinkedToConstraint(ctrXml.Item.Caption);
+            if (!(ctrXml.Item is DatabaseModelItemXml))
+                throw new ArgumentOutOfRangeException();
+
+            var ctr = new LinkedToConstraint(((DatabaseModelItemXml)ctrXml.Item).Caption);
             return ctr;
         }
 
-        protected override StructureDiscoveryCommand InstantiateCommand(AbstractItem item)
+        protected override StructureDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
         {
             var factory = discoveryProvider.Instantiate(item.GetConnectionString());
 
@@ -53,7 +56,7 @@ namespace NBi.NUnit.Builder
             return command;
         }
 
-        protected override Target BuildTarget(AbstractItem item)
+        protected override Target BuildTarget(ModelItemXml item)
         {
 
             if (item is MeasureGroupXml)
@@ -64,7 +67,7 @@ namespace NBi.NUnit.Builder
                 throw new ArgumentException(item.GetType().Name);
         }
 
-        protected override IEnumerable<IFilter> BuildFilters(AbstractItem item)
+        protected override IEnumerable<IFilter> BuildFilters(DatabaseModelItemXml item)
         {
             if (item is IPerspectiveFilter)
                 yield return new CaptionFilter(Target.Perspectives, ((IPerspectiveFilter)item).Perspective);

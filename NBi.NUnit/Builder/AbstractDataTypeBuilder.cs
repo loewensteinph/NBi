@@ -39,10 +39,13 @@ namespace NBi.NUnit.Builder
 
         protected virtual object InstantiateSystemUnderTest(DataTypeXml sutXml)
         {
-            return InstantiateCommand(sutXml.Item);
+            if (sutXml.Item is DatabaseModelItemXml)
+                return InstantiateCommand((DatabaseModelItemXml)sutXml.Item);
+            else
+                throw new ArgumentException();
         }
 
-        protected virtual IDataTypeDiscoveryCommand InstantiateCommand(AbstractItem item)
+        protected virtual IDataTypeDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
         {
             var factory = discoveryProvider.Instantiate(item.GetConnectionString());
 
@@ -53,7 +56,7 @@ namespace NBi.NUnit.Builder
             return command;
         }
 
-        protected virtual IEnumerable<CaptionFilter> BuildFilters(AbstractItem item)
+        protected virtual IEnumerable<CaptionFilter> BuildFilters(DatabaseModelItemXml item)
         {
             if (item is IPerspectiveFilter)
                 yield return new CaptionFilter(Target.Perspectives, ((IPerspectiveFilter)item).Perspective);
@@ -75,7 +78,7 @@ namespace NBi.NUnit.Builder
                 yield return new CaptionFilter(itselfTarget, item.Caption);
         }
 
-        protected virtual Target BuildTarget(AbstractItem item)
+        protected virtual Target BuildTarget(ModelItemXml item)
         {
             if (item is MeasureXml)
                 return Target.Measures;

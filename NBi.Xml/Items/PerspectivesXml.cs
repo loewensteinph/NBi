@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace NBi.Xml.Items
 {
 
-    public class PerspectivesXml : AbstractItem, IOwnerFilter
+    public class PerspectivesXml : DatabaseModelItemXml, IOwnerFilter
     {
         [XmlAttribute("owner")]
         public string Owner { get; set; }
@@ -18,7 +18,7 @@ namespace NBi.Xml.Items
             get { return "perspectives"; }
         }
 
-        internal override ICollection<string> GetAutoCategories()
+        public override ICollection<string> GetAutoCategories()
         {
             var values = new List<string>();
             values.Add("Perspectives");

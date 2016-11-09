@@ -100,7 +100,9 @@
     <Compile Include="Decoration\SetupXml.cs" />
     <Compile Include="Decoration\Command\CommandGroupXml.cs" />
     <Compile Include="GroupXml.cs" />
+    <Compile Include="IAutoCategorize.cs" />
     <Compile Include="InheritanceTestXml.cs" />
+    <Compile Include="Items\ReportingModelItemXml.cs" />
     <Compile Include="Items\ReportParametersXml.cs" />
     <Compile Include="Items\ReportParameterXml.cs" />
     <Compile Include="Items\ColumnXml.cs" />
@@ -160,8 +162,8 @@
     <Compile Include="Items\ResultSet\ResultSetXml.cs" />
     <Compile Include="Items\ResultSet\RowXml.cs" />
     <Compile Include="Constraints\OrderedXml.cs" />
-    <Compile Include="Items\AbstractItem.cs" />
-    <Compile Include="Items\AbstractMembersItem.cs" />
+    <Compile Include="Items\ModelItemXml.cs" />
+    <Compile Include="Items\DatabaseModelItemXml.cs" />
     <Compile Include="Items\BaseItem.cs" />
     <Compile Include="Items\QueryXml.cs" />
     <Compile Include="Items\Calculation\PredicateXml.cs" />
@@ -173,6 +175,7 @@
     <Compile Include="Items\Xml\XmlSourceXml.cs" />
     <Compile Include="Items\Xml\XPathXml.cs" />
     <Compile Include="LocalXmlUrlResolver.cs" />
+    <Compile Include="RootItemXml.cs" />
     <Compile Include="Settings\CsvProfileXml.cs" />
     <Compile Include="Settings\SettingsStandaloneXml.cs" />
     <Compile Include="Settings\TraitXml.cs" />

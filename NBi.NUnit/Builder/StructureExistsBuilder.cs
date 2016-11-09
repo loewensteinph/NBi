@@ -42,7 +42,7 @@ namespace NBi.NUnit.Builder
 
         protected NBiConstraint InstantiateConstraint(ExistsXml ctrXml, StructureXml sutXml)
         {
-            var expected = sutXml.Item.Caption;
+            var expected = ((DatabaseModelItemXml)sutXml.Item).Caption;
 
             var ctr = new ExistsConstraint(expected);
             //Ignore-case if requested

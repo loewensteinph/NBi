@@ -33,7 +33,7 @@ namespace NBi.Xml.Constraints
         }
         
         [XmlIgnore]
-        public virtual BaseItem BaseItem 
+        public virtual ConnectionItemXml BaseItem 
         { 
             get {return null;} 
         }

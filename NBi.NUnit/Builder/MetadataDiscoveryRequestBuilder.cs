@@ -101,7 +101,7 @@ namespace NBi.NUnit.Builder
             return filter;
         }
 
-        internal MetadataDiscoveryRequest Build(AbstractItem item, MetadataDiscoveryRequestType type)
+        internal MetadataDiscoveryRequest Build(DatabaseModelItemXml item, MetadataDiscoveryRequestType type)
         {
             var properties = new string[] { "Perspective", "Dimension", "Hierarchy", "Level", "Property", "MeasureGroup", "DisplayFolder", "Measure", "Table", "Column" };
 

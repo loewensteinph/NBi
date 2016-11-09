@@ -97,7 +97,7 @@ namespace NBi.Testing.Unit.NUnit.Builder
             itemXmlStubFactory.Setup(i => i.GetQuery()).Returns("query");
             itemXmlStubFactory.Setup(i => i.GetCommandType()).Returns(CommandType.StoredProcedure);
             sutXmlStubFactory.Setup(s => s.Item).Returns(itemXmlStubFactory.Object);
-            sutXmlStubFactory.Setup(s => s.BaseItem).Returns(itemXmlStubFactory.Object);
+            sutXmlStubFactory.Setup(s => s.Item).Returns(itemXmlStubFactory.Object);
             var sutXml = sutXmlStubFactory.Object;
             sutXml.Item = itemXmlStubFactory.Object;
 

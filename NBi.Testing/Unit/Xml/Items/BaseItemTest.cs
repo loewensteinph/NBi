@@ -8,7 +8,7 @@ namespace NBi.Testing.Unit.Xml.Items
     [TestFixture]
     public class BaseItemTest
     {
-        public class BaseItemTestable : BaseItem
+        public class BaseItemTestable : ConnectionItemXml
         {}
 
         [Test]
