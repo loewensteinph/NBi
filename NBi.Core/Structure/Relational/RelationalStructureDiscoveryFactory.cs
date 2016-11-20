@@ -1,4 +1,5 @@
-﻿using NBi.Core.Structure.Relational.Builders;
+﻿using NBi.Core.Model;
+using NBi.Core.Structure.Relational.Builders;
 using System;
 using System.Collections.Generic;
 using System.Data;

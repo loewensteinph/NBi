@@ -1,13 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NBi.Core.Model;
 using NBi.Core.Structure;
 
 namespace NBi.NUnit.Structure
 {
     internal class DescriptionStructureHelper
     {
-        public string GetFilterExpression(IEnumerable<CaptionFilter> filters)
+        public string GetFilterExpression(IEnumerable<ICaptionFilter> filters)
+        {
+            if (filters.Count() == 0)
+                return string.Empty;
+
+            if (filters.ElementAt(0) is Core.Structure.CaptionFilter)
+                return GetFilterExpression(filters as IEnumerable<Core.Structure.CaptionFilter>);
+
+            throw new ArgumentOutOfRangeException();
+        }
+
+        public string GetFilterExpression(IEnumerable<Core.Structure.CaptionFilter> filters)
         {
             var texts = new List<string>();
             foreach (var filter in filters)
@@ -45,6 +57,15 @@ namespace NBi.NUnit.Structure
             texts.Reverse();
             return string.Join(", ", texts.ToArray());
         }
+
+        public string GetTargetExpression(Enum target)
+        {
+            if (target is Target)
+                return GetTargetExpression((Target) target);
+
+            throw new ArgumentOutOfRangeException();
+        }
+
 
         public string GetTargetExpression(Target target)
         {
@@ -89,6 +110,14 @@ namespace NBi.NUnit.Structure
             }
 
             return text;
+        }
+
+        public string GetTargetPluralExpression(Enum target)
+        {
+            if (target is Target)
+                return GetTargetPluralExpression((Target)target);
+
+            throw new ArgumentOutOfRangeException();
         }
 
         public string GetTargetPluralExpression(Target target)
@@ -136,6 +165,8 @@ namespace NBi.NUnit.Structure
             return text;
         }
 
+
+
         public string GetNextTargetExpression(Target target)
         {
             var text = string.Empty;
@@ -161,6 +192,14 @@ namespace NBi.NUnit.Structure
             }
 
             return text;
+        }
+
+        public string GetNextTargetPluralExpression(Enum target)
+        {
+            if (target is Target)
+                return GetNextTargetPluralExpression((Target)target);
+
+            throw new ArgumentOutOfRangeException();
         }
 
         public string GetNextTargetPluralExpression(Target target)

@@ -13,10 +13,7 @@ namespace NBi.Xml.Items
 
         [XmlIgnore]
         protected override string ParentPath { get { return string.Format("[{0}].[{1}].[{2}]", Dimension, Hierarchy, Level); } }
-
-        [XmlIgnore]
-        protected override string Path { get { return string.Format("{0}.[{1}]", ParentPath, Caption); } }
-
+        
         [XmlIgnore]
         public override string TypeName
         {

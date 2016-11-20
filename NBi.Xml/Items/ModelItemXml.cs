@@ -7,10 +7,5 @@ namespace NBi.Xml.Items
 {
     abstract public class ModelItemXml : RootItemXml
     {
-        
-
-        
-
-        
     }
 }

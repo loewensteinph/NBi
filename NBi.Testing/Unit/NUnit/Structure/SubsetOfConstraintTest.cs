@@ -2,7 +2,7 @@
 using Moq;
 using NBi.NUnit.Structure;
 using NUnit.Framework;
-using NBi.Core.Structure.Olap;
+using NBi.Core.Model;
 using NBi.Core.Structure;
 
 namespace NBi.Testing.Unit.NUnit.Structure
@@ -25,7 +25,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual level 1", "Actual level 2", "Actual level 3" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 

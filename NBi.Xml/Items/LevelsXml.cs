@@ -18,9 +18,6 @@ namespace NBi.Xml.Items
         protected virtual string ParentPath { get { return string.Format("[{0}].[{1}]", Dimension, Hierarchy); } }
 
         [XmlIgnore]
-        protected override string Path { get { return string.Format("{0}.[{1}]", ParentPath, Caption); } }
-
-        [XmlIgnore]
         public override string TypeName
         {
             get { return "levels"; }

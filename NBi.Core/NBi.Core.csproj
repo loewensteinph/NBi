@@ -229,6 +229,9 @@
     <Compile Include="Members\Ranges\IRange.cs" />
     <Compile Include="Members\Ranges\IRangeMembersBuilder.cs" />
     <Compile Include="Members\Ranges\RangeMembersFactory.cs" />
+    <Compile Include="Model\ICaptionFilter.cs" />
+    <Compile Include="Model\ICommandDescription.cs" />
+    <Compile Include="Model\IModelDiscoveryCommand.cs" />
     <Compile Include="OfficeDataConnectionFileParser.cs" />
     <Compile Include="PowerBiDesktop\PowerBiDesktopConnectionStringBuilder.cs" />
     <Compile Include="PowerBiDesktop\ProcessExtensions.cs" />
@@ -246,12 +249,19 @@
     <Compile Include="Query\DbTypeBuilder.cs" />
     <Compile Include="Query\IQueryParameter.cs" />
     <Compile Include="Query\IQueryTemplateVariable.cs" />
+    <Compile Include="Report\CaptionFilter.cs" />
+    <Compile Include="Report\CommandDescription.cs" />
+    <Compile Include="Model\IFilter.cs" />
+    <Compile Include="Report\IReportingModelDiscoveryFactory.cs" />
     <Compile Include="Report\IReportParser.cs" />
     <Compile Include="Report\IReportParserFactory.cs" />
+    <Compile Include="Report\ReportingModelDiscoveryFactoryProvider.cs" />
     <Compile Include="Report\Request\IReport.cs" />
     <Compile Include="Report\ReportParserFactory.cs" />
     <Compile Include="Report\Result\ReportCommand.cs" />
     <Compile Include="Report\Result\ReportParameter.cs" />
+    <Compile Include="Report\Target.cs" />
+    <Compile Include="Report\TargetType.cs" />
     <Compile Include="ResultSet\Comparer\ComparerFactory.cs" />
     <Compile Include="ResultSet\Comparer\DateTimeToleranceFactory.cs" />
     <Compile Include="ResultSet\Comparer\NumericBoundedPercentageTolerance.cs" />
@@ -337,8 +347,8 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="StringTemplateEngine.cs" />
     <Compile Include="DataManipulation\SqlServer\TruncateCommand.cs" />
+    <Compile Include="Structure\CaptionFilter.cs" />
     <Compile Include="Structure\IDiscoveryCommandBuilder.cs" />
-    <Compile Include="Structure\IFilter.cs" />
     <Compile Include="Structure\IValueFilter.cs" />
     <Compile Include="Structure\Olap\Builders\DimensionRelationDiscoveryCommandBuilder.cs" />
     <Compile Include="Structure\Olap\Builders\MeasureGroupRelationDiscoveryCommandBuilder.cs" />
@@ -361,7 +371,6 @@
     <Compile Include="Structure\Tabular\Builders\SchemaDiscoveryCommandBuilder.cs" />
     <Compile Include="Structure\Olap\DistinctOlapCommand.cs" />
     <Compile Include="Structure\CommandDescription.cs" />
-    <Compile Include="Structure\IStructureDiscoveryCommand.cs" />
     <Compile Include="Structure\IStructureDiscoveryFactory.cs" />
     <Compile Include="Structure\Olap\OlapCommand.cs" />
     <Compile Include="Structure\Olap\OlapRow.cs" />
@@ -380,7 +389,6 @@
     <Compile Include="Structure\Olap\Builders\PerspectiveDiscoveryCommandBuilder.cs" />
     <Compile Include="Structure\Olap\PostFilters\DisplayFolder.cs" />
     <Compile Include="Structure\Olap\IDisplayFolder.cs" />
-    <Compile Include="Structure\CaptionFilter.cs" />
     <Compile Include="Structure\Olap\OlapStructureDiscoveryFactory.cs" />
     <Compile Include="Structure\ICommandFilter.cs" />
     <Compile Include="Structure\IPostCommandFilter.cs" />

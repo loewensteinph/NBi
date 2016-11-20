@@ -1,5 +1,6 @@
 ﻿#region Using directives
 using NBi.Core.Structure;
+using NBi.Core.SqlServer.ReportingService;
 using NBi.NUnit.Builder;
 using NBi.NUnit.Structure;
 using NBi.Xml.Constraints;
@@ -82,6 +83,26 @@ namespace NBi.Testing.Unit.NUnit.Builder
         }
 
         [Test]
+        public void GetSystemUnderTest_ReportParameter_CorrectSystemUnderTest()
+        {
+            var sutXml = new StructureXml();
+            var item = new ReportParameterXml();
+            sutXml.Item = item;
+            item.ConnectionString = ConnectionStringReader.GetAdomd();
+            item.Path = "/folder/sub-folder";
+            item.Report = "report";
+            item.Caption = "parameter ?";
+            var ctrXml = new ExistsXml();
+
+            var builder = new StructureExistsBuilder();
+            builder.Setup(sutXml, ctrXml);
+            builder.Build();
+            var sut = builder.GetSystemUnderTest();
+
+            Assert.That(sut, Is.InstanceOf<ReportingModelDiscoveryCommand>());
+        }
+
+        [Test]
         public void GetConstraint_BuildWithIgnoreCase_ComparerCaseInsensitive()
         {
             var sutXml = new StructureXml();
@@ -122,6 +143,27 @@ namespace NBi.Testing.Unit.NUnit.Builder
             Assert.That(existsCtr.Comparer, Is.InstanceOf<Comparer>());
             Assert.That(existsCtr.Comparer.Compare("c", "C"), Is.Not.EqualTo(0));
         }
-        
+
+        [Test]
+        public void GetConstraintReportParameter_Build_CorrectConstraint()
+        {
+            var sutXml = new StructureXml();
+            var item = new ReportParameterXml();
+            item.ConnectionString = ConnectionStringReader.GetReportServerDatabase();
+            
+            item.Path = "/folder";
+            item.Report = "report-name";
+            item.Caption = "report-caption ?";
+            sutXml.Item = item;
+            var ctrXml = new ExistsXml();
+
+            var builder = new StructureExistsBuilder();
+            builder.Setup(sutXml, ctrXml);
+            builder.Build();
+            var ctr = builder.GetConstraint();
+
+            Assert.That(ctr, Is.InstanceOf<ExistsConstraint>());
+        }
+
     }
 }

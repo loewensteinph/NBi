@@ -8,14 +8,14 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 
-namespace NBi.Core.SqlServer.ReportingService
+namespace NBi.Core.SqlServer.ReportingService.DiskFile
 {
-    class FileParser : IReportParser
+    class QueryFileParser : IReportParser
     {
         public string ReportPath { get; private set; }
         public string ReportName { get; private set; }
 
-        public FileParser(string reportPath, string reportName)
+        public QueryFileParser(string reportPath, string reportName)
         {
             this.ReportPath = reportPath;
             this.ReportName = reportName;

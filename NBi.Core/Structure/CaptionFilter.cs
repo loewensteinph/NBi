@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NBi.Core.Model;
 
 namespace NBi.Core.Structure
 {
-    public class CaptionFilter : IFilter
+    public class CaptionFilter : ICaptionFilter
     {
-        public Target Target { get; private set; }
-        public string Caption { get; private set; }
+        private readonly string caption;
+        private readonly Target target;
+
+        public Target Target { get { return target; } }
+        public Enum UntypedTarget { get { return target; } }
+        public string Caption { get { return caption; } }
 
         public CaptionFilter(Target target, string caption)
         {
-            Target = target;
-            Caption = caption;
+            this.target = target;
+            this.caption = caption;
         }
     }
 }

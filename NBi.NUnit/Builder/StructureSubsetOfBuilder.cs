@@ -15,10 +15,7 @@ namespace NBi.NUnit.Builder
         {
         }
 
-        internal StructureSubsetOfBuilder(StructureDiscoveryFactoryProvider provider)
-            : base(provider)
-        {
-        }
+        
 
         protected override void SpecificSetup(AbstractSystemUnderTestXml sutXml, AbstractConstraintXml ctrXml)
         {

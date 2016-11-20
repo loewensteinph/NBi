@@ -9,15 +9,15 @@ using System.Reflection;
 using NBi.Core.Report.Request;
 using NBi.Core.Report.Result;
 
-namespace NBi.Core.SqlServer.ReportingService
+namespace NBi.Core.SqlServer.ReportingService.Database
 {
-    public class DatabaseParser : IReportParser
+    public class QueryDatabaseParser : IReportParser
     {
         private readonly string connectionString;
         private readonly string reportPath;
         public string ReportName { get; private set; }
 
-        public DatabaseParser(string connectionString, string reportPath, string reportName)
+        public QueryDatabaseParser(string connectionString, string reportPath, string reportName)
         {
             this.connectionString = connectionString;
             this.reportPath = reportPath;
@@ -197,7 +197,7 @@ namespace NBi.Core.SqlServer.ReportingService
         {
             var value = string.Empty;
             using (Stream stream = Assembly.GetExecutingAssembly()
-                                           .GetManifestResourceStream("NBi.Core.SqlServer.ReportingService" + name + ".sql"))
+                                           .GetManifestResourceStream("NBi.Core.SqlServer.ReportingService.Database.Resources." + name + ".sql"))
             using (StreamReader reader = new StreamReader(stream))
             {
                 value = reader.ReadToEnd();

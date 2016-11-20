@@ -13,9 +13,9 @@ namespace NBi.Core.SqlServer.ReportingService
         public IReportParser Get(IReport request)
         {
             if (string.IsNullOrWhiteSpace(request.Source))
-                return new FileParser(request.Path, request.Name.EndsWith(".rdl") ? request.Name : request.Name + ".rdl");
+                return new DiskFile.QueryFileParser(request.Path, request.Name.EndsWith(".rdl") ? request.Name : request.Name + ".rdl");
             else
-                return new DatabaseParser(request.Source, request.Path, request.Name);
+                return new Database.QueryDatabaseParser(request.Source, request.Path, request.Name);
         }
     }
 }

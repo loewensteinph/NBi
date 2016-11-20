@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace NBi.Xml.Items
 {
 
-    public class PerspectivesXml : DatabaseModelItemXml, IOwnerFilter
+    public class PerspectivesXml : DatabaseModelItemXml, IOwnerFilter, IModelCollectionItemXml
     {
         [XmlAttribute("owner")]
         public string Owner { get; set; }

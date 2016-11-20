@@ -6,12 +6,12 @@ using NBi.Core.Report;
 using NUnit.Framework;
 using System.Data;
 using NBi.Core.Report.Request;
-using NBi.Core.SqlServer.ReportingService;
+using NBi.Core.SqlServer.ReportingService.DiskFile;
 
-namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
+namespace NBi.Testing.Unit.Core.SqlServer.ReportingService.DiskFile
 {
     [TestFixture]
-    public class FileParserTest
+    public class QueryFileParserTest
     {
 
         private string ReportFileDirectory { get; set; }
@@ -71,7 +71,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_ExistingReportAndDataSet_CorrectQueryReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Currency_List.rdl");
+            var parser = new QueryFileParser(ReportFileDirectory, "Currency_List.rdl");
             var query = parser.ExtractQuery("Currency");
 
             Assert.That(query.Text,
@@ -84,7 +84,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingDataSetOneExisting_CorrectExceptionReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Currency_List.rdl");
+            var parser = new QueryFileParser(ReportFileDirectory, "Currency_List.rdl");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("Non Existing"));
             Assert.That(ex.Message, Is.StringContaining("'Currency'"));
         }
@@ -92,7 +92,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingDataSetMoreThanOneExisting_CorrectExceptionReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Currency_Rates.rdl");
+            var parser = new QueryFileParser(ReportFileDirectory, "Currency_Rates.rdl");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("Non Existing"));
             Assert.That(ex.Message, Is.StringContaining("DataSet1").And.StringContaining("DataSet2"));
         }
@@ -100,7 +100,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingReport_CorrectExceptionReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Not Existing");
+            var parser = new QueryFileParser(ReportFileDirectory, "Not Existing");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("DataSet1"));
             Assert.That(ex.Message, Is.StringContaining("No report found"));
         }
@@ -108,7 +108,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_ExistingReportAndSharedDataSet_CorrectQueryReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Employee_Sales_Summary.rdl");
+            var parser = new QueryFileParser(ReportFileDirectory, "Employee_Sales_Summary.rdl");
             var query = parser.ExtractQuery("SalesEmployees2008R2");
 
             Assert.That(query.Text,
@@ -121,7 +121,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService
         [Test]
         public void ExtractSProc_ExistingReport_CorrectSProcReturned()
         {
-            var parser = new FileParser(ReportFileDirectory, "Currency_List - SProc.rdl");
+            var parser = new QueryFileParser(ReportFileDirectory, "Currency_List - SProc.rdl");
             var query = parser.ExtractQuery("Currency");
 
             Assert.That(query.Text,

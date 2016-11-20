@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using NBi.Core.Model;
 using NBi.Core.Structure;
+using NBi.Core.Report;
 using NBi.Xml.Constraints;
 using NBi.Xml.Items;
 using NBi.Xml.Systems;
@@ -13,17 +15,12 @@ namespace NBi.NUnit.Builder
     abstract class AbstractStructureBuilder : AbstractTestCaseBuilder
     {
         protected StructureXml SystemUnderTestXml { get; set; }
-        protected readonly StructureDiscoveryFactoryProvider discoveryProvider;
 
         public AbstractStructureBuilder()
         {
-            discoveryProvider = new StructureDiscoveryFactoryProvider();
         }
 
-        internal AbstractStructureBuilder(StructureDiscoveryFactoryProvider discoveryProvider)
-        {
-            this.discoveryProvider = discoveryProvider;
-        }
+        
 
         protected override void BaseSetup(AbstractSystemUnderTestXml sutXml, AbstractConstraintXml ctrXml)
         {
@@ -40,83 +37,47 @@ namespace NBi.NUnit.Builder
 
         protected virtual object InstantiateSystemUnderTest(StructureXml sutXml)
         {
-            if (!(sutXml.Item is DatabaseModelItemXml))
+            if (sutXml.Item is DatabaseModelItemXml)
+                return InstantiateCommand((DatabaseModelItemXml)sutXml.Item);
+            else if (sutXml.Item is ReportingModelItemXml)
+                return InstantiateCommand((ReportingModelItemXml)sutXml.Item);
+            else 
                 throw new ArgumentOutOfRangeException();
 
-            return InstantiateCommand((DatabaseModelItemXml)sutXml.Item);
+            
         }
 
-        protected virtual StructureDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
+        protected virtual IModelDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
         {
-            var factory = discoveryProvider.Instantiate(item.GetConnectionString());
+            var provider = new StructureDiscoveryFactoryProvider();
+            var factory = provider.Instantiate(item.GetConnectionString());
 
-            var target = BuildTarget(item);
-            var filters = BuildFilters(item);
+            var modelFilterBuilder = new FilterObjectDatabaseModelBuilder();
+            modelFilterBuilder.Setup(item);
+            modelFilterBuilder.Build();
 
-            var command = factory.Instantiate(target, TargetType.Object, filters);
+            var target = modelFilterBuilder.GetTarget();
+            var filters = modelFilterBuilder.GetFilters();
+
+            var command = factory.Instantiate(target, Core.Structure.TargetType.Object, filters);
             return command;
         }
 
-        protected virtual IEnumerable<IFilter> BuildFilters(DatabaseModelItemXml item)
+
+        protected virtual IModelDiscoveryCommand InstantiateCommand(ReportingModelItemXml item)
         {
-            if (item is IPerspectiveFilter)
-                yield return new CaptionFilter(Target.Perspectives, ((IPerspectiveFilter)item).Perspective);
-            if (item is IDimensionFilter)
-                yield return new CaptionFilter(Target.Dimensions, ((IDimensionFilter)item).Dimension);
-            if (item is IHierarchyFilter)
-                yield return new CaptionFilter(Target.Hierarchies, ((IHierarchyFilter)item).Hierarchy);
-            if (item is ILevelFilter)
-                yield return new CaptionFilter(Target.Levels, ((ILevelFilter)item).Level);
-            if (item is IMeasureGroupFilter && !(string.IsNullOrEmpty(((IMeasureGroupFilter)item).MeasureGroup)))
-                yield return new CaptionFilter(Target.MeasureGroups, ((IMeasureGroupFilter)item).MeasureGroup);
-            if (item is IDisplayFolderFilter && !(string.IsNullOrEmpty(((IDisplayFolderFilter)item).DisplayFolder)))
-                yield return new CaptionFilter(Target.DisplayFolders, ((IDisplayFolderFilter)item).DisplayFolder);
+            var provider = new ReportingModelDiscoveryFactoryProvider();
+            var factory = provider.Instantiate(item.ConnectionString);
 
-            if (item is ITableFilter)
-                yield return new CaptionFilter(Target.Tables, ((ITableFilter)item).Table);
-            if (item is IRoutineFilter)
-                yield return new CaptionFilter(Target.Routines, ((IRoutineFilter)item).Routine);
-            if (item is IResultFilter && ((IResultFilter)item).IsResult != IsResultOption.Unspecified)
-                yield return new IsResultFilter(((IResultFilter)item).IsResult == IsResultOption.Yes);
-            if (item is IParameterDirectionFilter && ((IParameterDirectionFilter)item).Direction != ParameterDirectionOption.Unspecified)
-                yield return new ParameterDirectionFilter(((IParameterDirectionFilter)item).Direction.ToString());
-            if (item is IOwnerFilter && (!string.IsNullOrEmpty((item as IOwnerFilter).Owner)))
-                yield return new OwnerFilter(((IOwnerFilter)item).Owner);
+            var modelFilterBuilder = new FilterObjectReportModelBuilder();
+            modelFilterBuilder.Setup(item);
+            modelFilterBuilder.Build();
 
-            var itselfTarget = BuildTarget(item);
-            if (!string.IsNullOrEmpty(item.Caption))
-                yield return new CaptionFilter(itselfTarget, item.Caption);
-        }
+            var target = modelFilterBuilder.GetTarget();
+            var filters = modelFilterBuilder.GetFilters();
 
-        protected virtual Target BuildTarget(ModelItemXml item)
-        {
-
-            if (item is MeasuresXml || item is MeasureXml)
-                return Target.Measures;
-            if (item is MeasureGroupsXml || item is MeasureGroupXml)
-                return Target.MeasureGroups;
-            if (item is ColumnsXml || item is ColumnXml)
-                return Target.Columns;
-            if (item is TablesXml || item is TableXml)
-                return Target.Tables;
-            if (item is PropertiesXml || item is PropertyXml)
-                return Target.Properties;
-            if (item is LevelsXml || item is LevelXml)
-                return Target.Levels;
-            if (item is HierarchiesXml || item is HierarchyXml)
-                return Target.Hierarchies;
-            if (item is DimensionsXml || item is DimensionXml)
-                return Target.Dimensions;
-            if (item is SetsXml || item is SetXml)
-                return Target.Sets;
-            if (item is RoutineParametersXml || item is RoutineParameterXml)
-                return Target.Parameters;
-            if (item is RoutinesXml || item is RoutineXml)
-                return Target.Routines;
-            if (item is PerspectivesXml || item is PerspectiveXml)
-                return Target.Perspectives;
-            else
-                throw new ArgumentException(item.GetType().Name);
+            var command = factory.Instantiate(target, Core.Report.TargetType.Object, filters);
+            return command;
         }
 
     }

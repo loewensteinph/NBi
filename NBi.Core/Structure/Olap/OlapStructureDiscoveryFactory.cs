@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using NBi.Core.Structure.Olap.Builders;
 using NBi.Core.Structure;
 using NBi.Core.Structure.Tabular.Builders;
+using NBi.Core.Model;
 
 namespace NBi.Core.Structure.Olap
 {

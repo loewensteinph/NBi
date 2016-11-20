@@ -68,6 +68,9 @@
     <Compile Include="Builder\AbstractExecutionBuilder.cs" />
     <Compile Include="Builder\AbstractStructureBuilder.cs" />
     <Compile Include="Builder\AbstractExecutionNonQueryBuilder.cs" />
+    <Compile Include="Builder\FilterObjectReportModelBuilder.cs" />
+    <Compile Include="Builder\FilterRelationDatabaseModelBuilder.cs" />
+    <Compile Include="Builder\FilterObjectDatabaseModelBuilder.cs" />
     <Compile Include="Builder\ExecutionNoRowsBuilder.cs" />
     <Compile Include="Builder\ExecutionAllRowsBuilder.cs" />
     <Compile Include="Builder\ExecutionRowCountBuilder.cs" />

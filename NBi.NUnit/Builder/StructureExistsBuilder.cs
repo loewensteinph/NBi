@@ -17,10 +17,7 @@ namespace NBi.NUnit.Builder
         {
         }
 
-        internal StructureExistsBuilder(StructureDiscoveryFactoryProvider discoveryProvider)
-            : base(discoveryProvider)
-        {
-        }
+        
 
         protected override void SpecificSetup(AbstractSystemUnderTestXml sutXml, AbstractConstraintXml ctrXml)
         {
@@ -42,7 +39,10 @@ namespace NBi.NUnit.Builder
 
         protected NBiConstraint InstantiateConstraint(ExistsXml ctrXml, StructureXml sutXml)
         {
-            var expected = ((DatabaseModelItemXml)sutXml.Item).Caption;
+            if (!(sutXml.Item is IModelSingleItemXml))
+                throw new ArgumentException();
+
+            var expected = ((IModelSingleItemXml)sutXml.Item).Caption;
 
             var ctr = new ExistsConstraint(expected);
             //Ignore-case if requested

@@ -93,9 +93,22 @@
     <Compile Include="IntegrationService\PackageEvents.cs" />
     <Compile Include="IntegrationService\PackageInfoExtensions.cs" />
     <Compile Include="IntegrationService\SsisEtlRunnerFactory.cs" />
-    <Compile Include="ReportingService\DatabaseParser.cs" />
-    <Compile Include="ReportingService\FileParser.cs" />
+    <Compile Include="ReportingService\CommandFilter.cs" />
+    <Compile Include="ReportingService\Database\Builders\ReportingModelDiscoveryCommandBuilder.cs" />
+    <Compile Include="ReportingService\Database\Builders\ParameterDiscoveryCommandBuilder.cs" />
+    <Compile Include="ReportingService\Database\PostFilters\ParameterNameFilter.cs" />
+    <Compile Include="ReportingService\Database\PostFilters\ParameterCaptionFilter.cs" />
+    <Compile Include="ReportingService\Database\QueryDatabaseParser.cs" />
+    <Compile Include="ReportingService\Database\ReportingModelCommand.cs" />
+    <Compile Include="ReportingService\Database\ReportingModelRow.cs" />
+    <Compile Include="ReportingService\Database\ReportingModelDiscoveryFactory.cs" />
+    <Compile Include="ReportingService\DiskFile\QueryFileParser.cs" />
+    <Compile Include="ReportingService\ICommandFilter.cs" />
+    <Compile Include="ReportingService\IDiscoveryCommandBuilder.cs" />
+    <Compile Include="ReportingService\IPostCommandFilter.cs" />
+    <Compile Include="ReportingService\IValueFilter.cs" />
     <Compile Include="ReportingService\SsrsReportParserFactory.cs" />
+    <Compile Include="ReportingService\ReportingModelDiscoveryCommand.cs" />
     <Compile Include="Smo\BatchRunCommand.cs" />
     <Compile Include="Smo\SmoBatchRunnerFactory.cs" />
   </ItemGroup>
@@ -106,16 +119,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ReportingService\ReportServerListDataSet.sql" />
+    <EmbeddedResource Include="ReportingService\Database\Resources\ReportServerListDataSet.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ReportingService\ReportServerListSharedDataSet.sql" />
+    <EmbeddedResource Include="ReportingService\Database\Resources\ReportServerListSharedDataSet.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ReportingService\ReportServerQueryFromSharedDataSet.sql" />
+    <EmbeddedResource Include="ReportingService\Database\Resources\ReportServerQueryFromSharedDataSet.sql" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ReportingService\ReportServerListParameter.sql" />
+    <EmbeddedResource Include="ReportingService\Database\Resources\ListParameter.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using NBi.Core.Model;
 using NBi.NUnit.Structure;
 using NBi.Xml.Constraints;
 using NBi.Xml.Items;
@@ -18,10 +19,7 @@ namespace NBi.NUnit.Builder
         {
         }
 
-        internal StructureLinkedToBuilder(StructureDiscoveryFactoryProvider discoveryProvider)
-            : base(discoveryProvider)
-        {
-        }
+        
 
         protected override void SpecificSetup(AbstractSystemUnderTestXml sutXml, AbstractConstraintXml ctrXml)
         {
@@ -38,46 +36,29 @@ namespace NBi.NUnit.Builder
 
         protected NBiConstraint InstantiateConstraint(LinkedToXml ctrXml)
         {
-            if (!(ctrXml.Item is DatabaseModelItemXml))
+            if (!(ctrXml.Item is IModelSingleItemXml && ctrXml.Item is DatabaseModelItemXml))
                 throw new ArgumentOutOfRangeException();
 
-            var ctr = new LinkedToConstraint(((DatabaseModelItemXml)ctrXml.Item).Caption);
+            var ctr = new LinkedToConstraint(((IModelSingleItemXml)ctrXml.Item).Caption);
             return ctr;
         }
 
-        protected override StructureDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
+        protected override IModelDiscoveryCommand InstantiateCommand(DatabaseModelItemXml item)
         {
-            var factory = discoveryProvider.Instantiate(item.GetConnectionString());
+            var provider = new StructureDiscoveryFactoryProvider();
+            var factory = provider.Instantiate(item.GetConnectionString());
 
-            var target = BuildTarget(item);
-            var filters = BuildFilters(item);
+            var modelFilterBuilder = new FilterRelationDatabaseModelBuilder();
+            modelFilterBuilder.Setup(item);
+            modelFilterBuilder.Build();
+
+            var target = modelFilterBuilder.GetTarget();
+            var filters = modelFilterBuilder.GetFilters();
 
             var command = factory.Instantiate(target, TargetType.Relation, filters);
             return command;
         }
 
-        protected override Target BuildTarget(ModelItemXml item)
-        {
-
-            if (item is MeasureGroupXml)
-                return Target.Dimensions;
-            if (item is DimensionXml)
-                return Target.MeasureGroups;
-            else
-                throw new ArgumentException(item.GetType().Name);
-        }
-
-        protected override IEnumerable<IFilter> BuildFilters(DatabaseModelItemXml item)
-        {
-            if (item is IPerspectiveFilter)
-                yield return new CaptionFilter(Target.Perspectives, ((IPerspectiveFilter)item).Perspective);
-            
-            var itselfTarget = Target.Dimensions;
-            if (item is MeasureGroupXml)
-                itselfTarget=Target.MeasureGroups;
-            
-            yield return new CaptionFilter(itselfTarget, item.Caption);                
-        }
 
     }
 }

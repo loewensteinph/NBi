@@ -6,6 +6,8 @@ using NBi.Core.SqlServer.IntegrationService;
 using NUnit.Framework;
 using NBi.Core.Report;
 using NBi.Core.Report.Request;
+using NBi.Core.SqlServer.ReportingService.Database;
+using NBi.Core.SqlServer.ReportingService.DiskFile;
 using NBi.Core.SqlServer.ReportingService;
 
 namespace NBi.Testing.Unit.Core.SqlServer.IntegrationService
@@ -47,7 +49,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.IntegrationService
             
             var factory = new SsrsReportParserFactory();
 
-            Assert.IsInstanceOf<FileParser>(factory.Get(request));
+            Assert.IsInstanceOf<QueryFileParser>(factory.Get(request));
         }
 
         [Test]
@@ -69,7 +71,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.IntegrationService
 
             var factory = new SsrsReportParserFactory();
 
-            Assert.IsInstanceOf<DatabaseParser>(factory.Get(request));
+            Assert.IsInstanceOf<QueryDatabaseParser>(factory.Get(request));
         }
         
     }

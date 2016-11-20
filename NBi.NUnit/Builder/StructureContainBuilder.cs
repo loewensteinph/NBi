@@ -16,11 +16,7 @@ namespace NBi.NUnit.Builder
         {
         }
 
-        internal StructureContainBuilder(StructureDiscoveryFactoryProvider provider)
-            : base(provider)
-        {
-        }
-
+        
         protected override void SpecificSetup(AbstractSystemUnderTestXml sutXml, AbstractConstraintXml ctrXml)
         {
             if (!(ctrXml is ContainXml))

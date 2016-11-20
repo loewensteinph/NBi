@@ -7,8 +7,7 @@ namespace NBi.Xml.Items
 {
     public abstract class DatabaseModelItemXml : ConnectionItemXml, IAutoCategorize
     {
-        [XmlAttribute("caption")]
-        public string Caption { get; set; }
+        
 
         public abstract ICollection<string> GetAutoCategories();
 
@@ -17,7 +16,8 @@ namespace NBi.Xml.Items
         public virtual Dictionary<string, string> GetRegexMatch()
         {
             var dico = new Dictionary<string, string>();
-            dico.Add("sut:caption", Caption);
+            if (this is IModelSingleItemXml)
+                dico.Add("sut:caption", ((IModelSingleItemXml)this).Caption);
             dico.Add("sut:typeName", TypeName);
             return dico;
         }

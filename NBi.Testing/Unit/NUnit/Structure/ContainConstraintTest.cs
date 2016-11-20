@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Moq;
+using NBi.Core.Model;
 using NBi.Core.Structure;
 using NBi.NUnit.Structure;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual hierarchy 1" };
 
-            var commandMock = new Mock<IStructureDiscoveryCommand>();
+            var commandMock = new Mock<IModelDiscoveryCommand>();
             commandMock.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandMock.Setup(cmd => cmd.Description).Returns(description);
 
@@ -50,7 +51,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual hierarchy 1" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -88,7 +89,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual hierarchy 1" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -126,7 +127,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual hierarchy 1", "Actual hierarchy 2" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -161,7 +162,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual perspective 1", "Actual perspective 2" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -195,7 +196,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual perspective 1", "Actual perspective 2" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 

@@ -14,9 +14,7 @@ namespace NBi.Xml.Items
 
         [XmlIgnore]
         protected virtual string ParentPath { get { return string.Format("[{0}]", Table); } }
-        [XmlIgnore]
-        protected  override string Path { get { return string.Format("{0}.[{1}]", ParentPath, Caption); } }
-
+        
         [XmlIgnore]
         public override string TypeName
         {

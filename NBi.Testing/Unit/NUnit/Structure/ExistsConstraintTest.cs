@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Moq;
+using NBi.Core.Model;
 using NBi.Core.Structure;
 using NBi.NUnit.Structure;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual dimension 1", "Actual dimension 2", "Actual dimension 3" };
 
-            var commandMock = new Mock<IStructureDiscoveryCommand>();
+            var commandMock = new Mock<IModelDiscoveryCommand>();
             commandMock.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandMock.Setup(cmd => cmd.Description).Returns(description);
 
@@ -46,7 +47,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual dimension 1", "Actual dimension 2", "Actual dimension 3" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -81,7 +82,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "Actual hierarchy 1", "Actual hierarchy 2", "Actual hierarchy 3" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -117,7 +118,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] {};
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -152,7 +153,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "expected-measure-group-caption", "other expected-measure-group-caption" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -187,7 +188,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "unexpected-measure-group-1", "unexpected-measure-group-2" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -222,7 +223,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] {};
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -256,7 +257,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "expected-dimension-catpion" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -290,7 +291,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "a", "b", "c" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 
@@ -312,7 +313,7 @@ namespace NBi.Testing.Unit.NUnit.Structure
 
             var actuals = new string[] { "a", "b", "c" };
 
-            var commandStub = new Mock<IStructureDiscoveryCommand>();
+            var commandStub = new Mock<IModelDiscoveryCommand>();
             commandStub.Setup(cmd => cmd.Execute()).Returns(actuals);
             commandStub.Setup(cmd => cmd.Description).Returns(description);
 

@@ -72,7 +72,7 @@ namespace NBi.NUnit.Builder
             {
                 perspective = ((HierarchyXml)item).Perspective;
                 dimension = ((HierarchyXml)item).Dimension;
-                hierarchy = item.Caption;
+                hierarchy = ((HierarchyXml)item).Caption;
             }
 
             if (item is LevelXml)
@@ -80,7 +80,7 @@ namespace NBi.NUnit.Builder
                 perspective = ((LevelXml)item).Perspective;
                 dimension = ((LevelXml)item).Dimension;
                 hierarchy = ((LevelXml)item).Hierarchy;
-                level = item.Caption;
+                level = ((LevelXml)item).Caption;
             }
             if (item is HierarchyXml || item is LevelXml)
             {
@@ -98,7 +98,7 @@ namespace NBi.NUnit.Builder
             if (item is SetXml)
             {
                 perspective = ((SetXml)item).Perspective;
-                set = item.Caption;
+                set = ((SetXml)item).Caption;
 
                 disco = discoveryFactory.Build(
                     item.GetConnectionString(),

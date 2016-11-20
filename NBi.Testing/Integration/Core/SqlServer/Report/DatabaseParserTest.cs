@@ -5,13 +5,13 @@ using NBi.Core.Report;
 using NUnit.Framework;
 using System.Data;
 using NBi.Core.Report.Request;
-using NBi.Core.SqlServer.ReportingService;
+using NBi.Core.SqlServer.ReportingService.Database;
 
 namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
 {
     [TestFixture]
     [Category("ReportServerDB")]
-    public class DatabaseParserTest
+    public class QueryDatabaseParserTest
     {
 
         private static bool isSqlServerStarted = false;
@@ -54,7 +54,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_ExistingReportAndDataSet_CorrectQueryReturned()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
             var query = parser.ExtractQuery("Currency");
 
             Assert.That(query.Text, 
@@ -67,7 +67,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingDataSetOneExisting_CorrectExceptionReturned()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
             var ex = Assert.Throws<ArgumentException>(()=> parser.ExtractQuery("Non Existing"));
             Assert.That(ex.Message, Is.StringContaining("'Currency_List'"));
         }
@@ -75,7 +75,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingDataSetMoreThanOneExisting_CorrectExceptionReturned()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Currency_List");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("Non Existing"));
             Assert.That(ex.Message, Is.StringContaining("DataSet1").And.StringContaining("DataSet2"));
         }
@@ -83,7 +83,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
         [Test]
         public void ExtractQuery_NonExistingReport_CorrectExceptionReturned()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Non Existing");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Non Existing");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("DataSet1"));
 
             Assert.That(ex.Message, Is.StringContaining("No report found"));
@@ -91,7 +91,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
 
         public void ExtractQuery_SharedDataSet_CorrectQuery()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Employee_Sales_Summary");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Employee_Sales_Summary");
             var query = parser.ExtractQuery("SalesEmployees2008R2");
 
             Assert.That(query.Text,
@@ -102,7 +102,7 @@ namespace NBi.Testing.Integration.Core.SqlServer.ReportingService
 
         public void ExtractQuery_NonExistingSharedDataSet_CorrectQuery()
         {
-            var parser = new DatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Employee_Sales_Summary");
+            var parser = new QueryDatabaseParser(ConnectionStringReader.GetReportServerDatabase(), "/AdventureWorks Sample Reports/", "Employee_Sales_Summary");
             var ex = Assert.Throws<ArgumentException>(() => parser.ExtractQuery("Non Existing"));
             Assert.That(ex.Message, Is.StringContaining("Quota").And.StringContaining("2008R2"));
         }

@@ -160,7 +160,9 @@
     <Compile Include="Unit\Core\Members\PredefinedMembersFactoryTest.cs" />
     <Compile Include="Unit\Core\OfficeDataConnectionFileParserTest.cs" />
     <Compile Include="Unit\Core\Query\DbTypeBuilderTest.cs" />
-    <Compile Include="Unit\Core\SqlServer\ReportingService\FileParserTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\Database\Builders\ParameterDiscoveryCommandBuilderTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\Database\PostFilters\ParameterCaptionFilterTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\DiskFile\QueryFileParserTest.cs" />
     <Compile Include="Unit\Core\ResultSet\KeyCollectionTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\BooleanComparerTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\DateTimeRoundingTest.cs" />
@@ -183,6 +185,7 @@
     <Compile Include="Unit\Core\ResultSetManagerTest.cs" />
     <Compile Include="Unit\Core\CsvReaderTest.cs" />
     <Compile Include="Unit\Core\SqlServer\ReportingService\SsrsReportParserFactoryTest.cs" />
+    <Compile Include="Unit\Core\SqlServer\ReportingService\ReportingModelDiscoveryFactoryProviderTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\HierarchyDiscoveryCommandBuilderTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\MeasureDiscoveryCommandBuilderTest.cs" />
     <Compile Include="Unit\Core\Structure\Olap\Builders\DimensionDiscoveryCommandBuilderTest.cs" />

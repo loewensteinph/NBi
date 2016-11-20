@@ -5,7 +5,7 @@ using System.Linq;
 using NBi.Core.Analysis.Request;
 using NUnit.Framework.Constraints;
 using NUnitCtr = NUnit.Framework.Constraints;
-using NBi.Core.Structure;
+using NBi.Core.Model;
 
 namespace NBi.NUnit.Structure
 {
@@ -20,8 +20,8 @@ namespace NBi.NUnit.Structure
         /// <summary>
         /// Request for metadata extraction
         /// </summary>
-        public IStructureDiscoveryCommand Command { get; protected set; }
-        public IStructureDiscoveryCommand InvestigateCommand { get; protected set; }
+        public IModelDiscoveryCommand Command { get; protected set; }
+        public IModelDiscoveryCommand InvestigateCommand { get; protected set; }
 
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace NBi.NUnit.Structure
         /// <summary>
         /// Command to be executed when invesrtigating a failure
         /// </summary>
-        protected AbstractStructureConstraint Investigate(StructureDiscoveryCommand command)
+        protected AbstractStructureConstraint Investigate(IModelDiscoveryCommand command)
         {
             InvestigateCommand = command;
             return this;
@@ -57,8 +57,8 @@ namespace NBi.NUnit.Structure
         #region Specific NUnit
         public override bool Matches(object actual)
         {
-            if (actual is IStructureDiscoveryCommand)
-                return Process((IStructureDiscoveryCommand)actual);
+            if (actual is IModelDiscoveryCommand)
+                return Process((IModelDiscoveryCommand)actual);
             else if (actual is IEnumerable<string>)
             {
                 this.actual = actual;
@@ -74,7 +74,7 @@ namespace NBi.NUnit.Structure
                 throw new ArgumentException();
         }
 
-        protected bool Process(IStructureDiscoveryCommand actual)
+        protected bool Process(IModelDiscoveryCommand actual)
         {
             Command = actual;
             IEnumerable<string> structures = Command.Execute().ToArray();

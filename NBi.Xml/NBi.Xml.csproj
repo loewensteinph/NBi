@@ -102,6 +102,8 @@
     <Compile Include="GroupXml.cs" />
     <Compile Include="IAutoCategorize.cs" />
     <Compile Include="InheritanceTestXml.cs" />
+    <Compile Include="Items\IModelCollectionItemXml.cs" />
+    <Compile Include="Items\IModelSingleItemXml.cs" />
     <Compile Include="Items\ReportingModelItemXml.cs" />
     <Compile Include="Items\ReportParametersXml.cs" />
     <Compile Include="Items\ReportParameterXml.cs" />

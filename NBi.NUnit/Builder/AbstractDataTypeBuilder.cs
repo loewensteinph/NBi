@@ -73,9 +73,11 @@ namespace NBi.NUnit.Builder
             if (item is ITableFilter)
                 yield return new CaptionFilter(Target.Tables, ((ITableFilter)item).Table);
 
-            var itselfTarget = BuildTarget(item);
-            if (!string.IsNullOrEmpty(item.Caption))
-                yield return new CaptionFilter(itselfTarget, item.Caption);
+            if (item is IModelSingleItemXml)
+            {
+                var itselfTarget = BuildTarget(item);
+                yield return new CaptionFilter(itselfTarget, ((IModelSingleItemXml)item).Caption);
+            }
         }
 
         protected virtual Target BuildTarget(ModelItemXml item)

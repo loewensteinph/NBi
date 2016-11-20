@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NBi.Core.Structure
+namespace NBi.Core.SqlServer.ReportingService.Database
 {
-    public interface IFilter
+    class ReportingModelRow
     {
+        public string Caption { get; set; }
     }
 }

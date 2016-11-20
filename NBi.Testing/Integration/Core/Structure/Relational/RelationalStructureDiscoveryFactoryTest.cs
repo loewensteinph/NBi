@@ -5,6 +5,7 @@ using NBi.Core.Structure;
 using NBi.Core.Structure.Relational;
 using System.Data.SqlClient;
 using NBi.Core.Structure.Relational.PostFilters;
+using NBi.Core.Model;
 
 namespace NBi.Testing.Integration.Core.Structure.Relational
 {

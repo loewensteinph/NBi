@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items
 {
-    public class ReportParameterXml : ReportingModelItemXml
+    public class ReportParameterXml : ReportingModelItemXml, IModelSingleItemXml
     {
         [XmlAttribute("report")]
         public string Report { get; set; }

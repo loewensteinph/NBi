@@ -6,8 +6,12 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items
 {
-    public class SetXml : DatabaseModelItemXml, IPerspectiveFilter
+    public class SetXml : DatabaseModelItemXml, IPerspectiveFilter, IModelSingleItemXml
     {
+
+        [XmlAttribute("caption")]
+        public string Caption { get; set; }
+
         [XmlAttribute("perspective")]
         public string Perspective { get; set; }
 

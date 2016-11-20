@@ -6,13 +6,10 @@ using System.Xml.Serialization;
 
 namespace NBi.Xml.Items
 {
-    public class DimensionsXml : DatabaseModelItemXml, IPerspectiveFilter
+    public class DimensionsXml : DatabaseModelItemXml, IPerspectiveFilter, IModelCollectionItemXml
     {
         [XmlAttribute("perspective")]
         public string Perspective { get; set; }
-
-        [XmlIgnore]
-        protected virtual string Path { get { return string.Format("[{0}]", Caption); } }
 
         public override string TypeName
         {

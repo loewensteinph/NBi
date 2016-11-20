@@ -9,6 +9,9 @@ namespace NBi.Xml.Items
 {
     public abstract class ReportingModelItemXml : ModelItemXml
     {
+        [XmlAttribute("connectionString")]
+        public string ConnectionString { get; set; }
+
         [XmlAttribute("path")]
         public string Path { get; set; }
 

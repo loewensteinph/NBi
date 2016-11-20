@@ -59,7 +59,6 @@ namespace NBi.Testing.Unit.NUnit.Builder
             {
                 ConnectionString = ConnectionStringReader.GetAdomd(),
                 Perspective = "Perspective",
-                Caption = "MeasureGroup"
             };
 
             var ctrXml = new ContainXml();
