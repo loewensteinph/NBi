@@ -4,8 +4,16 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-#if SqlServer2014
+#if SqlServer2008R2
+[assembly: AssemblyTitle("NBi.Core for SQL Server 2008R2")]
+#elif SqlServer2012
+[assembly: AssemblyTitle("NBi.Core for SQL Server 2012")]
+#elif SqlServer2014
 [assembly: AssemblyTitle("NBi.Core for SQL Server 2014")]
+#elif SqlServer2016
+[assembly: AssemblyTitle("NBi.Core for SQL Server 2016")]
+#elif SqlServerVNext
+[assembly: AssemblyTitle("NBi.Core for SQL Server vNext")]
 #else
 [assembly: AssemblyTitle("NBi.Core for SQL Server (unspecified version)")]
 #endif

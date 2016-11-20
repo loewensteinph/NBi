@@ -46,7 +46,7 @@ namespace NBi.Testing.Unit.Core.SqlServer.ReportingService.Database.Builders
             var builder = new ParameterDiscoveryCommandBuilder();
             builder.Build(filters);
             var postFilters = builder.GetPostFilters();
-            Assert.That(postFilters.Count, Is.EqualTo(1));
+            Assert.That(postFilters.Count(), Is.EqualTo(1));
             Assert.That(postFilters.ElementAt(0), Is.TypeOf<ParameterCaptionFilter>());
         }
 
