@@ -6,6 +6,7 @@ using NBi.Core;
 using NUnit.Framework.Constraints;
 using NUnitCtr = NUnit.Framework.Constraints;
 using NBi.Core.Structure;
+using NBi.Core.Model;
 
 namespace NBi.NUnit.Structure
 {
@@ -79,15 +80,21 @@ namespace NBi.NUnit.Structure
         /// <param name="writer"></param>
         public override void WriteDescriptionTo(MessageWriter writer)
         {
-            var description = new DescriptionStructureHelper();
-            var filterExpression = description.GetFilterExpression(Command.Description.Filters.Where(f => f is CaptionFilter).Cast<CaptionFilter>());
+            var factory = new DescriptionModelHelperFactory();
+            var description = factory.Get
+                                (
+                                    Command.Description.Filters.Where(f => f is ICaptionFilter).Cast<ICaptionFilter>()
+                                    , Command.Description.Target
+                                );
+
+            var filterExpression = description.GetFilterExpression();
             if (!string.IsNullOrEmpty(filterExpression))
                 filterExpression = string.Format(" contained {0}", filterExpression);
 
             if (Expected.Count() == 1)
             {
                 writer.WritePredicate(string.Format("find a {0} named '{1}'{2}.",
-                    description.GetTargetExpression(Command.Description.Target),
+                    description.GetTargetExpression(),
                     Expected.First(),
                     filterExpression));
             }
@@ -99,7 +106,7 @@ namespace NBi.NUnit.Structure
                 expectationExpression.Remove(expectationExpression.Length - 2, 2);
 
                 writer.WritePredicate(string.Format("find the {0} named '{1}'{2}.",
-                    description.GetTargetPluralExpression(Command.Description.Target),
+                    description.GetTargetPluralExpression(),
                     expectationExpression.ToString(),
                     filterExpression));
             }

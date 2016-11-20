@@ -46,11 +46,16 @@ namespace NBi.NUnit.Structure
         {
             if (Command != null)
             {
-                var description = new DescriptionStructureHelper();
+                var factory = new DescriptionModelHelperFactory();
+                var description = factory.Get
+                                    (
+                                        Command.Description.GetCaptionNonTargetFilter()
+                                        , Command.Description.Target
+                                    );
                 var notExpression = description.GetNotExpression(true);
-                var targetExpression = description.GetTargetExpression(Command.Description.Target);
+                var targetExpression = description.GetTargetExpression();
                 var captionExpression = Expected;
-                var filterExpression = description.GetFilterExpression(Command.Description.GetCaptionNonTargetFilter()).Remove(0, 3);
+                var filterExpression = description.GetFilterExpression().Remove(0, 3);
 
                 writer.WritePredicate(string.Format("find {0} {1} named '{2}' linked to {3}"
                             , notExpression

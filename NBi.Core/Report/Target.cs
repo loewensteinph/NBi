@@ -8,7 +8,10 @@ namespace NBi.Core.Report
     {
         Undefined = 0,
         Path,
+        Paths,
         Report,
-        Parameter
+        Reports,
+        Parameter,
+        Parameters
     }
 }

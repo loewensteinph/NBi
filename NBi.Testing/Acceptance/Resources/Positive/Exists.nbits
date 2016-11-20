@@ -187,4 +187,18 @@
       <exists/>
     </assert>
   </test>
+  <test name="In Report 'Sales_by_Region', we've a parameter named 'Bing Map tile type?'">
+    <system-under-test>
+      <structure>
+        <report-parameter connectionString="Data Source=(local)\SQL2016;Initial Catalog=ReportServer$Sql2016;Integrated Security=True;"
+						path="/AdventureWorks Sample Reports"
+						report="Sales_by_Region"
+						caption="Bing Map tile type?"
+				/>
+      </structure>
+    </system-under-test>
+    <assert>
+      <exists/>
+    </assert>
+  </test>
 </testSuite>

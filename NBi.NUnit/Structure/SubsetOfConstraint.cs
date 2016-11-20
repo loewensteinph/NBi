@@ -7,6 +7,7 @@ using NBi.Core;
 using NBi.Core.Structure;
 using NUnit.Framework.Constraints;
 using NUnitCtr = NUnit.Framework.Constraints;
+using NBi.Core.Model;
 
 namespace NBi.NUnit.Structure
 {
@@ -46,9 +47,15 @@ namespace NBi.NUnit.Structure
         {
             if (Command != null)
             {
-                var description = new DescriptionStructureHelper();
-                var filterExpression = description.GetFilterExpression(Command.Description.Filters.Where(f => f is CaptionFilter).Cast<CaptionFilter>());
-                var nextTargetExpression = description.GetNextTargetPluralExpression(Command.Description.Target);
+                var factory = new DescriptionModelHelperFactory();
+                var description = factory.Get
+                                    (
+                                        Command.Description.Filters.Where(f => f is ICaptionFilter).Cast<ICaptionFilter>()
+                                        , Command.Description.Target
+                                    );
+
+                var filterExpression = description.GetFilterExpression();
+                var nextTargetExpression = description.GetNextTargetPluralExpression();
                 var expectationExpression = new StringBuilder();
                 foreach (string item in Expected)
                     expectationExpression.AppendFormat("<{0}>, ", item);

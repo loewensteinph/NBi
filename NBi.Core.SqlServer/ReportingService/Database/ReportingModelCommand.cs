@@ -42,7 +42,7 @@ namespace NBi.Core.SqlServer.ReportingService.Database
         protected virtual ReportingModelRow BuildRow(IDataReader rdr)
         {
             var row = new ReportingModelRow();
-            row.Caption = rdr.GetString(0);
+            row.Caption = rdr.GetString(1);
             return row;
         }
 

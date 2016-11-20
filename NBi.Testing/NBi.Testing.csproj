@@ -124,7 +124,7 @@
     <Compile Include="Integration\Core\Structure\StructureDiscoveryFactoryProviderTest.cs" />
     <Compile Include="Integration\Core\Structure\Tabular\TabularStructureDiscoveryFactoryTest.cs" />
     <Compile Include="Integration\Core\WindowsService\WindowsServiceCheckTest.cs" />
-    <Compile Include="Integration\Core\SqlServer\Report\DatabaseParserTest.cs" />
+    <Compile Include="Integration\Core\SqlServer\ReportingService\Database\QueryDatabaseParserTest.cs" />
     <Compile Include="Integration\Core\WindowsService\WindowsServiceCommandTest.cs" />
     <Compile Include="Integration\GenbiL\TestSuiteGeneratorTest.cs" />
     <Compile Include="Integration\NUnit\EqualToConstraintTest.cs" />

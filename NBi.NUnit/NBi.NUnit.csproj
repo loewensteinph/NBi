@@ -116,11 +116,14 @@
     <Compile Include="Query\MatchPatternConstraint.cs" />
     <Compile Include="Structure\AbstractCollectionConstraint.cs" />
     <Compile Include="Structure\AbstractStructureConstraint.cs" />
+    <Compile Include="Structure\DescriptionModelHelperFactory.cs" />
+    <Compile Include="Structure\DescriptionReportModelHelper.cs" />
     <Compile Include="Structure\EquivalentToConstraint.cs" />
     <Compile Include="Structure\ContainConstraint.cs" />
+    <Compile Include="Structure\IDescriptionModelHelper.cs" />
     <Compile Include="Structure\SubsetOfConstraint.cs" />
     <Compile Include="Structure\LinkedToConstraint.cs" />
-    <Compile Include="Structure\DescriptionStructureHelper.cs" />
+    <Compile Include="Structure\DescriptionDatabaseModelHelper.cs" />
     <Compile Include="TestCase.cs" />
     <Compile Include="TestCaseFactory.cs" />
     <Compile Include="FluentInterface\Has.cs" />

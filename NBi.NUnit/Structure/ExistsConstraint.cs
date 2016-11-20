@@ -4,6 +4,7 @@ using System.Linq;
 using NBi.Core;
 using NBi.Core.Structure;
 using NUnit.Framework.Constraints;
+using NBi.Core.Model;
 
 namespace NBi.NUnit.Structure
 {
@@ -38,10 +39,15 @@ namespace NBi.NUnit.Structure
         {
             if (Command != null)
             {
-                var description = new DescriptionStructureHelper();
-                var filterExpression = description.GetFilterExpression(Command.Description.GetCaptionNonTargetFilter());
+                var factory = new DescriptionModelHelperFactory();
+                var description = factory.Get
+                                    (
+                                        Command.Description.Filters.Where(f => f is ICaptionFilter).Cast<ICaptionFilter>()
+                                        , Command.Description.Target
+                                    );
+                var filterExpression = description.GetFilterExpression();
                 var notExpression = description.GetNotExpression(true);
-                var targetExpression = description.GetTargetExpression(Command.Description.Target);
+                var targetExpression = description.GetTargetExpression();
                 var captionExpression = Expected;
 
                 writer.WritePredicate(string.Format("find {0} {1} named '{2}' {3}"
