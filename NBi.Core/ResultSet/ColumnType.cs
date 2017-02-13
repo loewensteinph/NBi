@@ -11,6 +11,8 @@ namespace NBi.Core.ResultSet
         [XmlEnum(Name = "dateTime")]
         DateTime = 2,
         [XmlEnum(Name = "boolean")]
-        Boolean = 3
+        Boolean = 3,
+        [XmlEnum(Name = "table")]
+        Table = 10
     }
 }
