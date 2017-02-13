@@ -756,20 +756,7 @@
                     <xs:element name="resultSet" minOccurs="0" maxOccurs="1">
                       <xs:complexType>
                         <xs:sequence>
-                          <xs:element name="row" minOccurs="0" maxOccurs="unbounded">
-                            <xs:complexType>
-                              <xs:sequence>
-                                <xs:element name="cell" minOccurs="1" maxOccurs="unbounded">
-                                  <xs:complexType>
-                                    <xs:simpleContent>
-                                      <xs:extension base="xs:string">
-                                      </xs:extension>
-                                    </xs:simpleContent>
-                                  </xs:complexType>
-                                </xs:element>
-                              </xs:sequence>
-                            </xs:complexType>
-                          </xs:element>
+                          <xs:element name="row" minOccurs="0" maxOccurs="unbounded" type="row-type"/>
                         </xs:sequence>
                         <xs:attribute name="file" type="xs:string" use="optional" />
                       </xs:complexType>
@@ -1116,6 +1103,16 @@
       </xs:element>
       <xs:element name="expression" type="expression2-type" minOccurs="0" maxOccurs="1"/>
       <xs:element name="predicate" type="predicate-type" minOccurs="0" maxOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cell-type" mixed="true">
+    <xs:sequence>
+      <xs:element name="row" minOccurs="0" maxOccurs="unbounded" type="row-type"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="row-type">
+    <xs:sequence>
+      <xs:element name="cell" minOccurs="1" maxOccurs="unbounded" type="cell-type"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

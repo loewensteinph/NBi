@@ -102,6 +102,13 @@ namespace NBi.Core.ResultSet
         private class Cell : ICell
         {
             private string cellValue;
+            private readonly IList<IRow> rows = new List<IRow>();
+
+            public IList<IRow> Rows
+            {
+                get { return rows; }
+            }
+
             public string Value
             {
                 get { return cellValue; }

@@ -5,6 +5,8 @@ using NBi.Xml.Items;
 using NBi.Xml.Systems;
 using NUnit.Framework;
 using NBi.Xml.Constraints;
+using System.Collections.Generic;
+using NBi.Core.ResultSet;
 
 namespace NBi.Testing.Unit.Xml.Items.ResultSet
 {
@@ -59,7 +61,35 @@ namespace NBi.Testing.Unit.Xml.Items.ResultSet
             Assert.That(equalTo.ResultSet.Rows[0].Cells, Has.Count.EqualTo(1));
             Assert.That(equalTo.ResultSet.Rows[0].Cells[0].Value, Is.EqualTo("Document Control"));
         }
-        
+
+        [Test]
+        public void Deserialize_OneSubTable_ValueReturned()
+        {
+            int testNr = 1;
+
+            // Create an instance of the XmlSerializer specifying type and namespace.
+            TestSuiteXml ts = DeserializeSample();
+
+            // Check the properties of the object.
+            Assert.That(ts.Tests[testNr].Constraints[0], Is.TypeOf<EqualToXml>());
+            var equalTo = ts.Tests[testNr].Constraints[0] as EqualToXml;
+
+            Assert.That(equalTo.ResultSet.Rows, Has.Count.EqualTo(1));
+            Assert.That(equalTo.ResultSet.Rows[0].Cells, Has.Count.EqualTo(2));
+            Assert.That(equalTo.ResultSet.Rows[0].Cells[0].Value, Is.EqualTo("Document Control"));
+            Assert.That(equalTo.ResultSet.Rows[0].Cells[0].Rows, Is.Null.Or.Empty);
+
+            Assert.That(equalTo.ResultSet.Rows[0].Cells, Has.Count.EqualTo(2));
+
+            Assert.That(equalTo.ResultSet.Rows[0].Cells[1].Value, Is.Null.Or.Empty);
+            Assert.That(equalTo.ResultSet.Rows[0].Cells[1].Rows, Is.TypeOf<List<IRow>>());
+
+            var subTable = equalTo.ResultSet.Rows[0].Cells[1].Rows as IList<IRow>;
+            Assert.That(subTable, Has.Count.EqualTo(2));
+            Assert.That(subTable[0].Cells[0].Value, Is.EqualTo("1"));
+
+        }
+
 
 
     }
