@@ -9,5 +9,6 @@ namespace NBi.Core.ResultSet
     {
         string Value { get; set; }
         IList<IRow> Rows { get; }
+        string ColumnName { get; set; }
     }
 }
