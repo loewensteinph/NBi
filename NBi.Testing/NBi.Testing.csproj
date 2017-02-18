@@ -183,6 +183,7 @@
     <Compile Include="Unit\Core\ResultSet\Converter\DateTimeConverterTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Converter\BaseNumericConverterTest.cs" />
     <Compile Include="Unit\Core\ResultSet\ResultSetComparerByNameTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\ResultSetBuilderTest.cs" />
     <Compile Include="Unit\Core\ResultSet\SettingsResultSetComparisonFactoryTest.cs" />
     <Compile Include="Unit\Core\ResultSet\SettingsResultSetComparisonByIndexTest.cs" />
     <Compile Include="Unit\Core\ResultSet\SingleRowComparerTest.cs" />

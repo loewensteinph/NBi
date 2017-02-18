@@ -25,5 +25,10 @@ namespace NBi.Xml.Items.ResultSet
         {
             get { return _rows.Cast<IRow>().ToList(); }
         }
+
+        public CellXml()
+        {
+            _rows = new List<RowXml>();
+        }
     }
 }
