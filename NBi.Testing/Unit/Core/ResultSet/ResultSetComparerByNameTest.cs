@@ -167,11 +167,9 @@ namespace NBi.Testing.Unit.Core.ResultSet
                     );
 
             return new SettingsResultSetComparisonByName(
-                string.Empty,
-                string.Empty,
+                columnsDef,
                 ColumnType.Numeric,
-                null,
-                columnsDef
+                null
                 );
         }
         

@@ -193,5 +193,87 @@ namespace NBi.Testing.Unit.Core.ResultSet
             return (settings as SettingsResultSetComparisonByName);
         }
 
+        private EqualToXml BuildEqualToXmlSubTable()
+        {
+            //Buiding object used during test
+            var xml = new EqualToXml();
+            //default values/def
+            xml.KeyName = "Zero";
+            //default values/def
+            xml.ValueName = "Two";
+            //default values/def
+            xml.ValuesDefaultType = ColumnType.Numeric;
+            //default tolerance
+            xml.Tolerance = "100";
+
+            //Build a value column (numeric, specific tolerance)
+            var col1Xml = new ColumnDefinitionXml();
+            col1Xml.Name = "One";
+            col1Xml.Role = ColumnRole.Value;
+            col1Xml.Type = ColumnType.Table;
+
+            //Build a key column (without info)
+            var col10Xml = new ColumnDefinitionXml();
+            col10Xml.Name = "One.Zero";
+            col10Xml.Role = ColumnRole.Key;
+            col10Xml.Type = ColumnType.Text;
+
+            //Build a value column (numeric)
+            var col11Xml = new ColumnDefinitionXml();
+            col11Xml.Name = "One.One";
+            col11Xml.Role = ColumnRole.Value;
+            col11Xml.Type = ColumnType.Numeric;
+            
+            //Add columns to definition
+            var cols = new List<ColumnDefinitionXml>();
+            cols.Add(col1Xml);
+            cols.Add(col10Xml);
+            cols.Add(col11Xml);
+            xml.columnsDef = cols;
+
+            return xml;
+        }
+
+        private SettingsResultSetComparisonByName BuildSettingsSubTable()
+        {
+            var xml = BuildEqualToXmlSubTable();
+            //get settings
+            var settings = xml.GetSettings();
+
+            return (settings as SettingsResultSetComparisonByName);
+        }
+
+        [Test]
+        public void GetColumnRole_EqualToSubTable_CorrectResult()
+        {
+            //Get the Settings
+            var actual = BuildSettingsSubTable();
+
+            //Assertion
+            Assert.That(actual.GetColumnRole("Zero"), Is.EqualTo(ColumnRole.Key));
+            Assert.That(actual.GetColumnRole("One"), Is.EqualTo(ColumnRole.Value));
+            Assert.That(actual.GetColumnRole("Two"), Is.EqualTo(ColumnRole.Value));
+
+            var subSettings = actual.GetSubSettings("One");
+            Assert.That(actual.GetColumnRole("One.Zero"), Is.EqualTo(ColumnRole.Key));
+            Assert.That(actual.GetColumnRole("One.One"), Is.EqualTo(ColumnRole.Value));
+        }
+
+        [Test]
+        public void GetColumnType_EqualToSubTable_CorrectResult()
+        {
+            //Get the Settings
+            var actual = BuildSettingsSubTable();
+
+            //Assertion
+            Assert.That(actual.GetColumnType("Zero"), Is.EqualTo(ColumnType.Text));
+            Assert.That(actual.GetColumnType("One"), Is.EqualTo(ColumnType.Table));
+            Assert.That(actual.GetColumnType("Two"), Is.EqualTo(ColumnType.Numeric)); 
+
+            var subSettings = actual.GetSubSettings("One");
+            Assert.That(actual.GetColumnType("One.Zero"), Is.EqualTo(ColumnType.Text));
+            Assert.That(actual.GetColumnType("One.One"), Is.EqualTo(ColumnType.Numeric));
+
+        }
     }
 }

@@ -7,11 +7,10 @@ using System.Collections.ObjectModel;
 
 namespace NBi.Core.ResultSet
 {
-	public class SettingsResultSetComparisonByName : SettingsResultSetComparison<string>
-	{
-        
-        public IReadOnlyCollection<string> KeyNames { get; private set; }
-        public IReadOnlyCollection<string> ValueNames { get; private set; }
+    public class SettingsResultSetComparisonByName : SettingsResultSetComparison<string>
+    {
+        public readonly string ParentColumnName; 
+        protected readonly IReadOnlyCollection<SettingsResultSetComparisonByName> subSettings;
 
         protected override bool IsKey(string name)
         {
@@ -20,19 +19,10 @@ namespace NBi.Core.ResultSet
 
             if (ColumnsDef.Any(c => c.Name == name && c.Role == ColumnRole.Key))
                 return true;
-
-            if (KeyNames.Contains(name))
-                return true;
-
-            if (ValueNames.Contains(name))
-                return false;
-
-            if (ValueNames.Count>0 && KeyNames.Count==0)
-                return true;
-
+            
             return false;
         }
-        
+
         protected override bool IsValue(string name)
         {
             if (ColumnsDef.Any(c => c.Name == name && c.Role != ColumnRole.Value))
@@ -41,18 +31,9 @@ namespace NBi.Core.ResultSet
             if (ColumnsDef.Any(c => c.Name == name && c.Role == ColumnRole.Value))
                 return true;
 
-            if (KeyNames.Contains(name))
-                return false;
-
-            if (ValueNames.Contains(name))
-                return true;
-
-            if (ValueNames.Count > 0)
-                return false;
-
             return false;
         }
-        
+
         public override bool IsRounding(string name)
         {
             return ColumnsDef.Any(
@@ -61,7 +42,7 @@ namespace NBi.Core.ResultSet
                     && c.RoundingStyle != Comparer.Rounding.RoundingStyle.None
                     && !string.IsNullOrEmpty(c.RoundingStep));
         }
-        
+
         public override Rounding GetRounding(string name)
         {
             if (!IsRounding(name))
@@ -71,7 +52,7 @@ namespace NBi.Core.ResultSet
                     c => c.Name == name
                     && c.Role == ColumnRole.Value));
         }
-        
+
         public override ColumnRole GetColumnRole(string name)
         {
             if (!cacheRole.ContainsKey(name))
@@ -86,7 +67,7 @@ namespace NBi.Core.ResultSet
 
             return cacheRole[name];
         }
-        
+
         public override ColumnType GetColumnType(string name)
         {
             if (!cacheType.ContainsKey(name))
@@ -97,12 +78,14 @@ namespace NBi.Core.ResultSet
                     cacheType.Add(name, ColumnType.DateTime);
                 else if (IsBoolean(name))
                     cacheType.Add(name, ColumnType.Boolean);
+                else if (IsTable(name))
+                    cacheType.Add(name, ColumnType.Table);
                 else
                     cacheType.Add(name, ColumnType.Text);
             }
             return cacheType[name];
         }
-        
+
         protected override bool IsType(string name, ColumnType type)
         {
             if (ColumnsDef.Any(c => c.Name == name && c.Type != type))
@@ -112,11 +95,11 @@ namespace NBi.Core.ResultSet
                 return true;
 
             if (IsKey(name))
-                return type ==ColumnType.Text;
+                return type == ColumnType.Text;
 
             return (IsValue(name) && ValuesDefaultType == type);
         }
-        
+
         public override Tolerance GetTolerance(string name)
         {
             if (GetColumnType(name) != ColumnType.Numeric && GetColumnType(name) != ColumnType.DateTime)
@@ -133,43 +116,49 @@ namespace NBi.Core.ResultSet
 
             return ToleranceFactory.Instantiate(col);
         }
-        
 
-        public SettingsResultSetComparisonByName(string keyNames, string valueNames, ColumnType valuesDefaultType, NumericTolerance defaultTolerance, IReadOnlyCollection<IColumnDefinition> columnsDef)
-            : base(valuesDefaultType, defaultTolerance, columnsDef)
+        public SettingsResultSetComparisonByName(IEnumerable<IColumnDefinition> columnsDef)
+            : this(string.Empty, columnsDef, ColumnType.Numeric, NumericAbsoluteTolerance.None, Enumerable.Empty<SettingsResultSetComparisonByName>()) { }
+
+
+        public SettingsResultSetComparisonByName(IEnumerable<IColumnDefinition> columnsDef, ColumnType valuesDefaultType, NumericTolerance defaultTolerance)
+            : this(string.Empty, columnsDef, valuesDefaultType, defaultTolerance, Enumerable.Empty<SettingsResultSetComparisonByName>()) { }
+
+        public SettingsResultSetComparisonByName(IEnumerable<IColumnDefinition> columnsDef, ColumnType valuesDefaultType, NumericTolerance defaultTolerance, IEnumerable<SettingsResultSetComparisonByName> subSettings)
+            : this(string.Empty, columnsDef, valuesDefaultType, defaultTolerance, subSettings) { }
+
+        public SettingsResultSetComparisonByName(string parent, IEnumerable<IColumnDefinition> columnsDef, ColumnType valuesDefaultType, NumericTolerance defaultTolerance)
+            : this(parent, columnsDef, valuesDefaultType, defaultTolerance, Enumerable.Empty<SettingsResultSetComparisonByName>()) { }
+
+        public SettingsResultSetComparisonByName(string parent, IEnumerable<IColumnDefinition> columnsDef, ColumnType valuesDefaultType, NumericTolerance defaultTolerance, IEnumerable<SettingsResultSetComparisonByName> subSettings)
+            : base(valuesDefaultType, defaultTolerance, new ReadOnlyCollection<IColumnDefinition>(columnsDef.ToList()))
         {
-            KeyNames = new ReadOnlyCollection<string>(new string[] { });
-            if (!string.IsNullOrEmpty(keyNames))
-            {
-                var keys = keyNames.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                KeyNames = new ReadOnlyCollection<string>(keys.Select(x => x.Trim()).ToList());
-            }
-
-            ValueNames = new ReadOnlyCollection<string>(new string[] { });
-            if (!string.IsNullOrEmpty(valueNames))
-            {
-                var values = valueNames.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-                ValueNames = new ReadOnlyCollection<string>(values.Select(x => x.Trim()).ToList());
-            }
+            ParentColumnName = parent;
+            this.subSettings = new ReadOnlyCollection<SettingsResultSetComparisonByName>(subSettings.ToList());
         }
+
 
         public IEnumerable<string> GetKeyNames()
         {
-            var result = new List<string>(KeyNames);
-            result.AddRange(ColumnsDef.Where(c => c.Role==ColumnRole.Key).Select(c => c.Name));
-            return result.Distinct().OrderBy(x => x);
+            return ColumnsDef.Where(c => c.Role == ColumnRole.Key).Select(c => c.Name).OrderBy(x => x);
         }
 
         public IEnumerable<string> GetValueNames()
         {
-            var result = new List<string>(ValueNames);
-            result.AddRange(ColumnsDef.Where(c => c.Role == ColumnRole.Value).Select(c => c.Name));
-            return result.Distinct();
+            return ColumnsDef.Where(c => c.Role == ColumnRole.Value).Select(c => c.Name);
         }
 
         public IEnumerable<string> GetColumnNames()
         {
-            return GetKeyNames().Union(GetValueNames());
+            return ColumnsDef.Where(c => c.Role != ColumnRole.Ignore).Select(c => c.Name);
+        }
+
+        public SettingsResultSetComparisonByName GetSubSettings(string parentColumName)
+        {
+            if (!IsType(parentColumName, ColumnType.Table))
+                throw new ArgumentException();
+
+            return subSettings.Where(s => s.ParentColumnName == parentColumName).Single();
         }
 
     }

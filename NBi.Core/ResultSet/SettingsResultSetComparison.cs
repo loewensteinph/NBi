@@ -44,6 +44,10 @@ namespace NBi.Core.ResultSet
         {
             return IsType(index, ColumnType.Boolean);
         }
+        protected virtual bool IsTable(T index)
+        {
+            return IsType(index, ColumnType.Table);
+        }
 
         protected virtual bool IsText(T index)
         {

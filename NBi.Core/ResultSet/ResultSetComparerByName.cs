@@ -61,7 +61,20 @@ namespace NBi.Core.ResultSet
                 var x = rx.IsNull(columnName) ? DBNull.Value : rx[columnName];
                 var y = ry.IsNull(columnName) ? DBNull.Value : ry[columnName];
                 var rounding = settings.IsRounding(columnName) ? settings.GetRounding(columnName) : null;
-                var result = base.CellComparer.Compare(x, y, settings.GetColumnType(columnName), settings.GetTolerance(columnName), rounding);
+                var columnType = settings.GetColumnType(columnName);
+
+                ComparerResult result = null;
+                //DataTable
+                if (columnType == ColumnType.Table)
+                {
+                    var tableComparer = new TableComparer(settings.GetSubSettings(columnName));
+                    result = tableComparer.Compare(x, y);
+                }
+                else
+                {
+                    result = CellComparer.Compare(x, y, settings.GetColumnType(columnName), settings.GetTolerance(columnName), rounding);
+                }
+                
 
                 if (!result.AreEqual)
                 {

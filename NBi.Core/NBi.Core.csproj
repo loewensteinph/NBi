@@ -259,6 +259,7 @@
     <Compile Include="Report\SharedDatasetRequest.cs" />
     <Compile Include="Report\DatasetRequest.cs" />
     <Compile Include="Report\ReportCommand.cs" />
+    <Compile Include="ResultSet\Comparer\TableComparer.cs" />
     <Compile Include="ResultSet\Comparer\CellComparer.cs" />
     <Compile Include="ResultSet\Comparer\ComparerFactory.cs" />
     <Compile Include="Report\DatabaseParser.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="ResultSet\Comparer\SideTolerance.cs" />
     <Compile Include="ResultSet\ComparisonStyle.cs" />
     <Compile Include="ResultSet\Converter\BaseNumericConverter.cs" />
+    <Compile Include="ResultSet\Converter\TableConverter.cs" />
     <Compile Include="ResultSet\Converter\ConverterFactory.cs" />
     <Compile Include="ResultSet\Converter\IConverter.cs" />
     <Compile Include="ResultSet\Converter\DateTimeConverter.cs" />
