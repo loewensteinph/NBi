@@ -23,7 +23,7 @@ namespace NBi.Core.Rest
                 case ContentType.Json:
                     return new RestClient(webClient, parser);
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(contentType));
+                    throw new ArgumentOutOfRangeException("contentType");
             }
         }
 
@@ -34,7 +34,7 @@ namespace NBi.Core.Rest
                 case ContentType.Json:
                     return new JsonParser();
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(contentType));
+                    throw new ArgumentOutOfRangeException("contentType");
             }
         }
 
