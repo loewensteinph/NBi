@@ -76,7 +76,11 @@ namespace NBi.Testing.Integration.Core.Rest
 
             Assert.That(dataset, Is.Not.Null);
             Assert.That(dataset.Tables, Has.Count.EqualTo(1));
-            Assert.That(dataset.Tables[0].Rows, Has.Count.EqualTo(1));
+            Assert.That(dataset.Tables[0].Rows, Has.Count.GreaterThan(15));
+
+            Assert.That(dataset.Tables[0].Rows[0][3], Is.TypeOf<DataTable>());
+            var owner = dataset.Tables[0].Rows[0][3] as DataTable;
+            Assert.That(owner.Columns, Has.Count.EqualTo(17));
         }
     }
 }

@@ -35,7 +35,10 @@ namespace NBi.Core.Rest.Json
                     break;
                 case JTokenType.String:
                 case JTokenType.Integer:
-                    WalkValue(node, parent, columnName);
+                case JTokenType.Float:
+                case JTokenType.Date:
+                case JTokenType.Boolean:
+                    WalkValue(node, parent, columnName, node.Type);
                     break;
             }
         }
@@ -52,25 +55,52 @@ namespace NBi.Core.Rest.Json
             }
         }
 
-        private void WalkValue(JToken node, object parent, string columnName)
+        private void WalkValue(JToken node, object parent, string columnName, JTokenType jsonType)
         {
             if (parent is DataRow)
             {
                 var row = (parent as DataRow);
-                row[columnName] = node.Value<object>();
+                row[columnName] = GetValue(jsonType, node);
             }
-            else if(parent is List<object>)
+            else if (parent is List<object>)
             {
                 var list = (parent as List<object>);
-                list.Add(node.Value<object>());
+                list.Add(GetValue(jsonType, node));
             }
-            
         }
 
+        private object GetValue(JTokenType type, JToken node)
+        {
+            switch (type)
+            {
+                case JTokenType.Integer:
+                    return node.Value<Int32>();
+                case JTokenType.Float:
+                    return node.Value<float>();
+                case JTokenType.String:
+                    return node.Value<String>();
+                case JTokenType.Boolean:
+                    return node.Value<Boolean>();
+                case JTokenType.Date:
+                    return node.Value<DateTime>();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         private void WalkObject(JToken node, object parent, string columnName)
         {
-            var table = (parent as DataTable);
+            DataTable table;
+            if (parent is DataRow)
+            {
+                table = new DataTable(columnName);
+                (parent as DataRow)[columnName] = table;
+            }
+            else
+            {
+                table = (parent as DataTable);
+            }
+
             var row = table.NewRow();
             table.Rows.Add(row);
             foreach (JToken child in node.Children())
@@ -100,7 +130,7 @@ namespace NBi.Core.Rest.Json
                 {
                     dt = new List<object>();
                     (parent as DataRow)[columnName] = dt;
-                }  
+                }
             }
 
             foreach (JToken child in node.Children())
