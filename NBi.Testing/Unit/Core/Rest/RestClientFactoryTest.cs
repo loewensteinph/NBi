@@ -17,7 +17,7 @@ namespace NBi.Testing.Unit.Core.Rest
             var factory = new RestClientFactory();
             var client = factory.Instantiate(ContentType.Json, "http://calapi.inadiutorium.cz/api/v0/en/", CredentialsType.Anonymous);
 
-            Assert.That(client, Is.TypeOf<JsonRestClient>());
+            Assert.That(client, Is.TypeOf<RestClient>());
         }
         
     }

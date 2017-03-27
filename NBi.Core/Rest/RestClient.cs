@@ -11,12 +11,15 @@ using System.Threading.Tasks;
 
 namespace NBi.Core.Rest
 {
-    public class JsonRestClient : IRestClient
+    public class RestClient : IRestClient
     {
         private readonly WebClient client;
-        public JsonRestClient(WebClient client)
+        private readonly IParser parser;
+
+        public RestClient(WebClient client, IParser parser)
         {
             this.client = client;
+            this.parser = parser;
         }
 
         public string Download(string uri, IDictionary<string, string> parameters)
@@ -32,14 +35,17 @@ namespace NBi.Core.Rest
 
         public DataSet Parse(string content)
         {
-            //If json is an object and not an array then transform it to array
-            var token = JToken.Parse(content);
-            if (token is JObject && token.Count()>1)
-                content = new StringBuilder(content).Append("]}").Insert(0, "{ \"object\": [").ToString();
+            var ds = parser.Parse(content);
+            return ds;
 
-            //desrialize to Dataset
-            var dataset = JsonConvert.DeserializeObject<DataSet>(content);
-            return dataset;
+            //If json is an object and not an array then transform it to array
+            //var token = JToken.Parse(content);
+            //if (token is JObject && token.Count()>1)
+            //    content = new StringBuilder(content).Append("]}").Insert(0, "{ \"object\": [").ToString();
+
+            ////desrialize to Dataset
+            //var dataset = JsonConvert.DeserializeObject<DataSet>(content);
+            //return dataset;
         }
     }
 }

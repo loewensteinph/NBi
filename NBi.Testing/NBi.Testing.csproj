@@ -114,6 +114,7 @@
     <Compile Include="Integration\Core\Query\QueryOdbcEngineTest.cs" />
     <Compile Include="Integration\Core\Query\QueryOleDbEngineTest.cs" />
     <Compile Include="Integration\Core\Query\QuerySqlEngineTest.cs" />
+    <Compile Include="Unit\Core\Rest\Json\JsonParserTest.cs" />
     <Compile Include="Integration\Core\Rest\RestEngineTest.cs" />
     <Compile Include="Integration\GenbiL\Action\ActionTest.cs" />
     <Compile Include="Integration\SqlServer\IntegrationService\EtlDtsWindowsRunnerTest.cs" />

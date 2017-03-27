@@ -1,4 +1,5 @@
 ﻿using Antlr4.StringTemplate;
+using NBi.Core.Rest.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,6 +14,31 @@ namespace NBi.Core.Rest
     class RestClientFactory
     {
         public IRestClient Instantiate(ContentType contentType, string baseAddress, CredentialsType credentialsType)
+        {
+            var webClient = BuildClient(baseAddress, credentialsType);
+            var parser = BuildParser(contentType);
+
+            switch (contentType)
+            {
+                case ContentType.Json:
+                    return new RestClient(webClient, parser);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(contentType));
+            }
+        }
+
+        private IParser BuildParser(ContentType contentType)
+        {
+            switch (contentType)
+            {
+                case ContentType.Json:
+                    return new JsonParser();
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(contentType));
+            }
+        }
+
+        protected WebClient BuildClient(string baseAddress, CredentialsType credentialsType)
         {
             var webClient = new WebClient();
 
@@ -37,14 +63,8 @@ namespace NBi.Core.Rest
             WebRequest.DefaultWebProxy = null;
             webClient.Proxy = null;
 
-            switch (contentType)
-            {
-                case ContentType.Json:
-                    return new JsonRestClient(webClient);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(contentType));
-            }
+            return webClient;
         }
-        
+
     }
 }

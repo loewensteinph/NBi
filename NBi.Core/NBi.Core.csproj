@@ -261,8 +261,10 @@
     <Compile Include="Report\ReportCommand.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\CredentialsType.cs" />
+    <Compile Include="Rest\IParser.cs" />
     <Compile Include="Rest\IRestClient.cs" />
-    <Compile Include="Rest\JsonRestClient.cs" />
+    <Compile Include="Rest\Json\JsonParser.cs" />
+    <Compile Include="Rest\RestClient.cs" />
     <Compile Include="Rest\RestEngine.cs" />
     <Compile Include="Rest\RestClientFactory.cs" />
     <Compile Include="Rest\UriParametersBuilder.cs" />
