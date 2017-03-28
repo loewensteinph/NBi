@@ -483,6 +483,35 @@
     <xs:attribute name="roles" type="xs:string" use="optional" />
     <xs:attribute name="timeout-milliSeconds" type="xs:nonNegativeInteger" use="optional" />
   </xs:complexType>
+  <xs:complexType name="rest-type">
+    <xs:sequence>
+      <xs:element name="location" minOccurs="0" maxOccurs="1" type="location-type"/>
+      <xs:element name="credentials" minOccurs="0" maxOccurs="1" type="credentials-type"/>
+      <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="rest-parameter-type"/>
+    </xs:sequence>
+    <xs:attribute name="path" type="xs:string" use="required" />
+  </xs:complexType>
+  <xs:complexType name="location-type">
+    <xs:attribute name="base-address" type="xs:string" use="required" />
+    <xs:attribute name="content-type" use="optional" >
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="json"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="credentials-type">
+    <xs:attribute name="type" type="xs:string" use="optional" />
+  </xs:complexType>
+  <xs:complexType name="rest-parameter-type">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="remove" type="xs:boolean" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
   <xs:complexType name="transformation-type">
     <xs:simpleContent>
       <xs:extension base="xs:string">
@@ -666,6 +695,7 @@
               <xs:complexType>
                 <xs:choice>
                   <xs:element name="query" type ="query-type"/>
+                  <xs:element name="rest" type ="rest-type"/>
                   <xs:element name="report" type ="report-type"/>
                   <xs:element name="shared-dataset" type ="shared-dataset-type"/>
                   <xs:element name="assembly" type ="assembly-type"/>

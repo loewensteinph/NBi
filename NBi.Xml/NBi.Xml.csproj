@@ -104,6 +104,10 @@
     <Compile Include="Items\ColumnXml.cs" />
     <Compile Include="Items\ColumnsXml.cs" />
     <Compile Include="Items\Filters\IOwnerFilter.cs" />
+    <Compile Include="Items\Rest\CredentialsXml.cs" />
+    <Compile Include="Items\Rest\LocationXml.cs" />
+    <Compile Include="Items\Rest\RestParameterXml.cs" />
+    <Compile Include="Items\Rest\RestXml.cs" />
     <Compile Include="Items\SharedDatasetXml.cs" />
     <Compile Include="Items\ResultSet\TransformationXml.cs" />
     <Compile Include="Items\UrlXml.cs" />
