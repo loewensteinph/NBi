@@ -139,10 +139,10 @@ namespace NBi.Core.ResultSet
             if (settings is SettingsSingleRowComparison)
                 comparer = new SingleRowComparer(settings as SettingsSingleRowComparison);
 
-            if (settings is SettingsResultSetComparisonByIndex)
+            else if (settings is SettingsResultSetComparisonByIndex)
                 comparer = new ResultSetComparerByIndex(settings as SettingsResultSetComparisonByIndex);
 
-            if (settings is SettingsResultSetComparisonByName)
+            else if (settings is SettingsResultSetComparisonByName)
                 comparer = new ResultSetComparerByName(settings as SettingsResultSetComparisonByName);
         }
 
