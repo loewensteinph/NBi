@@ -1,4 +1,4 @@
-﻿using NBi.Core.ResultSet.Converter;
+﻿    using NBi.Core.ResultSet.Converter;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -58,7 +58,7 @@ namespace NBi.Core.ResultSet.Comparer
         }
 
 
-        private ComparerResult EqualByNull(object x, object y)
+        protected virtual ComparerResult EqualByNull(object x, object y)
         {
             if (x == null && y == null)
                 return ComparerResult.Equality;

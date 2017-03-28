@@ -172,6 +172,10 @@
     <Compile Include="Unit\Core\Report\FileParserTest.cs" />
     <Compile Include="Unit\Core\Rest\RestClientFactoryTest.cs" />
     <Compile Include="Unit\Core\Rest\UriParametersBuilderTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\Comparer\CellComparerTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\Comparer\TableComparerTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\Converter\TableConverterTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\JsonResultSetTest.cs" />
     <Compile Include="Unit\Core\ResultSet\KeyCollectionTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\BooleanComparerTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Comparer\DateTimeRoundingTest.cs" />
@@ -184,11 +188,15 @@
     <Compile Include="Unit\Core\ResultSet\Comparer\NumericToleranceFactoryTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Converter\DateTimeConverterTest.cs" />
     <Compile Include="Unit\Core\ResultSet\Converter\BaseNumericConverterTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\ResultSetComparerByNameTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\ResultSetBuilderTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\SettingsResultSetComparisonFactoryTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\SettingsResultSetComparisonByIndexTest.cs" />
     <Compile Include="Unit\Core\ResultSet\SingleRowComparerTest.cs" />
-    <Compile Include="Unit\Core\ResultSet\ResultSetComparerTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\ResultSetComparerByIndexTest.cs" />
     <Compile Include="Unit\Core\ResultSet\IntervalBuilderTest.cs" />
     <Compile Include="Unit\Core\ResultSet\LineFormatterTest.cs" />
-    <Compile Include="Unit\Core\ResultSet\ResultSetComparisonSettingsTest.cs" />
+    <Compile Include="Unit\Core\ResultSet\SettingsResultSetComparisonByNameTest.cs" />
     <Compile Include="Unit\Core\ResultSet\ResultSetTest.cs" />
     <Compile Include="Unit\Core\ResultSet\ResultSetWriterTest.cs" />
     <Compile Include="Unit\Core\ConnectionFactoryTest.cs" />
@@ -287,6 +295,8 @@
     <Compile Include="Unit\Xml\Constraints\ExistsXmlTest.cs" />
     <Compile Include="Unit\Xml\Decoration\ConditionXmlTest.cs" />
     <Compile Include="Unit\Xml\Decoration\DecorationXmlTest.cs" />
+    <Compile Include="Unit\Xml\Items\ResultSet\ColumnDefinitionXmlTest.cs" />
+    <Compile Include="Unit\Xml\Items\ResultSet\ResultSetXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\SharedDatasetXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\RoutineParameterXmlTest.cs" />
     <Compile Include="Unit\Xml\Items\RoutineXmlTest.cs" />
@@ -703,6 +713,8 @@
     <Content Include="Acceptance\Resources\PowerBiDesktop\Source.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Unit\Xml\Resources\ColumnDefinitionXmlTestSuite.xml" />
+    <EmbeddedResource Include="Unit\Xml\Resources\ResultSetXmlTestSuite.xml" />
     <EmbeddedResource Include="Unit\Xml\Resources\SharedDatasetXmlTestSuite.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>

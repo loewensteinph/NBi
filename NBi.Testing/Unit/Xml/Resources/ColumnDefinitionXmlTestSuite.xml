@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testSuite name="The Query TestSuite" xmlns="http://NBi/TestSuite">
+	<settings>
+		<default apply-to="system-under-test">
+			<connectionString>Data Source=mhknbn2kdz.database.windows.net;Initial Catalog=AdventureWorks2012;User Id=sqlfamily;password=sqlf@m1ly</connectionString>
+		</default>
+	</settings>
+	<test name="My first test case" uid="0001">
+		<system-under-test>
+			<execution>
+				<query name="Select first departments">
+					select top 2 [DepartmentID], [Name], [GroupName] from [HumanResources].[Department] order by Name
+				</query>
+			</execution>
+		</system-under-test>
+		<assert>
+			<equalTo>
+        <column index="0" role="key" type="numeric"/>
+        <column index="0" role="key" type="text"/>
+        <column index="0" role="key" type="dateTime"/>
+        <column index="0" role="key" type="boolean"/>
+        <column index="0" role="value" type="table"/>
+				<resultSet/>
+			</equalTo>
+		</assert>
+	</test>
+</testSuite>

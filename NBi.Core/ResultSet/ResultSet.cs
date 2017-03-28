@@ -115,14 +115,48 @@ namespace NBi.Core.ResultSet
             foreach (var row in rows)
             {
                 var cells = row.Cells.ToArray<ICell>();
-                var contentCells = new List<Object>();
+                var contentCells = new List<object>();
                 foreach (var cell in cells)
-                    contentCells.Add(cell.Value);
-
+                {
+                    if (cell.Rows.Count == 0)
+                        contentCells.Add(cell.Value);
+                    else
+                        contentCells.Add(LoadSubTable(cell.Rows));
+                }
                 objs.Add(contentCells.ToArray());
             }
 
             this.Load(objs);
+        }
+
+        private DataTable LoadSubTable(IEnumerable<IRow> rows)
+        {
+            var dataTable = new DataTable();
+            if (rows.Count() > 0)
+                foreach (var cell in rows.ElementAt(0).Cells)
+                    dataTable.Columns.Add(new DataColumn(cell.ColumnName));
+
+            foreach (var row in rows)
+            {
+                var dataRow = dataTable.NewRow();
+                dataRow.ItemArray = LoadRowOfSubTable(row.Cells).ToArray();
+                dataTable.Rows.Add(dataRow);
+            }
+            dataTable.AcceptChanges();
+            return dataTable;
+        }
+
+        private IEnumerable<object> LoadRowOfSubTable(IEnumerable<ICell> cells)
+        {
+            var contentCells = new List<object>();
+            foreach (var cell in cells)
+            {
+                if (cell.Rows.Count == 0)
+                    contentCells.Add(cell.Value);
+                else
+                    contentCells.Add(LoadSubTable(cell.Rows));
+            }
+            return contentCells;
         }
 
         protected void ConsoleDisplay()

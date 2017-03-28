@@ -261,6 +261,8 @@
     <Compile Include="Report\ReportCommand.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\CredentialsType.cs" />
+    <Compile Include="ResultSet\Comparer\TableComparer.cs" />
+    <Compile Include="ResultSet\Comparer\CellComparer.cs" />
     <Compile Include="Rest\IParser.cs" />
     <Compile Include="Rest\IRestClient.cs" />
     <Compile Include="Rest\Json\JsonParser.cs" />
@@ -278,7 +280,9 @@
     <Compile Include="ResultSet\Comparer\NumericBoundedPercentageTolerance.cs" />
     <Compile Include="ResultSet\Comparer\NumericToleranceFactory.cs" />
     <Compile Include="ResultSet\Comparer\SideTolerance.cs" />
+    <Compile Include="ResultSet\ComparisonStyle.cs" />
     <Compile Include="ResultSet\Converter\BaseNumericConverter.cs" />
+    <Compile Include="ResultSet\Converter\TableConverter.cs" />
     <Compile Include="ResultSet\Converter\ConverterFactory.cs" />
     <Compile Include="ResultSet\Converter\IConverter.cs" />
     <Compile Include="ResultSet\Converter\DateTimeConverter.cs" />
@@ -286,7 +290,10 @@
     <Compile Include="ResultSet\Converter\ThreeStateBooleanConverter.cs" />
     <Compile Include="ResultSet\Converter\NumericConverter.cs" />
     <Compile Include="ResultSet\Converter\TextConverter.cs" />
+    <Compile Include="ResultSet\DataRowKeysComparerByName.cs" />
+    <Compile Include="ResultSet\DataRowKeysComparerByIndex.cs" />
     <Compile Include="ResultSet\EndPoint.cs" />
+    <Compile Include="ResultSet\Content.cs" />
     <Compile Include="ResultSet\IntervalBuilder.cs" />
     <Compile Include="ListComparisonFormatter.cs" />
     <Compile Include="ListComparer.cs" />
@@ -316,9 +323,16 @@
     <Compile Include="ResultSet\Comparer\RoundingFactory.cs" />
     <Compile Include="ResultSet\Comparer\TextComparer.cs" />
     <Compile Include="ResultSet\Comparer\Tolerance.cs" />
-    <Compile Include="ResultSet\SingleRowComparisonSettings.cs" />
-    <Compile Include="ResultSet\SingleRowComparer.cs" />
+    <Compile Include="ResultSet\JsonResultSet.cs" />
+    <Compile Include="ResultSet\IResultSetComparisonSettings.cs" />
     <Compile Include="ResultSet\ResultSetComparer.cs" />
+    <Compile Include="ResultSet\ResultSetComparerByName.cs" />
+    <Compile Include="ResultSet\SettingsResultSetComparisonByIndex.cs" />
+    <Compile Include="ResultSet\SettingsResultSetComparisonByName.cs" />
+    <Compile Include="ResultSet\ResultSetComparisonBuilder.cs" />
+    <Compile Include="ResultSet\SettingsSingleRowComparison.cs" />
+    <Compile Include="ResultSet\SingleRowComparer.cs" />
+    <Compile Include="ResultSet\ResultSetComparerByIndex.cs" />
     <Compile Include="ResultSet\DataRowKeysComparer.cs" />
     <Compile Include="ResultSet\Interval.cs" />
     <Compile Include="ResultSet\KeyCollection.cs" />
@@ -335,7 +349,7 @@
     <Compile Include="ResultSet\ResultSet.cs" />
     <Compile Include="ResultSet\ResultSetBuilder.cs" />
     <Compile Include="ResultSet\ResultSetComparerException.cs" />
-    <Compile Include="ResultSet\ResultSetComparisonSettings.cs" />
+    <Compile Include="ResultSet\SettingsResultSetComparison.cs" />
     <Compile Include="ResultSet\ResultSetCompareResult.cs" />
     <Compile Include="ResultSet\IResultSetComparer.cs" />
     <Compile Include="ConnectionException.cs" />
