@@ -5,7 +5,7 @@
 			<connectionString>Data Source=mhknbn2kdz.database.windows.net;Initial Catalog=AdventureWorks2012;User Id=sqlfamily;password=sqlf@m1ly</connectionString>
 		</default>
 	</settings>
-	<test name="My first test case" uid="0001">
+	<test name="My first test case" uid="0000">
 		<system-under-test>
 			<execution>
 				<query name="Select first departments">
@@ -68,8 +68,9 @@
 		</system-under-test>
 		<assert>
 			<equalTo>
-				<column role="value" index="3" type="numeric" tolerance="10"/>
-				<column role="value" index="4" type="boolean"/>
+        <column role="value" index="3" type="numeric" tolerance="10"/>
+				<column role="value" index="4" type="boolean" array="false"/>
+        <column role="value" index="2" type="numeric" array="true"/>
 				<query file="Query.sql"/>
 			</equalTo>
 		</assert>

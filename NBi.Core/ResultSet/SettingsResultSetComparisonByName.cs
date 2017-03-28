@@ -34,6 +34,18 @@ namespace NBi.Core.ResultSet
             return false;
         }
 
+        public override bool IsArray(string name)
+        {
+            var isArray = ColumnsDef.Any(
+                    c => c.Name == name
+                    && c.IsArray);
+
+            if (IsKey(name) && isArray)
+                throw new InvalidOperationException(String.Format("The column with name '{0}' cannot be defined as a key and as an array at the same time.", name));
+
+            return isArray;
+        }
+
         public override bool IsRounding(string name)
         {
             return ColumnsDef.Any(

@@ -125,14 +125,14 @@ namespace NBi.Xml.Constraints
         }
 
         [XmlElement("column")]
-        public List<NBi.Xml.Items.ResultSet.ColumnDefinitionXml> columnsDef;
+        public List<ColumnDefinitionXml> columnsDef;
 
         public IReadOnlyList<IColumnDefinition> ColumnsDef
         {
             get
             {
                 if (columnsDef == null)
-                    columnsDef = new List<NBi.Xml.Items.ResultSet.ColumnDefinitionXml>();
+                    columnsDef = new List<ColumnDefinitionXml>();
                 return columnsDef.Cast<IColumnDefinition>().ToList();
             }
         }

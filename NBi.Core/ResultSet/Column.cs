@@ -9,6 +9,7 @@ namespace NBi.Core.ResultSet
     {
         public int Index {get; set;}
         public string Name { get; set; }
+        public bool IsArray { get; set; }
         public ColumnRole Role {get; set;} 
         public ColumnType Type {get; set;}
 

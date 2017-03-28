@@ -82,6 +82,18 @@ namespace NBi.Core.ResultSet
 
 			return false;
 		}
+
+        public override bool IsArray(int index)
+        {
+            var isArray = ColumnsDef.Any(
+                    c => c.Index == index
+                    && c.IsArray);
+
+            if (IsKey(index) && isArray)
+                throw new InvalidOperationException(String.Format("The column with index '{0}' cannot be defined as a key and as an array at the same time."));
+            
+            return isArray;
+        }
         
         public override bool IsRounding(int index)
 		{
