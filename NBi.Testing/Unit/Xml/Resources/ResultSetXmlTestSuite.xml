@@ -1,44 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <testSuite name="The Query TestSuite" xmlns="http://NBi/TestSuite">
-	<test name="One cell" uid="0000">
+	<test name="result-set with rows/cells" uid="0000">
 		<system-under-test>
 			<execution>
-				<query name="Select first departments">
-					select top 1 [Name] from [HumanResources].[Department] order by Name
-				</query>
+        <query>
+          select 1, 'alpha' union all select 2, 'beta' union all select 3, 'gamma'
+        </query>
 			</execution>
 		</system-under-test>
 		<assert>
 			<equalTo>
 				<resultSet>
-					<row>						
-						<cell>Document Control</cell>
+					<row>
+						<cell>1</cell>
+            <cell>alpha</cell>
 					</row>
+          <row>
+            <cell>2</cell>
+            <cell>beta</cell>
+          </row>
+          <row>
+            <cell>3</cell>
+            <cell>gamma</cell>
+          </row>
 				</resultSet>
 			</equalTo>
 		</assert>
 	</test>
-  <test name="One sub-table" uid="0001">
+  <test name="rest with sub-object" uid="0001">
     <system-under-test>
       <execution>
-        <query name="Select first departments">
-          select top 1 [Name] from [HumanResources].[Department] order by Name
-        </query>
+        <rest path="http://calapi.inadiutorium.cz/api/v0/en/calendars/default/2015/6/27"/>
       </execution>
     </system-under-test>
     <assert>
       <equalTo>
         <resultSet>
           <row>
-            <cell>Document Control</cell>
+            <cell>2015-06-27</cell>
+            <cell>ordinary</cell>
+            <cell>12</cell>
             <cell>
               <row>
-                <cell>1</cell>
-                <cell>2</cell>
+                <cell>(empty)</cell>
+                <cell>green</cell>
               </row>
               <row>
-                <cell>3</cell>
-                <cell>4</cell>
+                <cell>Saint Cyril of Alexandria, bishop and doctor</cell>
+                <cell>white</cell>
+              </row>
+            </cell>
+            <cell>saturday</cell>
+          </row>
+        </resultSet>
+      </equalTo>
+    </assert>
+  </test>
+  <test name="rest with arrays" uid="0002">
+    <system-under-test>
+      <execution>
+        <rest path="volumes">
+          <location base-address="https://www.googleapis.com/books/v1/"/>
+          <parameter name="q">isbn:3905829800</parameter>
+        </rest>
+      </execution>
+    </system-under-test>
+    <assert>
+      <equalTo>
+        <resultSet>
+          <row>
+            <cell column-name="totalItems">1</cell>
+            <cell column-name="items">
+              <row>
+                <cell column-name="etag">JWDdDeGHry0</cell>
+                <cell column-name="volumeInfo">
+                  <row>
+                    <cell column-name="subtitle">Educational Complex Onwards 1995-2008</cell>
+                    <cell column-name="authors">
+                      <item>Mike Kelley</item>
+                      <item>Anne Pontégnie</item>
+                    </cell>
+                  </row>
+                </cell>
               </row>
             </cell>
           </row>
@@ -46,4 +89,35 @@
       </equalTo>
     </assert>
   </test>
+  <test name="rest with single-element in array" uid="0003">
+    <system-under-test>
+      <execution>
+        <rest path="volumes">
+          <location base-address="https://www.googleapis.com/books/v1/"/>
+          <parameter name="q">isbn:0747532699</parameter>
+        </rest>
+      </execution>
+    </system-under-test>
+    <assert>
+      <equalTo>
+        <resultSet>
+          <row>
+            <cell column-name="totalItems">1</cell>
+            <cell column-name="items">
+              <row>
+                <cell column-name="etag">511pTu1Klc4</cell>
+                <cell column-name="volumeInfo">
+                  <row>
+                    <cell column-name="title">Harry Potter 1 and the Philosopher's Stone</cell>
+                    <cell column-name="authors">J. K. Rowling</cell>
+                  </row>
+                </cell>
+              </row>
+            </cell>
+          </row>
+        </resultSet>
+      </equalTo>
+    </assert>
+  </test>
+  
 </testSuite>

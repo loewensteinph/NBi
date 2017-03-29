@@ -1142,9 +1142,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cell-type" mixed="true">
-    <xs:sequence>
+    <xs:choice>
       <xs:element name="row" minOccurs="0" maxOccurs="unbounded" type="row-type"/>
-    </xs:sequence>
+      <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+    </xs:choice>
     <xs:attribute name="column-name" type="xs:string" use="optional" />
   </xs:complexType>
   <xs:complexType name="row-type">

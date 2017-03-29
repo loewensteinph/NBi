@@ -128,6 +128,7 @@ namespace NBi.Core.ResultSet
         private class Cell : ICell
         {
             public string Value { get; set; }
+            public IEnumerable<string> Values { get; set; }
             public string ColumnName { get; set; }
             private readonly IList<IRow> rows = new List<IRow>();
 
