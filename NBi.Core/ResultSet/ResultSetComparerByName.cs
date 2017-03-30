@@ -70,11 +70,11 @@ namespace NBi.Core.ResultSet
                     var tableComparer = new TableComparer(settings.GetSubSettings(columnName));
                     result = tableComparer.Compare(x, y);
                 }
+                else if (settings.IsArray(columnName))
+                    result = ArrayComparer.Compare(x, y, settings.GetColumnType(columnName));
                 else
-                {
                     result = CellComparer.Compare(x, y, settings.GetColumnType(columnName), settings.GetTolerance(columnName), rounding);
-                }
-                
+
 
                 if (!result.AreEqual)
                 {
@@ -119,7 +119,7 @@ namespace NBi.Core.ResultSet
 
         protected void CheckSettingsAndDataTable(DataTable dt, SettingsResultSetComparisonByName settings)
         {
-            var missingColumns = new List<KeyValuePair<string,string>>();
+            var missingColumns = new List<KeyValuePair<string, string>>();
             foreach (var columnName in settings.GetKeyNames())
             {
                 if (!dt.Columns.Contains(columnName))

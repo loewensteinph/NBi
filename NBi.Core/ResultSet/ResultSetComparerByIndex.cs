@@ -62,7 +62,11 @@ namespace NBi.Core.ResultSet
                     var x = rx.IsNull(i) ? DBNull.Value : rx[i];
                     var y = ry.IsNull(i) ? DBNull.Value : ry[i];
                     var rounding = settings.IsRounding(i) ? settings.GetRounding(i) : null;
-                    var result = CellComparer.Compare(x, y, settings.GetColumnType(i), settings.GetTolerance(i), rounding);
+                    ComparerResult result;
+                    if (settings.IsArray(i))
+                        result = ArrayComparer.Compare(x, y, settings.GetColumnType(i));
+                    else
+                        result = CellComparer.Compare(x, y, settings.GetColumnType(i), settings.GetTolerance(i), rounding);
 
                     if (!result.AreEqual)
                     {
