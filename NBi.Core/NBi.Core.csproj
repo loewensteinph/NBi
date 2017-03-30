@@ -261,6 +261,7 @@
     <Compile Include="Report\ReportCommand.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\CredentialsType.cs" />
+    <Compile Include="ResultSet\Comparer\ArrayComparer.cs" />
     <Compile Include="ResultSet\Comparer\TableComparer.cs" />
     <Compile Include="ResultSet\Comparer\CellComparer.cs" />
     <Compile Include="Rest\IParser.cs" />
