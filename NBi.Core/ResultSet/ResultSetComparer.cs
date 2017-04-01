@@ -13,9 +13,16 @@ namespace NBi.Core.ResultSet
     public abstract class ResultSetComparer : IResultSetComparer
     {
         private readonly CellComparer cellComparer = new CellComparer();
+        private readonly ArrayComparer arrayComparer = new ArrayComparer();
+
         protected CellComparer CellComparer
         {
             get { return cellComparer; }
+        }
+
+        protected ArrayComparer ArrayComparer
+        {
+            get { return arrayComparer; }
         }
 
         public ISettingsResultSetComparison Settings { get; set; }
