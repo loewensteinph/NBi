@@ -65,6 +65,17 @@ namespace NBi.Testing.Unit.Core.ResultSet.Comparer
         }
 
         [Test]
+        [Ignore("(value) is not supported at the moment in an array")]
+        public void Compare_IdenticalArrayWithValue_True()
+        {
+            var comparer = new ArrayComparer();
+            var x = new object[] { "epsilon", "alpha", "delta", "beta", "gamma" };
+            var y = new object[] { "beta", "gamma", "(value)", "delta", "epsilon" };
+            var result = comparer.Compare(x, y, NBi.Core.ResultSet.ColumnType.Text);
+            Assert.That(result.AreEqual, Is.True);
+        }
+
+        [Test]
         public void Compare_DifferentArray_False()
         {
             var comparer = new ArrayComparer();
