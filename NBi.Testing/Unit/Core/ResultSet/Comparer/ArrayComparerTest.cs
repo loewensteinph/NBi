@@ -55,6 +55,16 @@ namespace NBi.Testing.Unit.Core.ResultSet.Comparer
         }
 
         [Test]
+        public void Compare_IdenticalArrayChangedOrder_True()
+        {
+            var comparer = new ArrayComparer();
+            var x = new object[] { "alpha", "beta" };
+            var y = new object[] { "beta", "alpha" };
+            var result = comparer.Compare(x, y, NBi.Core.ResultSet.ColumnType.Text);
+            Assert.That(result.AreEqual, Is.True);
+        }
+
+        [Test]
         public void Compare_DifferentArray_False()
         {
             var comparer = new ArrayComparer();

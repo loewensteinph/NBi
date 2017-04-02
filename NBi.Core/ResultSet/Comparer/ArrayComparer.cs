@@ -14,6 +14,8 @@ namespace NBi.Core.ResultSet.Comparer
         private readonly DateTimeComparer dateTimeComparer = new DateTimeComparer();
         private readonly BooleanComparer booleanComparer = new BooleanComparer();
 
+        private BaseComparer comparer;
+
         public ComparerResult Compare(object x, object y, ColumnType columnType)
         {
             //Any management
@@ -59,78 +61,48 @@ namespace NBi.Core.ResultSet.Comparer
                     if (!(y is IEnumerable<object>))
                         return new ComparerResult("(array)");
 
-                    var xArray = x as IEnumerable<object>;
-                    var yArray = y as IEnumerable<object>;
+                    IList<object> xArray = (x as IEnumerable<object>).ToList();
+                    IList<object> yArray = (y as IEnumerable<object>).ToList();
 
                     //Check the length of the arrays
                     if (xArray.Count() != yArray.Count())
                         return new ComparerResult("(array-size)");
 
-                    Func<object, bool> filter = (o => o.ToString() != "(any)" && o.ToString() != "(value)");
-
-                    //Numeric
-                    if (columnType == ColumnType.Numeric)
+                    switch (columnType)
                     {
-                        var converter = new NumericConverter();
-                        foreach (var item in xArray.Union(yArray))
-                            if (!converter.IsValid(item))
-                                return new ComparerResult("(array-type-mismatch)");
-
-                        for (int i = 0; i < xArray.Count(); i++)
-                        {
-                            var res = numericComparer.Compare(xArray.ElementAt(i), yArray.ElementAt(i));
-                            if (!res.AreEqual)
-                                return res;
-                        }
+                        case ColumnType.Text:
+                            comparer = new TextComparer();
+                            break;
+                        case ColumnType.Numeric:
+                            comparer = new NumericComparer();
+                            break;
+                        case ColumnType.DateTime:
+                            comparer = new DateTimeComparer();
+                            break;
+                        case ColumnType.Boolean:
+                            comparer = new BooleanComparer();
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
-                    //Date and Time
-                    else if (columnType == ColumnType.DateTime)
-                    {
-                        var converter = new DateTimeConverter();
-                        foreach (var item in xArray.Union(yArray))
-                            if (!converter.IsValid(item))
-                                return new ComparerResult("(array-type-mismatch)");
 
-                        for (int i = 0; i < xArray.Count(); i++)
-                        {
-                            var res = dateTimeComparer.Compare(xArray.ElementAt(i), yArray.ElementAt(i));
-                            if (!res.AreEqual)
-                                return res;
-                        }
-                    }
-                    //Boolean
-                    else if (columnType == ColumnType.Boolean)
-                    {
-                        var converter = new BooleanConverter();
-                        foreach (var item in xArray.Union(yArray))
-                            if (!converter.IsValid(item))
-                                return new ComparerResult("(array-type-mismatch)");
-
-                        for (int i = 0; i < xArray.Count(); i++)
-                        {
-                            var res = booleanComparer.Compare(xArray.ElementAt(i), yArray.ElementAt(i));
-                            if (!res.AreEqual)
-                                return res;
-                        }
-                    }
-                    //Text
-                    else
-                    {
-                        var converter = new TextConverter();
-                        foreach (var item in xArray.Union(yArray))
-                            if (!converter.IsValid(item))
-                                return new ComparerResult("(array-type-mismatch)");
-
-                        for (int i = 0; i < xArray.Count(); i++)
-                        {
-                            var res = textComparer.Compare(xArray.ElementAt(i), yArray.ElementAt(i));
-                            if (!res.AreEqual)
-                                return res;
-                        }
-                    }
+                    foreach (object o in yArray)
+                        if (!TryRemove(o, ref xArray))
+                            return new ComparerResult("(array-mismatch)");
                 }
             }
             return ComparerResult.Equality;
+        }
+
+        public bool TryRemove(object o, ref IList<object> list)
+        {
+            for (int index = 0; index < list.Count; index++)
+                if (comparer.Compare(list[index], o).AreEqual)
+                {
+                    list.RemoveAt(index);
+                    return true;
+                }
+            return false;
         }
     }
 }
