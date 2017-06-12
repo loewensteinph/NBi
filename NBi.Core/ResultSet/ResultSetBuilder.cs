@@ -9,6 +9,9 @@ namespace NBi.Core.ResultSet
     public class ResultSetBuilder : IResultSetBuilder
     {
         private readonly CsvProfile profile;
+
+        private readonly ExcelDefinition excelProfile;
+        //private readonly ExcelProfile excelProfile;
         public ResultSetBuilder()
             : this(CsvProfile.SemiColumnDoubleQuote)
         {
@@ -18,7 +21,10 @@ namespace NBi.Core.ResultSet
         {
             this.profile = profile;
         }
-
+        public ResultSetBuilder(ExcelDefinition profile)
+        {
+            this.excelProfile = profile;
+        }
         public virtual ResultSet Build(Object obj)
         {
             //Console.WriteLine("Debug: {0} {1}", obj.GetType(), obj.ToString()); 
@@ -60,14 +66,23 @@ namespace NBi.Core.ResultSet
 
         public virtual ResultSet Build(string path)
         {
+            var rs = new ResultSet();
+
             if (!System.IO.File.Exists(path))
                 throw new ExternalDependencyNotFoundException(path);
+            if (path.EndsWith(".csv"))
+            {
+                CsvReader reader = new CsvReader(profile);
+                DataTable dataTable = reader.Read(path, false);
+                rs.Load(dataTable);
+            }
+            if (path.EndsWith(".xlsx"))
+            {
+                ExcelReader reader = new ExcelReader(excelProfile);
+                DataTable dataTable = reader.Read(path, false);
+                rs.Load(dataTable);
+            }
 
-            var reader = new CsvReader(profile);
-            var dataTable = reader.Read(path, false);
-
-            var rs = new ResultSet();
-            rs.Load(dataTable);
             return rs;
         }
 

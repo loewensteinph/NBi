@@ -420,6 +420,13 @@
     <EmbeddedResource Include="Acceptance\GenbiL\Resources\Settings.nbiset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Acceptance\Resources\Positive\ExcelTest.nbits">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="Acceptance\Resources\Excel\Sample.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Acceptance\Resources\Positive\OrderCountByYear.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -614,7 +621,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NBi.Core.SqlServer\NBi.Core.SqlServer.csproj">
       <Project>{687f2843-268c-43e2-8369-9eb06b9b59f8}</Project>
-      <Name>NBi.Core.SqlServer2014</Name>
+      <Name>NBi.Core.SqlServer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NBi.Core\NBi.Core.csproj">
       <Project>{3f730647-fe31-4907-8a6e-a0c4a0c970ea}</Project>

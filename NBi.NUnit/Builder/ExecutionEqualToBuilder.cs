@@ -67,6 +67,8 @@ namespace NBi.NUnit.Builder
                     ctr = new EqualToConstraint(ConstraintXml.ResultSet.GetFile());
                     if (ConstraintXml.Settings.CsvProfile != null)
                         ctr = ctr.CsvProfile(ConstraintXml.Settings.CsvProfile);
+                    if (ConstraintXml.ResultSet.Sheet != null)
+                        ctr = ctr.ExcelProfile(ConstraintXml.ResultSet.Sheet);
                 }
                 else if (ConstraintXml.ResultSet.Rows != null)
                 {

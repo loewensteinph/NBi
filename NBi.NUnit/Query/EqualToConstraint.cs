@@ -21,6 +21,7 @@ namespace NBi.NUnit.Query
 
         protected bool parallelizeQueries = false;
         protected CsvProfile csvProfile;
+        protected ExcelDefinition excelDefinition;
 
         protected ResultSet expectedResultSet;
         protected ResultSet actualResultSet;
@@ -88,6 +89,8 @@ namespace NBi.NUnit.Query
                 {
                     if (csvProfile==null)
                         _resultSetBuilder = new ResultSetBuilder();
+                    if (excelDefinition != null)
+                        _resultSetBuilder = new ResultSetBuilder(excelDefinition);
                     else
                         _resultSetBuilder = new ResultSetBuilder(csvProfile);
                 }
@@ -171,6 +174,14 @@ namespace NBi.NUnit.Query
             return this;
         }
 
+        public EqualToConstraint ExcelProfile(string sheetName)
+        {
+            ExcelDefinition excelDefinition = new ExcelDefinition();
+            excelDefinition.SheetName = sheetName;
+
+            this.excelDefinition = excelDefinition;
+            return this;
+        }
 
         /// <summary>
         /// Handle an IDbCommand and compare it to a predefined resultset

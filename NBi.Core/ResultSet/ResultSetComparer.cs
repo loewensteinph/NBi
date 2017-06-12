@@ -49,6 +49,7 @@ namespace NBi.Core.ResultSet
             {
                 CompareHelper hlpr = new CompareHelper();
 
+                var ep = dt.ExtendedProperties["NBi::ResultSetType"];
                 var keys = keyComparer.GetKeys(row);
 
                 hlpr.Keys = keys;
@@ -59,7 +60,7 @@ namespace NBi.Core.ResultSet
                 if (dict.ContainsKey(keys))
                 {
                     throw new ResultSetComparerException(
-                        string.Format("The {0} data set has some duplicated keys. Check your keys definition or the result set defined in your {1}. The duplicated hashcode is {2}.\r\nRow to insert:{3}.\r\nRow already inserted:{4}.", 
+                        string.Format("The {0} data set has some duplicated keys. Check your keys definition or the result set defined in your {1}. The duplicated hashcode is {2}.\r\nRow to insert:{3}.\r\nRow already inserted:{4}.",
                             isSystemUnderTest ? "actual" : "expected",
                             isSystemUnderTest ? "system-under-test" : "assertion",
                             keys.GetHashCode(),
@@ -92,6 +93,47 @@ namespace NBi.Core.ResultSet
             return sb.ToString();
         }
 
+        private ResultSetComparisonSettings GetExcelComparisonSettings(DataTable x)
+        {
+            List<Column> columnList = new List<Column>();
+
+
+            foreach (DataColumn col in x.Columns)
+            {
+                Column column = new Column();
+
+                column.Index = col.Ordinal;
+                var test = col.ExtendedProperties["NBi::Role"];
+
+                column.Role = col.ExtendedProperties["NBi::Role"].Equals(ColumnRole.Key) ? ColumnRole.Key : ColumnRole.Value;
+                switch (col.ExtendedProperties["NBi::Type"])
+                {
+                    case ColumnType.Numeric:
+                        column.Type = ColumnType.Numeric;
+                        break;
+                    case ColumnType.DateTime:
+                        column.Type = ColumnType.DateTime;
+                        break;
+                    case ColumnType.Boolean:
+                        column.Type = ColumnType.Boolean;
+                        break;
+                    default:
+                        column.Type = ColumnType.Text;
+                        break;
+                }
+                columnList.Add(column);
+            }
+
+            List<IColumnDefinition> columnDefinitions = new List<IColumnDefinition>(columnList);
+
+            ResultSetComparisonSettings ResultSetComparisonSettings = new ResultSetComparisonSettings(
+                ResultSetComparisonSettings.KeysChoice.First,
+                ResultSetComparisonSettings.ValuesChoice.Last,
+                columnDefinitions
+            );
+            return ResultSetComparisonSettings;
+        }
+
         protected ResultSetCompareResult doCompare(DataTable x, DataTable y)
         {
             var chrono = DateTime.Now;
@@ -103,8 +145,12 @@ namespace NBi.Core.ResultSet
                 Settings.ApplyTo(columnsCount);
 
             Settings.ConsoleDisplay();
-            WriteSettingsToDataTableProperties(y, Settings);
+
             WriteSettingsToDataTableProperties(x, Settings);
+            if (x.ExtendedProperties.ContainsKey("NBi::ResultSetType") && Settings.GetMinColumnIndexDefined() == -1)
+                Settings = GetExcelComparisonSettings(x);
+
+            WriteSettingsToDataTableProperties(y, Settings);
 
             CheckSettingsAndDataTable(y, Settings);
             CheckSettingsAndDataTable(x, Settings);
@@ -286,15 +332,17 @@ namespace NBi.Core.ResultSet
         {
             foreach (DataColumn column in dt.Columns)
             {
-                if (column.ExtendedProperties.ContainsKey("NBi::Role"))
+                if (!dt.ExtendedProperties.ContainsKey("NBi::ResultSetType"))
+                {
+                    if (column.ExtendedProperties.ContainsKey("NBi::Type"))
+                        column.ExtendedProperties["NBi::Type"] = settings.GetColumnType(column.Ordinal);
+                    else
+                        column.ExtendedProperties.Add("NBi::Type", settings.GetColumnType(column.Ordinal));
+                }
+                if (column.ExtendedProperties.ContainsKey("NBi::Role") && !dt.ExtendedProperties["NBi::ResultSetType"].Equals("Excel") && !column.ExtendedProperties["NBi::Role"].Equals(ColumnRole.Key))
                     column.ExtendedProperties["NBi::Role"] = settings.GetColumnRole(column.Ordinal);
-                else
+                if (!column.ExtendedProperties.ContainsKey("NBi::Role"))
                     column.ExtendedProperties.Add("NBi::Role", settings.GetColumnRole(column.Ordinal));
-
-                if (column.ExtendedProperties.ContainsKey("NBi::Type"))
-                    column.ExtendedProperties["NBi::Type"] = settings.GetColumnType(column.Ordinal);
-                else
-                    column.ExtendedProperties.Add("NBi::Type", settings.GetColumnType(column.Ordinal));
 
                 if (column.ExtendedProperties.ContainsKey("NBi::Tolerance"))
                     column.ExtendedProperties["NBi::Tolerance"] = settings.GetTolerance(column.Ordinal);
@@ -341,7 +389,7 @@ namespace NBi.Core.ResultSet
 
                     var numericConverter = new NumericConverter();
                     if (settings.GetColumnType(i) == ColumnType.Numeric && !(numericConverter.IsValid(dr[i]) || BaseComparer.IsValidInterval(dr[i])))
-                    {                   
+                    {
                         var exception = string.Format("The column with an index of {0} is expecting a numeric value but the first row of your result set contains a value '{1}' not recognized as a valid numeric value or a valid interval."
                             , i, dr[i].ToString());
 
@@ -359,7 +407,7 @@ namespace NBi.Core.ResultSet
                         throw new ResultSetComparerException(
                             string.Format("The column with an index of {0} is expecting a date & time value but the first row of your result set contains a value '{1}' not recognized as a valid date & time value."
                                 , i, dr[i].ToString()));
-                    } 
+                    }
                 }
             }
         }

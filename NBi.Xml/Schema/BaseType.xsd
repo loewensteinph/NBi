@@ -773,6 +773,7 @@
                           </xs:element>
                         </xs:sequence>
                         <xs:attribute name="file" type="xs:string" use="optional" />
+                        <xs:attribute name="sheet" type="xs:string" use="optional" />
                       </xs:complexType>
                     </xs:element>
                     <xs:element name="query" type="query-type" minOccurs="0" maxOccurs="1"/>

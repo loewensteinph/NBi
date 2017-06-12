@@ -30,6 +30,8 @@ namespace NBi.Xml.Items.ResultSet
 
             return file;
         }
+        [XmlAttribute("sheet")]
+        public string Sheet { get; set; }
 
         public ResultSetXml()
         {
