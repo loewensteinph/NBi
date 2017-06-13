@@ -21,7 +21,7 @@ namespace NBi.Core.ResultSet.Comparer
         public string Step { get; private set; }
         public RoundingStyle Style { get; private set; }
 
-        protected Rounding(string step, RoundingStyle style)
+        public Rounding(string step, RoundingStyle style)
         {
             Step = step;
             Style = style; 

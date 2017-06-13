@@ -80,14 +80,14 @@ namespace NBi.Core.ResultSet
             sb.Append("<");
             foreach (var obj in row.ItemArray)
             {
-                if (obj==null)
+                if (obj == null)
                     sb.Append("(null)");
                 else
                     sb.Append(obj.ToString());
                 sb.Append("|");
             }
             if (sb.Length > 1)
-                sb.Remove(sb.Length-1, 1);
+                sb.Remove(sb.Length - 1, 1);
             sb.Append(">");
 
             return sb.ToString();
@@ -98,15 +98,14 @@ namespace NBi.Core.ResultSet
             List<Column> columnList = new List<Column>();
 
 
-            foreach (DataColumn col in x.Columns)
+            foreach (DataColumn dataColumn in x.Columns)
             {
                 Column column = new Column();
 
-                column.Index = col.Ordinal;
-                var test = col.ExtendedProperties["NBi::Role"];
+                column.Index = dataColumn.Ordinal;
 
-                column.Role = col.ExtendedProperties["NBi::Role"].Equals(ColumnRole.Key) ? ColumnRole.Key : ColumnRole.Value;
-                switch (col.ExtendedProperties["NBi::Type"])
+                column.Role = dataColumn.ExtendedProperties["NBi::Role"].Equals(ColumnRole.Key) ? ColumnRole.Key : ColumnRole.Value;
+                switch (dataColumn.ExtendedProperties["NBi::Type"])
                 {
                     case ColumnType.Numeric:
                         column.Type = ColumnType.Numeric;
@@ -121,6 +120,18 @@ namespace NBi.Core.ResultSet
                         column.Type = ColumnType.Text;
                         break;
                 }
+                if (dataColumn.ExtendedProperties.ContainsKey("NBi::Tolerance") && dataColumn.ExtendedProperties["NBi::Tolerance"]!=null && column.Role != ColumnRole.Key)
+                {
+                    var tolerance = (Tolerance)(dataColumn.ExtendedProperties["NBi::Tolerance"]);
+                    column.Tolerance = tolerance.ValueString;
+                }
+
+                if (dataColumn.ExtendedProperties.ContainsKey("NBi::Rounding") && dataColumn.ExtendedProperties["NBi::Rounding"] != null)
+                {
+                    var rounding = (Rounding)(dataColumn.ExtendedProperties["NBi::Rounding"]);
+                    column.RoundingStyle = rounding.Style;
+                    column.RoundingStep = rounding.Step;
+                }
                 columnList.Add(column);
             }
 
@@ -131,6 +142,7 @@ namespace NBi.Core.ResultSet
                 ResultSetComparisonSettings.ValuesChoice.Last,
                 columnDefinitions
             );
+
             return ResultSetComparisonSettings;
         }
 
@@ -343,15 +355,13 @@ namespace NBi.Core.ResultSet
                     column.ExtendedProperties["NBi::Role"] = settings.GetColumnRole(column.Ordinal);
                 if (!column.ExtendedProperties.ContainsKey("NBi::Role"))
                     column.ExtendedProperties.Add("NBi::Role", settings.GetColumnRole(column.Ordinal));
-
-                if (column.ExtendedProperties.ContainsKey("NBi::Tolerance"))
+                if (column.ExtendedProperties.ContainsKey("NBi::Tolerance") && !dt.ExtendedProperties["NBi::ResultSetType"].Equals("Excel"))
                     column.ExtendedProperties["NBi::Tolerance"] = settings.GetTolerance(column.Ordinal);
-                else
+                if (!column.ExtendedProperties.ContainsKey("NBi::Tolerance"))
                     column.ExtendedProperties.Add("NBi::Tolerance", settings.GetTolerance(column.Ordinal));
-
-                if (column.ExtendedProperties.ContainsKey("NBi::Rounding"))
+                if (column.ExtendedProperties.ContainsKey("NBi::Rounding") && !dt.ExtendedProperties["NBi::ResultSetType"].Equals("Excel"))
                     column.ExtendedProperties["NBi::Rounding"] = settings.GetRounding(column.Ordinal);
-                else
+                if (!column.ExtendedProperties.ContainsKey("NBi::Rounding"))
                     column.ExtendedProperties.Add("NBi::Rounding", settings.GetRounding(column.Ordinal));
             }
         }
