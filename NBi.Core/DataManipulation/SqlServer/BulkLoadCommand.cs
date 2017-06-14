@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Linq;
+using OfficeOpenXml.FormulaParsing.LexicalAnalysis.TokenSeparatorHandlers;
 
 namespace NBi.Core.DataManipulation.SqlServer
 {
@@ -37,18 +38,50 @@ namespace NBi.Core.DataManipulation.SqlServer
                     null
                     );
 
-                // set the destination table name
-                bulkCopy.DestinationTableName = tableName;
-                connection.Open();
+                if (!filename.EndsWith(".xlsx"))
+                {
+                    // set the destination table name
+                    bulkCopy.DestinationTableName = tableName;
+                    connection.Open();
+                    // write the data in the "dataTable"
+                    var fileReader = new CsvReader();
+                    var dataTable = fileReader.Read(filename, false);
+                    bulkCopy.WriteToServer(dataTable);
 
-                // write the data in the "dataTable"
-                var fileReader = new CsvReader();
-                var dataTable = fileReader.Read(filename, false);
-                bulkCopy.WriteToServer(dataTable);
+                    connection.Close();
+                }
 
-                connection.Close();
+                if (filename.EndsWith(".xlsx"))
+                {
+                    string sheetname = tableName.Replace(".", "#");
+
+                    ExcelDefinition excelDefinition = new ExcelDefinition();
+                    excelDefinition.SheetName = sheetname;
+                    // write the data in the "dataTable"
+                    var fileReader = new ExcelReader(excelDefinition);
+                    var dataTable = fileReader.Read(filename, false);
+
+                    if (dataTable.ExtendedProperties["NBi::BulkIdentityInsert"].Equals(true))
+                    {
+                        bulkCopy =
+                            new SqlBulkCopy
+                            (
+                                connection,
+                                SqlBulkCopyOptions.TableLock |
+                                SqlBulkCopyOptions.UseInternalTransaction |
+                                SqlBulkCopyOptions.KeepIdentity,
+                                null
+                            );
+                    }
+                    // set the destination table name
+                    bulkCopy.DestinationTableName = tableName;
+                    connection.Open();
+                   
+                    bulkCopy.WriteToServer(dataTable);
+
+                    connection.Close();
+                }
             }
-
         }
     }
 }

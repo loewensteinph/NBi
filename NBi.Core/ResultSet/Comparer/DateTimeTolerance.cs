@@ -16,7 +16,7 @@ namespace NBi.Core.ResultSet.Comparer
         public DateTimeTolerance(TimeSpan value)
             : base(value.ToString(), SideTolerance.Both)
         {
-            if (value.Ticks <= 0)
+            if (value.Ticks < 0)
                 throw new ArgumentException("The parameter 'step' must be a value greater than zero.", "step");
 
             this.TimeSpan = value;

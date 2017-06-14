@@ -1,26 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <testSuite name="Acceptance Testing: query equalTo Csv" xmlns="http://NBi/TestSuite">
 	<settings>
-		<default apply-to="system-under-test">
-		  <connectionString>Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True</connectionString>
+		<default apply-to="everywhere">
+		  <connectionString>Data Source=.\SQL2016;Initial Catalog=Sandbox;Integrated Security=True</connectionString>
 		</default>
 	</settings>
-	<test name="Excel Test" uid="0001">
+	<test name="Excel Test">
+    <setup>
+      <table-reset name="dbo.Sandbox"/>
+      <table-load file="..\Excel\Sample.xlsx" name="dbo.Sandbox"/>
+    </setup>
 		<system-under-test>
 			<execution>
         <query>
-          SELECT TOP 5
-          Test = '01.01.1980',
+          SELECT identitytest,
+          Test,
           object_id,
-          schema_id
-          FROM master.sys.objects
-          ORDER BY object_id;
+          schema_id,
+          guid FROM dbo.Sandbox
         </query>
 			</execution>
 		</system-under-test>
 		<assert>
 			<equalTo>
-        <resultSet file="..\Excel\Sample.xlsx" sheet="Assert1">
+        <resultSet file="..\Excel\Sample.xlsx" sheet="dbo#Sandbox">
         </resultSet>
 			</equalTo>
 		</assert>
