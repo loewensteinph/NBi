@@ -97,6 +97,9 @@
     <Compile Include="Acceptance\GenbiL\MatchPatternTest.cs" />
     <Compile Include="Acceptance\GenbiL\CaseCrossTest.cs" />
     <Compile Include="Acceptance\GenbiL\GenbiLTest.cs" />
+    <Compile Include="Acceptance\Resources\DataTableAssemblyClass.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Acceptance\Resources\AssemblyClass.cs" />
     <Compile Include="Acceptance\RuntimeOverrider.cs" />
     <Compile Include="Acceptance\TestSuiteRunner.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Unit\Core\Assemblies\Resource\Klass.cs" />
     <Compile Include="Unit\Core\Assemblies\TypeConverterTest.cs" />
     <Compile Include="Unit\Core\Connection\ConnectionWaitFactoryTest.cs" />
+    <Compile Include="Unit\Core\ExcelReaderTest.cs" />
     <Compile Include="Unit\Core\CsvWriterTest.cs" />
     <Compile Include="Unit\Core\DataType\DataTypeInfoFactoryTest.cs" />
     <Compile Include="Unit\Core\GroupCommandFactoryTest.cs" />
@@ -427,6 +431,9 @@
     <None Include="Acceptance\Resources\Excel\Sample.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <EmbeddedResource Include="Acceptance\Resources\Positive\AssemblyEqualToResultSet2.nbits">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="Acceptance\Resources\Positive\OrderCountByYear.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -510,6 +517,9 @@
     <EmbeddedResource Include="Unit\Core\Report\Resources\EmpSalesMonth.rsd" />
     <EmbeddedResource Include="Unit\Core\Report\Resources\SalesEmployees.rsd" />
     <EmbeddedResource Include="Unit\Core\Report\Resources\Currency_List - SProc.rdl" />
+    <None Include="Unit\Core\Excel\DataTableTest.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <MyOptionalItems Include="ConnectionString.user.config">

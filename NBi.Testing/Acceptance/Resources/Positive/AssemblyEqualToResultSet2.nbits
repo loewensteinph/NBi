@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testSuite name="Acceptance Testing: query equalTo Csv" xmlns="http://NBi/TestSuite">
+  <settings>
+    <default apply-to="everywhere">
+      <connectionString>Data Source=.\SQL2016;Initial Catalog=Sandbox;Integrated Security=True</connectionString>
+    </default>
+  </settings>
+	<test name="'Datatable Taest" uid="0001">
+    <condition>
+    </condition>
+		<system-under-test>
+			<execution>
+				<assembly path="NBi.Testing.dll" class="NBi.Testing.Acceptance.Resources.DataTableAssemblyClass" method="GeDataTable">
+					<!--<method-parameter name="calendarYear">CY 2008</method-parameter>-->
+				</assembly>
+			</execution>
+		</system-under-test>
+		<assert>
+			<equalTo>
+				<resultSet>
+					<row>
+						<cell>1</cell>
+					</row>
+				</resultSet>
+			</equalTo>
+		</assert>
+	</test>
+</testSuite>
