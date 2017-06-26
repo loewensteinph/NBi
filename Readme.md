@@ -66,5 +66,3 @@ In order to be able to build the software on different machines, the database an
 This OSS project is tracked by [Ohloh](http://www.ohloh.net/p/NBi)
 
 [![Project Stats](https://www.ohloh.net/p/nbi/widgets/project_thin_badge.gif)](https://www.ohloh.net/p/nbi)
-
-
