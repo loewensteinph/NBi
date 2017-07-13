@@ -52,7 +52,7 @@ namespace NBi.Core.SqlServer.Smo
             }
 
             var commandBuilder = new CommandBuilder();
-            var cmd = commandBuilder.Build(connectionString, inlineQuery, variables);
+            var cmd = commandBuilder.Build(connectionString, script, variables);
 
             var server = new Server();
             server.ConnectionContext.ConnectionString = connectionString;
