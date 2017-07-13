@@ -16,14 +16,14 @@ namespace NBi.Core.SqlServer.Smo
     {
         private readonly string connectionString;
         private readonly string fullPath;
-        private readonly string query;
+        private readonly string inlineQuery;
         private IEnumerable<IQueryTemplateVariable> Variables;
 
         public BatchRunCommand(IBatchRunCommand command, SqlConnection connection)
         {
             this.connectionString = connection.ConnectionString;
             this.fullPath = command.FullPath;
-            this.query = command.InlineQuery;
+            this.inlineQuery = command.InlineQuery;
             this.Variables = command.Variables;
         }       
 
@@ -36,10 +36,7 @@ namespace NBi.Core.SqlServer.Smo
                 variables = Variables;
             }
 
-            var commandBuilder = new CommandBuilder();
-            var cmd = commandBuilder.Build(connectionString, query, variables);
-
-            if (!File.Exists(fullPath) && cmd == null)
+            if (!File.Exists(fullPath) && inlineQuery == null)
                 throw new ExternalDependencyNotFoundException(fullPath);
 
             var script = string.Empty;
@@ -48,15 +45,18 @@ namespace NBi.Core.SqlServer.Smo
                 script = File.ReadAllText(fullPath);
                 Trace.WriteLineIf(NBiTraceSwitch.TraceVerbose, script);
             }
-            if (!File.Exists(fullPath) && cmd != null)
+            if (!File.Exists(fullPath) && inlineQuery != null)
             {
-                script = cmd.CommandText;
+                script = inlineQuery;
                 Trace.WriteLineIf(NBiTraceSwitch.TraceVerbose, script);
             }
 
+            var commandBuilder = new CommandBuilder();
+            var cmd = commandBuilder.Build(connectionString, inlineQuery, variables);
+
             var server = new Server();
             server.ConnectionContext.ConnectionString = connectionString;
-            server.ConnectionContext.ExecuteNonQuery(script);
+            server.ConnectionContext.ExecuteNonQuery(cmd.CommandText);
         }
     }
 }
