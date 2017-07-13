@@ -8,6 +8,11 @@ using System.IO;
 using NBi.Core.Batch;
 using NBi.Xml.Settings;
 using System.ComponentModel;
+using System.Data;
+using System.Text;
+using NBi.Core;
+using NBi.Xml.SerializationOption;
+using NBi.Core.Query;
 
 namespace NBi.Xml.Decoration.Command
 {
@@ -18,6 +23,36 @@ namespace NBi.Xml.Decoration.Command
 
         [XmlAttribute("path")]
         public string InternalPath { get; set; }
+
+        [XmlIgnore]
+        private string inlineQuery;
+
+        [XmlIgnore]
+        public CData InlineQueryWrite
+        {
+            get { return inlineQuery; }
+            set { inlineQuery = value; }
+        }
+
+        [XmlText]
+        public string InlineQuery
+        {
+            get { return inlineQuery; }
+            set { inlineQuery = value; }
+        }
+
+        [XmlElement("variable")]
+        public List<QueryTemplateVariableXml> Variables { get; set; }
+
+        public virtual List<QueryTemplateVariableXml> GetVariables()
+        {
+            var list = Variables;
+            foreach (var variable in Variables)
+                if (!Variables.Exists(p => p.Name == variable.Name))
+                    list.Add(variable);
+
+            return list;
+        }
 
         [XmlIgnore]
         public string FullPath
@@ -55,9 +90,42 @@ namespace NBi.Xml.Decoration.Command
             }
         }
 
+        IEnumerable<IQueryTemplateVariable> IBatchRunCommand.Variables
+        { get => GetVariables(); set => throw new NotImplementedException(); }
+
         public SqlRunXml()
         {
+            Variables = new List<QueryTemplateVariableXml>();
             Version = "SqlServer2014";
+        }
+
+        public string GetQuery()
+        {
+            //if Sql is specified then return it
+            if (InlineQuery != null && !string.IsNullOrEmpty(InlineQuery))
+                return InlineQuery;
+
+            if (string.IsNullOrEmpty(FullPath))
+                throw new InvalidOperationException("Element query must contain a query or a file!");
+
+            //Else check that file exists and read the file's content
+            var file = string.Empty;
+            if (Path.IsPathRooted(FullPath))
+                file = FullPath;
+            if (!System.IO.File.Exists(file))
+                throw new ExternalDependencyNotFoundException(file);
+            var query = System.IO.File.ReadAllText(file, Encoding.UTF8);
+            return query;
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities")]
+        public virtual IDbCommand GetCommand()
+        {
+            var conn = new ConnectionFactory().Get(ConnectionString);
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = GetQuery();
+
+            return cmd;
         }
     }
 }

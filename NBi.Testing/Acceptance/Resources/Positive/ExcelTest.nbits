@@ -7,12 +7,24 @@
 	</settings>
 	<test name="Excel Test">
     <setup>
+      <sql-run>
+        UPDATE dbo.$TableName$ SET Test = '1980-01-01'
+        WHERE identitytest = $OperatorVar$
+        <variable name="OperatorVar">
+          4
+        </variable>
+        <variable name ="TableName">
+          Sandbox
+        </variable>
+      </sql-run>
       <table-reset name="dbo.Sandbox"/>
       <table-load file="..\Excel\Sample.xlsx" name="dbo.Sandbox"/>
     </setup>
 		<system-under-test>
 			<execution>
         <query>
+          UPDATE dbo.Sandbox SET Test = '1980-01-01'
+          
           SELECT identitytest,
           Test,
           object_id,
