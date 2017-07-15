@@ -7,7 +7,7 @@ using NBi.Core;
 
 namespace NBi.Xml.Decoration.Command
 {
-    public class FileDeleteXml : FileManipulationAbstractXml, IDeleteCommand
+    public class FileDeleteXml : FileManipulationAbstractXml, IFileDeleteCommand
     {
         
     }

@@ -20,7 +20,8 @@ namespace NBi.Xml.Decoration.Command
 
         [XmlAttribute("arguments")]
         public string Arguments { get; set; }
-
+        [XmlAttribute("silent")]
+        public bool Silent { get; set; }
         [XmlIgnore]
         public string Argument { get { return Arguments; } }
 
@@ -31,10 +32,11 @@ namespace NBi.Xml.Decoration.Command
             {
                 var fullPath = string.Empty;
                 if (Path.IsPathRooted(InternalPath) || String.IsNullOrEmpty(Settings.BasePath))
-                    fullPath = InternalPath + Name;
+                    fullPath = Path.Combine(InternalPath, Name);
                 else
-                    fullPath = Settings.BasePath + InternalPath + Name;
-
+                    fullPath = Path.Combine(Path.Combine(Settings.BasePath,InternalPath),Name);
+                if (InternalPath.Contains("%"))
+                    fullPath = Path.Combine(InternalPath, Name);
                 return fullPath;
 
             }

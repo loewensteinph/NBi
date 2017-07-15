@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NBi.Core.DataManipulation;
 using NBi.Core.Etl;
@@ -7,6 +8,8 @@ using NBi.Core.Batch;
 using NBi.Core.FileManipulation;
 using NBi.Core.Process;
 using NBi.Core.Connection;
+using NBi.Core.FolderManipulation;
+using NBi.Core.Query;
 
 namespace NBi.Core
 {
@@ -43,7 +46,12 @@ namespace NBi.Core
             {
                 return new FileManipulationFactory().Get(command as IFileManipulationCommand);
             }
-            
+
+            if (command is IFolderManipulationCommand)
+            {
+                return new FolderManipulationFactory().Get(command as IFolderDeleteCommand);
+            }
+
             if (command is IProcessCommand)
             {
                 return new ProcessCommandFactory().Get(command as IProcessCommand);

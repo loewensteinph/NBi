@@ -25,13 +25,13 @@ namespace NBi.Testing.Integration.Core.FileManipulation
             var existingFile = @"Temp\Text.txt";
             File.WriteAllText(existingFile, "a little text");
 
-            var deleteInfo = Mock.Of<IDeleteCommand>
+            var deleteInfo = Mock.Of<IFileDeleteCommand>
             (
                 c => c.FullPath == existingFile
             );
 
 
-            var command = new DeleteCommand(deleteInfo);
+            var command = new FileDeleteCommand(deleteInfo);
             command.Execute();
 
             Assert.That(File.Exists(existingFile), Is.False);
@@ -43,13 +43,13 @@ namespace NBi.Testing.Integration.Core.FileManipulation
         {
             var nonExistingFile = @"Temp\nonExistingFile.txt";
 
-            var deleteInfo = Mock.Of<IDeleteCommand>
+            var deleteInfo = Mock.Of<IFileDeleteCommand>
             (
                 c => c.FullPath == nonExistingFile
             );
 
 
-            var command = new DeleteCommand(deleteInfo);
+            var command = new FileDeleteCommand(deleteInfo);
             command.Execute();
             Assert.Pass();
         }
@@ -59,13 +59,13 @@ namespace NBi.Testing.Integration.Core.FileManipulation
         {
             var nonExistingDirectory = @"NonExistingDirectory\File.txt";
 
-            var deleteInfo = Mock.Of<IDeleteCommand>
+            var deleteInfo = Mock.Of<IFileDeleteCommand>
             (
                 c => c.FullPath == nonExistingDirectory
             );
 
 
-            var command = new DeleteCommand(deleteInfo);
+            var command = new FileDeleteCommand(deleteInfo);
             command.Execute();
             Assert.Pass();
         }

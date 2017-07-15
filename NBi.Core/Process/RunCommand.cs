@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -8,16 +9,18 @@ namespace NBi.Core.Process
 {
     class RunCommand : IDecorationCommandImplementation
     {
-		private readonly string argument;
+        private readonly string argument;
         private readonly string fullPath;
         private readonly int timeOut;
+        private readonly bool silent;
 
         public RunCommand(IRunCommand command)
-		{
+        {
             argument = command.Argument;
             fullPath = command.FullPath;
             timeOut = command.TimeOut;
-		}
+            silent = command.Silent;
+        }
 
         public void Execute()
         {
@@ -29,23 +32,41 @@ namespace NBi.Core.Process
             var startInfo = new ProcessStartInfo();
             startInfo.FileName = fullPath;
             startInfo.Arguments = argument;
+
+            startInfo.UseShellExecute = silent;
+
+            if (fullPath.Contains("%"))
+            {
+                var enviromentPath = Environment.GetEnvironmentVariable("PATH");
+                var file = Path.GetFileName(fullPath);
+                if (enviromentPath != null)
+                {
+                    var paths = enviromentPath.Split(';');
+                    var exePath = paths
+                        .Select(x => Path.Combine(x, file))
+                        .FirstOrDefault(File.Exists);
+                    if (exePath != null) startInfo.FileName = exePath;
+                }
+            }
+
             using (var exeProcess = System.Diagnostics.Process.Start(startInfo))
             {
                 if (timeOut != 0)
                 {
                     Console.WriteLine("Waiting the end of the process.");
-                    exeProcess.WaitForExit(timeOut);
-                    if (exeProcess.HasExited)
+                    if (exeProcess != null)
                     {
-                        if (exeProcess.ExitCode == 0)
-                            Console.WriteLine("Process has been successfully executed.");
+                        exeProcess.WaitForExit(timeOut);
+                        if (exeProcess.HasExited)
+                        {
+                            Console.WriteLine(exeProcess.ExitCode == 0
+                                ? "Process has been successfully executed."
+                                : "Process has failed.");
+                            result = exeProcess.ExitCode == 0;
+                        }
                         else
-                            Console.WriteLine("Process has failed.");
-                        result = exeProcess.ExitCode == 0;
+                            Console.WriteLine("Process has been interrupted before the end of its execution.");
                     }
-                    else
-                        Console.WriteLine("Process has been interrupted before the end of its execution.");
-                        
                 }
                 else
                 {

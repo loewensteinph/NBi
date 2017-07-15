@@ -13,6 +13,8 @@ namespace NBi.Xml.Settings
     {
         [XmlIgnore]
         public string BasePath { get; set; }
+        [XmlIgnore]
+        public string AssemblyPath { get; set; }
 
         [XmlElement("default")]
         public List<DefaultXml> Defaults { get; set; }

@@ -536,6 +536,7 @@
         <xs:element name="connection-wait" type="connection-wait-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="file-delete" type="file-delete-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="file-copy" type="file-copy-type" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="folder-delete" type="folder-delete-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="etl-run" type="etl-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="tasks" type="tasks-type" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
@@ -555,6 +556,7 @@
         <xs:element name="connection-wait" type="connection-wait-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="file-delete" type="file-delete-type" minOccurs="0" maxOccurs="unbounded"/>
         <xs:element name="file-copy" type="file-copy-type" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element name="folder-delete" type="folder-delete-type" minOccurs="0" maxOccurs="unbounded"/>        
         <xs:element name="etl-run" type="etl-type" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
     </xs:sequence>
@@ -590,10 +592,15 @@
     <xs:complexContent>
       <xs:extension base="file-delete-type">
         <xs:attribute name="source-path" type="xs:string" use="required"/>
+        <xs:attribute name="recursive" type="xs:boolean" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="folder-delete-type">
+    <xs:attribute name="path" type="xs:string" use="required"/>
+  </xs:complexType>
   <xs:complexType name="exe-run-type" >
+    <xs:attribute name="silent" use="optional" type="xs:boolean"/>
     <xs:attribute name="name" type="xs:string" use="required"/>
     <xs:attribute name="path" type="xs:string" use="optional"/>
     <xs:attribute name="arguments" type="xs:string" use="optional"/>

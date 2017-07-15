@@ -30,14 +30,14 @@ namespace NBi.Testing.Integration.Core.FileManipulation
             var targetFile = @"Temp\Target\TextCopy.txt";
             File.WriteAllText(existingFile, "a little text");
 
-            var copyInfo = Mock.Of<ICopyCommand>
+            var copyInfo = Mock.Of<IFileCopyCommand>
             (
                 c =>c.SourceFullPath == existingFile
                   && c.FullPath == targetFile
             );
 
 
-            var command = new CopyCommand(copyInfo);
+            var command = new FileCopyCommand(copyInfo);
             command.Execute();
 
             Assert.That(File.Exists(existingFile), Is.True);
@@ -50,14 +50,14 @@ namespace NBi.Testing.Integration.Core.FileManipulation
             var nonExistingFile = @"Temp\nonExistingFile.txt";
             var targetFile = @"Temp\Target\TextCopy.txt";
 
-            var copyInfo = Mock.Of<ICopyCommand>
+            var copyInfo = Mock.Of<IFileCopyCommand>
             (
                 c => c.SourceFullPath == nonExistingFile
                   && c.FullPath == targetFile
             );
 
 
-            var command = new CopyCommand(copyInfo);
+            var command = new FileCopyCommand(copyInfo);
             Assert.Throws<ExternalDependencyNotFoundException>(() => command.Execute());
         }
     }

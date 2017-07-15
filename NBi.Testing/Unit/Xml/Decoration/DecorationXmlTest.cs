@@ -385,7 +385,7 @@ namespace NBi.Testing.Unit.Xml.Decoration
             var command = ts.Groups[groupNr].Tests[0].Setup.Commands[0];
 
             Assert.That(command, Is.TypeOf<FileDeleteXml>());
-            var delete = command as IDeleteCommand;
+            var delete = command as IFileDeleteCommand;
             Assert.That(delete.FullPath, Is.EqualTo(@"Temp\toto.xls"));
         }
 
@@ -402,7 +402,7 @@ namespace NBi.Testing.Unit.Xml.Decoration
             var command = ts.Groups[groupNr].Tests[1].Setup.Commands[0];
 
             Assert.That(command, Is.TypeOf<FileCopyXml>());
-            var move = command as ICopyCommand;
+            var move = command as IFileCopyCommand;
             Assert.That(move.FullPath, Is.EqualTo(@"Temp\toto.xls"));
             Assert.That(move.SourceFullPath, Is.EqualTo(@"Backup\toto.xls"));
         }

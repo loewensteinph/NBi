@@ -4,9 +4,18 @@
 		<default apply-to="everywhere">
 		  <connectionString>Data Source=.\SQL2016;Initial Catalog=Sandbox;Integrated Security=True</connectionString>
 		</default>
+    <default apply-to="setup-cleanup">
+      <variable name="myVar">Test</variable>
+    </default>
+    <default apply-to="system-under-test">
+      <variable name="myVar">Test</variable>
+    </default>
 	</settings>
 	<test name="Excel Test">
     <setup>
+      <folder-delete path="C:\temp\test1"/>
+      <exe-run path="%windir%\system32" name="cmd.exe" arguments="/c echo test" silent="true" timeout-milliseconds="1000"/>
+      <exe-run path="C:\Windows\system32" name="cmd.exe" arguments="/c echo test" silent="false" timeout-milliseconds="1000"/>
       <sql-run>
         UPDATE dbo.$TableName$ SET Test = '1980-01-01'
         WHERE identitytest = $OperatorVar$
@@ -23,8 +32,7 @@
 		<system-under-test>
 			<execution>
         <query>
-          UPDATE dbo.Sandbox SET Test = '1980-01-01'
-          
+          UPDATE dbo.Sandbox SET Test = '1980-01-01'         
           SELECT identitytest,
           Test,
           object_id,

@@ -77,6 +77,8 @@
     <Compile Include="Constraints\LinkedToXml.cs" />
     <Compile Include="Constraints\EvaluateRowsXml.cs" />
     <Compile Include="Decoration\Command\ConnectionWaitXml.cs" />
+    <Compile Include="Decoration\Command\FolderManipulationAbstractXml.cs" />
+    <Compile Include="Decoration\Command\FolderDeleteXml.cs" />
     <Compile Include="Decoration\Command\WaitXml.cs" />
     <Compile Include="Decoration\Command\ExeKillXml.cs" />
     <Compile Include="Decoration\Command\SqlRunXml.cs" />

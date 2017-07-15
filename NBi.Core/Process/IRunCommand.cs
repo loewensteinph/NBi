@@ -12,5 +12,6 @@ namespace NBi.Core.Process
         string FullPath { get; }
         string Argument { get; }
         int TimeOut { get; set; }
+        bool Silent { get; set; }
     }
 }

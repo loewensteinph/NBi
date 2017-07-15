@@ -10,10 +10,10 @@ namespace NBi.Core.DataManipulation
         public IDecorationCommandImplementation Get(IFileManipulationCommand command)
         {
 
-            if (command is IDeleteCommand)
-                return new DeleteCommand(command as IDeleteCommand);
-            if (command is ICopyCommand)
-                return new CopyCommand(command as ICopyCommand);
+            if (command is IFileDeleteCommand)
+                return new FileDeleteCommand(command as IFileDeleteCommand);
+            if (command is IFileCopyCommand)
+                return new FileCopyCommand(command as IFileCopyCommand);
 
             throw new ArgumentException();
         }

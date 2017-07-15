@@ -7,7 +7,7 @@ using NBi.Core;
 
 namespace NBi.Xml.Decoration.Command
 {
-    public class FileCopyXml : FileManipulationAbstractXml, ICopyCommand
+    public class FileCopyXml : FileManipulationAbstractXml, IFileCopyCommand
     {
         [XmlAttribute("source-path")]
         public string InternalSourcePath { get; set; }
