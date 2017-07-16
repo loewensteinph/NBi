@@ -62,24 +62,26 @@ namespace NBi.Core
                 var rawTbl = new DataTable();
                 var finalTbl = new DataTable();
 
-                var wsGlobalTolerance = ws.Cells[3, 2, 3, 2].Value;
-                var wsIsIdentityInsert = ws.Cells[1, 4, 1, 4].Value;
+                var wsIsIdentityInsert = ws.Cells["D1"].Value;
 
                 finalTbl.ExtendedProperties.Add("NBi::BulkIdentityInsert", Boolean.Parse(wsIsIdentityInsert.ToString()));
                 finalTbl.ExtendedProperties.Add("NBi::ResultSetType", "Excel");
-                finalTbl.ExtendedProperties.Add("NBi::Tolerance", wsGlobalTolerance);
 
-                ExcelRange wsToleranceRange = ws.Cells[7, 2, 7, ws.Dimension.End.Column];
                 //Tolerances
+                ExcelRange wsToleranceRange = ws.Cells[6, 2, 6, ws.Dimension.End.Column];
                 GetTolerances(wsToleranceRange, ws, tolerances);
-                ExcelRange wsRounding = ws.Cells[5, 2, 5, ws.Dimension.End.Column];
+
                 //Rounding
+                ExcelRange wsRounding = ws.Cells[4, 2, 4, ws.Dimension.End.Column];
                 GetRounding(wsRounding, ws, rounding);
-                ExcelRange wsKeyRange = ws.Cells[8, 2, 8, ws.Dimension.End.Column];
+
                 //Key Column Indicators
+                ExcelRange wsKeyRange = ws.Cells[7, 2, 7, ws.Dimension.End.Column];
                 GetKeyColumns(wsKeyRange, ws, keyColumns);
 
-                foreach (var firstRowCell in ws.Cells[9, 2, 9, ws.Dimension.End.Column])
+                var startRow = 8;
+
+                foreach (var firstRowCell in ws.Cells[startRow, 2, startRow, ws.Dimension.End.Column])
                 {
                     var col = new DataColumn();
                     col.ColumnName = firstRowCell.Text;
@@ -97,7 +99,7 @@ namespace NBi.Core
                     rawTbl.Columns.Add(col);
                 }
 
-                var startRow = 10;
+                startRow = 9;
 
                 // Check Datatypes
                 for (var colNum = 2; colNum <= ws.Dimension.End.Column; colNum++)

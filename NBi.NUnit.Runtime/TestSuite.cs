@@ -161,19 +161,29 @@ namespace NBi.NUnit.Runtime
         private static void ReplaceVariableValues(DecorationCommandXml command, string variableIdent, List<QueryTemplateVariableXml> variables)
         {
             Type type = command.GetType();
-            PropertyInfo[] properties = type.GetProperties().Where(x => x.GetValue(command, null)
-                .ToString().Contains(variableIdent)).ToArray();
 
-            foreach (PropertyInfo property in properties)
+            IEnumerable<PropertyInfo> properties = type.GetProperties();
+
+            try
             {
-                var propertyvalue = property.GetValue(command, null).ToString();
+                properties = properties
+                    .Where(x => x.GetValue(command, null)
+                        .ToString().Contains(variableIdent) && x.PropertyType == typeof(string));
 
-                if (propertyvalue.Contains(variableIdent))
+                foreach (PropertyInfo property in properties)
                 {
-                    var templateEngine = new StringTemplateEngine(propertyvalue, variables);
-                    var result = templateEngine.Build();
-                    property.SetValue(command, result);
+                    var propertyvalue = property.GetValue(command, null).ToString();
+
+                    if (propertyvalue.Contains(variableIdent))
+                    {
+                        var templateEngine = new StringTemplateEngine(propertyvalue, variables);
+                        var result = templateEngine.Build();
+                        property.SetValue(command, result);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
             }
         }
 
