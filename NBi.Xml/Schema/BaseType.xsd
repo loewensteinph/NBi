@@ -576,7 +576,6 @@
   </xs:complexType>
   <xs:complexType name="sql-run-type" mixed="true">
     <xs:sequence>
-      <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded" type="parameter-type"/>
       <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" type="variable-type" />
     </xs:sequence>
     <xs:attribute name="connectionString" type="xs:string" use="optional"/>

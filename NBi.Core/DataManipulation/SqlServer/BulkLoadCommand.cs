@@ -53,7 +53,15 @@ namespace NBi.Core.DataManipulation.SqlServer
 
                 if (filename.EndsWith(".xlsx"))
                 {
-                    string sheetname = tableName.Replace(".", "#");
+                    string sheetname;
+                    if (tableName.StartsWith("#"))
+                    {
+                        sheetname = tableName;
+                    }
+                    else
+                    {
+                        sheetname = tableName.Replace(".", "#");
+                    }
 
                     ExcelDefinition excelDefinition = new ExcelDefinition();
                     excelDefinition.SheetName = sheetname;
@@ -76,7 +84,7 @@ namespace NBi.Core.DataManipulation.SqlServer
                     // set the destination table name
                     bulkCopy.DestinationTableName = tableName;
                     connection.Open();
-                   
+
                     bulkCopy.WriteToServer(dataTable);
 
                     connection.Close();

@@ -1,51 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<testSuite name="Acceptance Testing: query equalTo Csv" xmlns="http://NBi/TestSuite">
-	<settings>
-		<default apply-to="everywhere">
-		  <connectionString>Data Source=.\SQL2016;Initial Catalog=Sandbox;Integrated Security=True</connectionString>
-		</default>
+<testSuite name="Acceptance Testing: Excel Setup and Assert" xmlns="http://NBi/TestSuite">
+  <settings>
+    <default apply-to="everywhere">
+      <connectionString>Data Source=.\SQL2016;Initial Catalog=master;Integrated Security=True</connectionString>
+    </default>
     <default apply-to="setup-cleanup">
       <variable name="myVar">Test</variable>
     </default>
     <default apply-to="system-under-test">
       <variable name="myVar">Test</variable>
     </default>
-	</settings>
-	<test name="Excel Test">
+  </settings>
+  <test name="Excel Test">
     <setup>
-      <folder-delete path="C:\temp\test1"/>
-      <exe-run path="%windir%\system32" name="cmd.exe" arguments="/c echo test" silent="true" timeout-milliseconds="1000"/>
-      <exe-run path="C:\Windows\system32" name="cmd.exe" arguments="/c echo test" silent="false" timeout-milliseconds="1000"/>
       <sql-run>
-        UPDATE dbo.$TableName$ SET Test = '1980-01-01'
-        WHERE identitytest = $OperatorVar$
-        <variable name="OperatorVar">
-          4
-        </variable>
-        <variable name ="TableName">
-          Sandbox
-        </variable>
+        IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
+        DROP TABLE dbo.ExcelTest;
+
+        CREATE TABLE dbo.ExcelTest
+        (
+        [identitytest] [INT] IDENTITY(1, 1) NOT NULL,
+        [Test] [DATE] NULL,
+        [object_id] [INT] NULL,
+        [schema_id] [DECIMAL](18, 0) NULL,
+        [guid] [UNIQUEIDENTIFIER] NULL
+        );
       </sql-run>
-      <table-reset name="dbo.Sandbox"/>
-      <table-load file="..\Excel\Sample.xlsx" name="dbo.Sandbox"/>
+      <table-load file="..\Excel\Sample.xlsx" name="dbo.ExcelTest"/>
     </setup>
-		<system-under-test>
-			<execution>
+    <system-under-test>
+      <execution>
         <query>
-          UPDATE dbo.Sandbox SET Test = '1980-01-01'         
           SELECT identitytest,
           Test,
           object_id,
           schema_id,
-          guid FROM dbo.Sandbox
+          guid FROM dbo.ExcelTest
         </query>
-			</execution>
-		</system-under-test>
-		<assert>
-			<equalTo>
-        <resultSet file="..\Excel\Sample.xlsx" sheet="dbo#Sandbox">
+      </execution>
+    </system-under-test>
+    <assert>
+      <equalTo>
+        <resultSet file="..\Excel\Sample.xlsx" sheet="Assert">
         </resultSet>
-			</equalTo>
-		</assert>
-	</test>
+      </equalTo>
+    </assert>
+  <cleanup>
+    <sql-run>
+      IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
+      DROP TABLE dbo.ExcelTest;
+    </sql-run>
+  </cleanup>
+  </test>
 </testSuite>

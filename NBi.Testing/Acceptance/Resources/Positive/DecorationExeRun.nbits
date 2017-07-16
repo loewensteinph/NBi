@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<testSuite name="Acceptance Testing: Exe Run supporting Env Variables and Silent Mode" xmlns="http://NBi/TestSuite">
+  <settings>
+    <default apply-to="everywhere">
+      <connectionString>Data Source=.\SQL2016;Initial Catalog=master;Integrated Security=True</connectionString>
+    </default>
+    <default apply-to="setup-cleanup">
+      <variable name="myVar">Test</variable>
+    </default>
+    <default apply-to="system-under-test">
+      <variable name="myVar">Test</variable>
+    </default>
+  </settings>
+  <test name="Excel Test">
+    <setup>
+      <exe-run path="%windir%\system32" name="cmd.exe" arguments="/c echo test" silent="true" timeout-milliseconds="1000"/>
+      <exe-run path="C:\Windows\system32" name="cmd.exe" arguments="/c echo test" silent="false" timeout-milliseconds="1000"/>
+    </setup>
+    <system-under-test>
+      <execution>
+        <query>
+          SELECT 1
+        </query>
+      </execution>
+    </system-under-test>
+    <assert>
+      <equalTo>
+        <query>SELECT 1</query>
+      </equalTo>
+    </assert>
+  </test>
+</testSuite>

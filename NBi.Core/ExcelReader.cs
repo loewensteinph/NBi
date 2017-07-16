@@ -39,6 +39,9 @@ namespace NBi.Core
         }
         public DataTable Read(string filename, bool firstLineIsColumnName)
         {
+            if(ExcelDefinition.SheetName == null)
+                throw new NullReferenceException("Provided Sheetname not found!");
+
             var keyColumns = new List<string>();
             var tolerances = new Dictionary<string, object>();
             var rounding = new Dictionary<string, Rounding>();
