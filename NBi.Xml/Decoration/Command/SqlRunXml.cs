@@ -41,19 +41,6 @@ namespace NBi.Xml.Decoration.Command
             set { inlineQuery = value; }
         }
 
-        [XmlElement("variable")]
-        public List<QueryTemplateVariableXml> Variables { get; set; }
-
-        public virtual List<QueryTemplateVariableXml> GetVariables()
-        {
-            var list = Variables;
-            foreach (var variable in Variables)
-                if (!Variables.Exists(p => p.Name == variable.Name))
-                    list.Add(variable);
-
-            return list;
-        }
-
         [XmlIgnore]
         public string FullPath
         {

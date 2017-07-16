@@ -23,6 +23,7 @@ namespace NBi.Xml.Decoration.Command
         XmlElement(Type = typeof(ConnectionWaitXml), ElementName = "connection-wait"),
         XmlElement(Type = typeof(FileDeleteXml), ElementName = "file-delete"),
         XmlElement(Type = typeof(FileCopyXml), ElementName = "file-copy"),
+        XmlElement(Type = typeof(FolderDeleteXml), ElementName = "folder-delete"),
         XmlElement(Type = typeof(EtlRunXml), ElementName = "etl-run")
         ]
         public List<DecorationCommandXml> InternalCommands { get; set; }
@@ -37,17 +38,6 @@ namespace NBi.Xml.Decoration.Command
             set
             {
                 InternalCommands = value.Cast<DecorationCommandXml>().ToList();
-            }
-        }
-
-        [XmlIgnore()]
-        public override Settings.SettingsXml Settings
-        {   get { return base.Settings; }
-            set
-            {
-                base.Settings = value;
-                foreach (var cmd in InternalCommands)
-                    cmd.Settings = value;
             }
         }
 
@@ -68,6 +58,18 @@ namespace NBi.Xml.Decoration.Command
             RunOnce = false;
             HasRun = false;
             InternalCommands = new List<DecorationCommandXml>();
+        }
+
+        [XmlIgnore()]
+        public override Settings.SettingsXml Settings
+        {
+            get { return base.Settings; }
+            set
+            {
+                base.Settings = value;
+                foreach (var cmd in InternalCommands)
+                    cmd.Settings = value;
+            }
         }
     }
 }

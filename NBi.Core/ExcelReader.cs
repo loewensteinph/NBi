@@ -39,9 +39,6 @@ namespace NBi.Core
         }
         public DataTable Read(string filename, bool firstLineIsColumnName)
         {
-            if(ExcelDefinition.SheetName == null)
-                throw new NullReferenceException("Provided Sheetname not found!");
-
             var keyColumns = new List<string>();
             var tolerances = new Dictionary<string, object>();
             var rounding = new Dictionary<string, Rounding>();
@@ -55,6 +52,13 @@ namespace NBi.Core
                 }
 
                 var ws = pck.Workbook.Worksheets[ExcelDefinition.SheetName];
+
+                if(ws == null)
+                    ws = pck.Workbook.Worksheets[0];
+
+                if (ws == null)
+                    throw new NullReferenceException();
+                
                 var rawTbl = new DataTable();
                 var finalTbl = new DataTable();
 

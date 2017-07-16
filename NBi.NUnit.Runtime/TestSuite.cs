@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using NBi.Core;
 using NBi.Core.DataManipulation;
@@ -14,6 +15,9 @@ using NBi.NUnit.Runtime.Configuration;
 using NBi.Framework.FailureMessage;
 using NBi.Framework;
 using NBi.Core.Configuration;
+using NBi.Xml.Decoration.Command;
+using NBi.Xml.Items;
+using NBi.Xml.Settings;
 
 namespace NBi.NUnit.Runtime
 {
@@ -92,7 +96,6 @@ namespace NBi.NUnit.Runtime
                 ExecuteCleanup(test.Cleanup);
             }
         }
-
         private void ExecuteChecks(ConditionXml check)
         {
             foreach (var predicate in check.Predicates)
@@ -103,13 +106,32 @@ namespace NBi.NUnit.Runtime
                     Assert.Ignore("This test has been ignored because following check wasn't successful: {0}", impl.Message);
             }
         }
-
         private void ExecuteSetup(SetupXml setup)
         {
             try
             {
                 foreach (var command in setup.Commands)
                 {
+                    List<QueryTemplateVariableXml> localVariables = command.Variables;
+
+                    List<QueryTemplateVariableXml> globalVariables = command.Settings.Defaults.Where(x => x.ApplyTo == SettingsXml.DefaultScope.Decoration)
+                        .SelectMany(x => x.Variables).ToList();
+
+                    if (!localVariables.Any())
+                    {
+                        foreach (var variable in globalVariables)
+                        {
+                            var variableIdent = string.Format("${0}$", variable.Name);
+                            ReplaceVariableValues(command, variableIdent, globalVariables);
+                        }
+                    }
+
+                    foreach (var variable in localVariables)
+                    {
+                        var variableIdent = string.Format("${0}$", variable.Name);
+                        ReplaceVariableValues(command, variableIdent, localVariables);
+                    }
+
                     var skip = false;
                     if (command is IGroupCommand)
                     {
@@ -125,7 +147,7 @@ namespace NBi.NUnit.Runtime
                         if (command is IGroupCommand)
                         {
                             var groupCommand = (command as IGroupCommand);
-                            groupCommand.HasRun=true;
+                            groupCommand.HasRun = true;
                         }
                     }
                 }
@@ -136,11 +158,30 @@ namespace NBi.NUnit.Runtime
             }
         }
 
+        private static void ReplaceVariableValues(DecorationCommandXml command, string variableIdent, List<QueryTemplateVariableXml> variables)
+        {
+            Type type = command.GetType();
+            PropertyInfo[] properties = type.GetProperties().Where(x => x.GetValue(command, null)
+                .ToString().Contains(variableIdent)).ToArray();
+
+            foreach (PropertyInfo property in properties)
+            {
+                var propertyvalue = property.GetValue(command, null).ToString();
+
+                if (propertyvalue.Contains(variableIdent))
+                {
+                    var templateEngine = new StringTemplateEngine(propertyvalue, variables);
+                    var result = templateEngine.Build();
+                    property.SetValue(command, result);
+                }
+            }
+        }
+
         protected virtual void HandleExceptionDuringSetup(Exception ex)
         {
             var message = string.Format("Exception during the setup of the test: {0}", ex.Message);
             message += "\r\n" + ex.StackTrace;
-            if (ex.InnerException!=null)
+            if (ex.InnerException != null)
             {
                 message += "\r\n" + ex.InnerException.Message;
                 message += "\r\n" + ex.InnerException.StackTrace;
@@ -217,7 +258,7 @@ namespace NBi.NUnit.Runtime
             }
             else
                 Trace.WriteLineIf(NBiTraceSwitch.TraceError, string.Format("No configuration-finder found."));
-                
+
 
             //Find connection strings referecned from an external file
             if (ConnectionStringsFinder != null)
@@ -229,7 +270,7 @@ namespace NBi.NUnit.Runtime
 
             return BuildTestCases();
         }
-  
+
         internal IEnumerable<TestCaseData> BuildTestCases()
         {
             List<TestCaseData> testCasesNUnit = new List<TestCaseData>();
@@ -301,7 +342,7 @@ namespace NBi.NUnit.Runtime
             var fullPath = System.Reflection.Assembly.GetAssembly(typeof(TestSuite)).Location;
 
             //get the filename that's in
-            var fileName = Path.GetFileName( fullPath );
+            var fileName = Path.GetFileName(fullPath);
 
             return fileName;
         }

@@ -22,6 +22,7 @@ namespace NBi.Xml.Decoration.Command
         public string Arguments { get; set; }
         [XmlAttribute("silent")]
         public bool Silent { get; set; }
+
         [XmlIgnore]
         public string Argument { get { return Arguments; } }
 

@@ -5,15 +5,14 @@
       <connectionString>Data Source=.\SQL2016;Initial Catalog=master;Integrated Security=True</connectionString>
     </default>
     <default apply-to="setup-cleanup">
-      <variable name="myVar">Test</variable>
-    </default>
-    <default apply-to="system-under-test">
-      <variable name="myVar">Test</variable>
     </default>
   </settings>
   <test name="Excel Test">
     <setup>
-      <exe-run path="%windir%\system32" name="cmd.exe" arguments="/c echo test" silent="true" timeout-milliseconds="1000"/>
+      <exe-run path="$folder$\system32" name="$exe$" arguments="/c echo test" silent="true" timeout-milliseconds="1000">
+        <variable name ="folder">%windir%</variable>
+        <variable name ="exe">cmd.exe</variable>
+      </exe-run>            
       <exe-run path="C:\Windows\system32" name="cmd.exe" arguments="/c echo test" silent="false" timeout-milliseconds="1000"/>
     </setup>
     <system-under-test>
