@@ -114,7 +114,7 @@ namespace NBi.NUnit.Runtime
                 {
                     List<QueryTemplateVariableXml> localVariables = command.Variables;
 
-                    List<QueryTemplateVariableXml> globalVariables = command.Settings.Defaults.Where(x => x.ApplyTo == SettingsXml.DefaultScope.Decoration)
+                    List<QueryTemplateVariableXml> globalVariables = command.Settings.Defaults.Where(x => x.ApplyTo == SettingsXml.DefaultScope.Decoration | x.ApplyTo == SettingsXml.DefaultScope.Everywhere)
                         .SelectMany(x => x.Variables).ToList();
 
                     if (!localVariables.Any())

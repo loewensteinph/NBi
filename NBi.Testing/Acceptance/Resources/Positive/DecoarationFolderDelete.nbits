@@ -7,7 +7,7 @@
   </settings>
   <test name="Folder Delete Test">
     <setup>
-      <folder-delete path="c:\temp\test1"/>
+      <folder-delete path="c:\"/>
     </setup>
     <system-under-test>
       <execution>

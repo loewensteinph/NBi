@@ -506,8 +506,12 @@
     <None Include="Acceptance\Resources\Positive\Users.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ConnectionString.config">
+    <None Include="ConnectionString - Copy.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ConnectionString.user.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <EmbeddedResource Include="Integration\NUnit\Resources\NonEmptyAmountByYear.csv" />
     <EmbeddedResource Include="Integration\Core\DataManipulation\Load.csv" />
@@ -532,11 +536,6 @@
     <None Include="Unit\Core\Excel\DataTableTest.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <MyOptionalItems Include="ConnectionString.user.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </MyOptionalItems>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Unit\Xml\Resources\TableXmlTestSuite.xml" />

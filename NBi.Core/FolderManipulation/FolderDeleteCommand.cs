@@ -23,8 +23,28 @@ namespace NBi.Core.FolderManipulation
 
         internal void Execute(string folder)
         {
-            if (!Directory.Exists(folder))
+            List<string> folderBlacklist = new List<string>();
+            folderBlacklist.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
+            folderBlacklist.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86));
+            folderBlacklist.Add(Environment.GetFolderPath(Environment.SpecialFolder.Windows));
+
+            foreach (var excludeFolder in folderBlacklist)
+            {
+                if (folder.Contains(excludeFolder) || !Directory.Exists(folder))
+                    return;
+            }
+
+            string[] drives = Directory.GetLogicalDrives();
+
+            foreach (var drive in drives)
+            {
+                if(folder.Equals(drive, StringComparison.OrdinalIgnoreCase))
+                    return;
+            }          
+
+            if (drives.Contains(folder))
                 return;
+
             Directory.Delete(folder,true);
         }
     }
