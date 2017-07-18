@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using NBi.Core;
 using NBi.Core.DataManipulation;
@@ -15,9 +14,6 @@ using NBi.NUnit.Runtime.Configuration;
 using NBi.Framework.FailureMessage;
 using NBi.Framework;
 using NBi.Core.Configuration;
-using NBi.Xml.Decoration.Command;
-using NBi.Xml.Items;
-using NBi.Xml.Settings;
 
 namespace NBi.NUnit.Runtime
 {
@@ -96,6 +92,7 @@ namespace NBi.NUnit.Runtime
                 ExecuteCleanup(test.Cleanup);
             }
         }
+
         private void ExecuteChecks(ConditionXml check)
         {
             foreach (var predicate in check.Predicates)
@@ -106,32 +103,13 @@ namespace NBi.NUnit.Runtime
                     Assert.Ignore("This test has been ignored because following check wasn't successful: {0}", impl.Message);
             }
         }
+
         private void ExecuteSetup(SetupXml setup)
         {
             try
             {
                 foreach (var command in setup.Commands)
                 {
-                    List<QueryTemplateVariableXml> localVariables = command.Variables;
-
-                    List<QueryTemplateVariableXml> globalVariables = command.Settings.Defaults.Where(x => x.ApplyTo == SettingsXml.DefaultScope.Decoration | x.ApplyTo == SettingsXml.DefaultScope.Everywhere)
-                        .SelectMany(x => x.Variables).ToList();
-
-                    if (!localVariables.Any())
-                    {
-                        foreach (var variable in globalVariables)
-                        {
-                            var variableIdent = string.Format("${0}$", variable.Name);
-                            ReplaceVariableValues(command, variableIdent, globalVariables);
-                        }
-                    }
-
-                    foreach (var variable in localVariables)
-                    {
-                        var variableIdent = string.Format("${0}$", variable.Name);
-                        ReplaceVariableValues(command, variableIdent, localVariables);
-                    }
-
                     var skip = false;
                     if (command is IGroupCommand)
                     {
@@ -155,35 +133,6 @@ namespace NBi.NUnit.Runtime
             catch (Exception ex)
             {
                 HandleExceptionDuringSetup(ex);
-            }
-        }
-
-        private static void ReplaceVariableValues(DecorationCommandXml command, string variableIdent, List<QueryTemplateVariableXml> variables)
-        {
-            Type type = command.GetType();
-
-            IEnumerable<PropertyInfo> properties = type.GetProperties();
-
-            try
-            {
-                properties = properties
-                    .Where(x => x.GetValue(command, null)
-                        .ToString().Contains(variableIdent) && x.PropertyType == typeof(string));
-
-                foreach (PropertyInfo property in properties)
-                {
-                    var propertyvalue = property.GetValue(command, null).ToString();
-
-                    if (propertyvalue.Contains(variableIdent))
-                    {
-                        var templateEngine = new StringTemplateEngine(propertyvalue, variables);
-                        var result = templateEngine.Build();
-                        property.SetValue(command, result);
-                    }
-                }
-            }
-            catch (Exception e)
-            {
             }
         }
 
@@ -309,8 +258,8 @@ namespace NBi.NUnit.Runtime
                 if (EnableAutoCategories)
                 {
                     foreach (var system in test.Systems)
-                        foreach (var category in system.GetAutoCategories())
-                            testCaseDataNUnit.SetCategory(CategoryHelper.Format(category));
+                    foreach (var category in system.GetAutoCategories())
+                        testCaseDataNUnit.SetCategory(CategoryHelper.Format(category));
                 }
                 //Assign auto-categories
                 if (EnableGroupAsCategory)
