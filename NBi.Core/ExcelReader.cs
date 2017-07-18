@@ -102,7 +102,7 @@ namespace NBi.Core
                 startRow = 9;
 
                 // Check Datatypes
-                for (var colNum = 2; colNum <= ws.Dimension.End.Column; colNum++)
+                for (var colNum = 2; colNum <= rawTbl.Columns.Count + 1; colNum++)
                 {
                     string colName = rawTbl.Columns[colNum-2].ColumnName;
                     ExcelRange wsCol = ws.Cells[startRow, colNum, ws.Dimension.End.Row, colNum];
@@ -129,7 +129,7 @@ namespace NBi.Core
 
                 for (var rowNum = startRow; rowNum <= ws.Dimension.End.Row; rowNum++)
                 {
-                    var wsRow = ws.Cells[rowNum, 2, rowNum, ws.Dimension.End.Column];
+                    var wsRow = ws.Cells[rowNum, 2, rowNum, rawTbl.Columns.Count + 1];
                     bool hascontent = false;
                     foreach (var cell in wsRow)
                     {
@@ -202,10 +202,10 @@ namespace NBi.Core
             {
                 var key = ws.Cells[cell.Start.Row, cell.Start.Column, cell.Start.Row, cell.Start.Column].Value;
                 var name = ws.Cells[cell.Start.Row + 1, cell.Start.Column, cell.Start.Row + 1, cell.Start.Column]
-                    .Value.ToString();
-                if (key != null)
+                    .Value;
+                if (key != null && name != null)
                     if (key.Equals("*"))
-                        keyColumns.Add(name);
+                        keyColumns.Add(name.ToString());
             }
         }
         private static void GetRounding(ExcelRange wsRounding, ExcelWorksheet ws, Dictionary<string, Rounding> rounding)

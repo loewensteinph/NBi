@@ -506,19 +506,13 @@
     <None Include="Acceptance\Resources\Positive\Users.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ConnectionString - Copy.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ConnectionString.user.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </None>
     <EmbeddedResource Include="Integration\NUnit\Resources\NonEmptyAmountByYear.csv" />
     <EmbeddedResource Include="Integration\Core\DataManipulation\Load.csv" />
     <EmbeddedResource Include="Integration\SqlServer\IntegrationService\Resources\Sample.dtsx" />
     <EmbeddedResource Include="Integration\Core\Resources\MyBatch.cmd" />
     <EmbeddedResource Include="Integration\Core\Resources\MyInvalidBatch.cmd" />
     <EmbeddedResource Include="Integration\GenbiL\Resources\Simple.genbil" />
+    <None Include="ConnectionString.config" />
     <None Include="Integration\GenbiL\Resources\action.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
