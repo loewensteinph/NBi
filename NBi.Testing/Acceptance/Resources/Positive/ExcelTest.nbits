@@ -11,45 +11,50 @@
       <variable name="myVar">Test</variable>
     </default>
   </settings>
-  <test name="Excel Test">
+  <group name="paralell">
     <setup>
+      <tasks run-once="true">
+        <exe-run path="%SystemRoot%\system32\WindowsPowerShell\v1.0"  name="powershell.exe" arguments="F:\GIT\NBi-master\NBi.Testing\Acceptance\Resources\Powershell\FileCopy.ps1 -source 'C:\temp\Abo\Src' -dest 'C:\temp\Abo\Dest' -filter '_20170430_'"></exe-run>
+        <sql-run>
+          IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
+          DROP TABLE dbo.ExcelTest;
+
+          CREATE TABLE dbo.ExcelTest
+          (
+          [identitytest] [INT] IDENTITY(1, 1) NOT NULL,
+          [Test] [DATE] NULL,
+          [object_id] [INT] NULL,
+          [schema_id] [DECIMAL](18, 0) NULL,
+          [guid] [UNIQUEIDENTIFIER] NULL
+          );
+        </sql-run>
+        <table-load file="..\Excel\Sample.xlsx" name="dbo.ExcelTest"/>
+      </tasks>
+    </setup>
+    <test name="Excel Test">  
+      <system-under-test>
+        <execution>
+          <query>
+            SELECT identitytest,
+            Test,
+            object_id,
+            schema_id,
+            guid FROM dbo.ExcelTest
+          </query>
+        </execution>
+      </system-under-test>
+      <assert>
+        <equalTo>
+          <resultSet file="..\Excel\Sample.xlsx" sheet="Assert">
+          </resultSet>
+        </equalTo>
+      </assert>
+    </test>  
+    <cleanup>
       <sql-run>
         IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
         DROP TABLE dbo.ExcelTest;
-
-        CREATE TABLE dbo.ExcelTest
-        (
-        [identitytest] [INT] IDENTITY(1, 1) NOT NULL,
-        [Test] [DATE] NULL,
-        [object_id] [INT] NULL,
-        [schema_id] [DECIMAL](18, 0) NULL,
-        [guid] [UNIQUEIDENTIFIER] NULL
-        );
       </sql-run>
-      <table-load file="..\Excel\Sample.xlsx" name="dbo.ExcelTest"/>
-    </setup>
-    <system-under-test>
-      <execution>
-        <query>
-          SELECT identitytest,
-          Test,
-          object_id,
-          schema_id,
-          guid FROM dbo.ExcelTest
-        </query>
-      </execution>
-    </system-under-test>
-    <assert>
-      <equalTo>
-        <resultSet file="..\Excel\Sample.xlsx" sheet="Assert">
-        </resultSet>
-      </equalTo>
-    </assert>
-  <cleanup>
-    <sql-run>
-      IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
-      DROP TABLE dbo.ExcelTest;
-    </sql-run>
-  </cleanup>
-  </test>
+    </cleanup>
+  </group>
 </testSuite>

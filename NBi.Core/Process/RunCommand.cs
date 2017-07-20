@@ -24,16 +24,23 @@ namespace NBi.Core.Process
 
         public void Execute()
         {
-            if (string.IsNullOrEmpty(argument))
-                Console.WriteLine("Starting process {0} without argument.", fullPath);
-            else
-                Console.WriteLine("Starting process {0} with arguments \"{1}\".", fullPath, argument);
-            var result = false;
-            var startInfo = new ProcessStartInfo();
-            startInfo.FileName = fullPath;
-            startInfo.Arguments = argument;
+            StringBuilder outputBuilder = new StringBuilder();
+            ProcessStartInfo processStartInfo;
+            System.Diagnostics.Process process;
 
-            startInfo.UseShellExecute = silent;
+            if (string.IsNullOrEmpty(argument))
+                Console.WriteLine("Starting process: {0} without argument.", fullPath);
+            else
+                Console.WriteLine("Starting process: {0} with arguments \"{1}\".", fullPath, argument);
+            var result = false;
+
+            processStartInfo = new ProcessStartInfo();
+            processStartInfo.FileName = fullPath;
+            processStartInfo.Arguments = argument;
+            processStartInfo.RedirectStandardOutput = true;
+
+            processStartInfo.UseShellExecute = silent;
+
 
             if (fullPath.Contains("%"))
             {
@@ -45,39 +52,46 @@ namespace NBi.Core.Process
                     var exePath = paths
                         .Select(x => Path.Combine(x, file))
                         .FirstOrDefault(File.Exists);
-                    if (exePath != null) startInfo.FileName = exePath;
+                    if (exePath != null) processStartInfo.FileName = exePath;
                 }
             }
 
-            using (var exeProcess = System.Diagnostics.Process.Start(startInfo))
+            process = new System.Diagnostics.Process();
+            process.StartInfo = processStartInfo;
+            // enable raising events because Process does not raise events by default
+            process.EnableRaisingEvents = true;
+            // attach the event handler for OutputDataReceived before starting the process
+            process.OutputDataReceived += new DataReceivedEventHandler
+            (
+                delegate (object sender, DataReceivedEventArgs e)
+                {
+                    // append the new data to the data already read-in
+                    outputBuilder.Append(Environment.NewLine);
+                    outputBuilder.Append(e.Data);
+                }
+            );
+
+
+            process.Start();
+            process.BeginOutputReadLine();
+            if (timeOut > 0)
             {
-                if (timeOut != 0)
-                {
-                    Console.WriteLine("Waiting the end of the process.");
-                    if (exeProcess != null)
-                    {
-                        exeProcess.WaitForExit(timeOut);
-                        if (exeProcess.HasExited)
-                        {
-                            Console.WriteLine(exeProcess.ExitCode == 0
-                                ? "Process has been successfully executed."
-                                : "Process has failed.");
-                            result = exeProcess.ExitCode == 0;
-                        }
-                        else
-                            Console.WriteLine("Process has been interrupted before the end of its execution.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Not waiting the end of the process.");
-                    result = true;
-                }
+                Console.WriteLine("Waiting the end of the process with timeout.");
+                process.WaitForExit(timeOut);
             }
+            else
+            {
+                Console.WriteLine("Waiting the end of the process.");
+                process.WaitForExit();
+            }
+            result = process.ExitCode == 0;
+            process.CancelOutputRead();
+
+            string output = outputBuilder.ToString();
+            Console.WriteLine(string.Format("Process StdOut: {0} ", output));
 
             if (!result)
                 throw new InvalidProgramException();
-
         }
     }
 }

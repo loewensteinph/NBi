@@ -464,6 +464,7 @@
     <None Include="Acceptance\Resources\PowerBiDesktop\Sales Analysis.pbix">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Acceptance\Resources\Powershell\FileCopy.ps1" />
     <None Include="Acceptance\Resources\Reports\EmployeeSalesDetail.rsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
