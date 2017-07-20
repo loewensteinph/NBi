@@ -105,7 +105,7 @@ namespace NBi.Core.ResultSet
                 column.Index = dataColumn.Ordinal;
 
                 column.Role = dataColumn.ExtendedProperties["NBi::Role"].Equals(ColumnRole.Key) ? ColumnRole.Key : ColumnRole.Value;
-                switch (dataColumn.ExtendedProperties["NBi::Type"])
+                switch ((ColumnType)dataColumn.ExtendedProperties["NBi::Type"])
                 {
                     case ColumnType.Numeric:
                         column.Type = ColumnType.Numeric;

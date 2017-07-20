@@ -78,7 +78,7 @@ namespace NBi.Xml.Decoration.Command
         }
 
         IEnumerable<IQueryTemplateVariable> IBatchRunCommand.Variables
-        { get => GetVariables(); set => throw new NotImplementedException(); }
+        { get { return GetVariables(); } set { throw new NotImplementedException(); } }
 
         public SqlRunXml()
         {
