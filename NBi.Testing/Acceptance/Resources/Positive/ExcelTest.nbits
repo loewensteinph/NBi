@@ -2,7 +2,7 @@
 <testSuite name="Acceptance Testing: Excel Setup and Assert" xmlns="http://NBi/TestSuite">
   <settings>
     <default apply-to="everywhere">
-      <connectionString>Data Source=.\SQL2016;Initial Catalog=master;Integrated Security=True</connectionString>
+      <connectionString>Data Source=.;Initial Catalog=master;Integrated Security=True</connectionString>
     </default>
     <default apply-to="setup-cleanup">
       <variable name="myVar">Test</variable>
@@ -14,8 +14,7 @@
   <group name="paralell">
     <setup>
       <tasks run-once="true">
-        <exe-run path="%SystemRoot%\system32\WindowsPowerShell\v1.0"  name="powershell.exe" arguments="F:\GIT\NBi-master\NBi.Testing\Acceptance\Resources\Powershell\FileCopy.ps1 -source 'C:\temp\Abo\Src' -dest 'C:\temp\Abo\Dest' -filter '_20170430_'"></exe-run>
-        <sql-run>
+         <sql-run>
           IF OBJECT_ID('dbo.ExcelTest') IS NOT NULL
           DROP TABLE dbo.ExcelTest;
 
